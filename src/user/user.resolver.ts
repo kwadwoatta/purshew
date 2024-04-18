@@ -7,12 +7,12 @@ import { UpdateUserInput } from './dto/update-user.input';
 import { User } from './models/user.model';
 import { UserService } from './user.service';
 
-@UseGuards(JwtGuard)
 @Resolver(() => User)
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
   @Query(() => [User], { name: 'user' })
+  @UseGuards(JwtGuard)
   getMe(@GetUser() user: User) {
     return user;
   }

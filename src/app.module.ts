@@ -10,9 +10,6 @@ import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
-    AuthModule,
-    DrizzleModule,
-    PgClientModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -21,6 +18,9 @@ import { UserModule } from './user/user.module';
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       sortSchema: true,
     }),
+    DrizzleModule,
+    PgClientModule,
+    AuthModule,
     UserModule,
   ],
   providers: [],
