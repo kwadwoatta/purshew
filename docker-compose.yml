@@ -1,0 +1,24 @@
+services:
+  redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - '${REDIS_PORT}:${REDIS_PORT}'
+    env_file:
+      - .env
+    volumes:
+      - .env:/.env
+
+  dev-db:
+    image: postgres:latest
+    restart: always
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: '${POSTGRES_USER}'
+      POSTGRES_PASSWORD: '${POSTGRES_PASSWORD}'
+      POSTGRES_DB: '${POSTGRES_DB}'
+    ports:
+      - '${POSTGRES_PORT}:5432'
+    volumes:
+      - .env:/.env

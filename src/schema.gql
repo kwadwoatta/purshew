@@ -1,0 +1,62 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Auth {
+  """Access token for authentication"""
+  access_token: String!
+}
+
+input AuthInput {
+  """Example field (placeholder)"""
+  email: String!
+
+  """Example field (placeholder)"""
+  password: String!
+}
+
+type Mutation {
+  login(login: AuthInput!): Auth!
+  signup(signup: AuthInput!): Auth!
+  updateUser(updateUser: UpdateUserInput!): User!
+}
+
+type Query {
+  user: [User!]!
+}
+
+input UpdateUserInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  firstName: Int
+  lastName: Int
+}
+
+type User {
+  """accounts"""
+  accounts: Int!
+
+  """createdAt"""
+  createdAt: Int!
+
+  """email"""
+  email: Int!
+
+  """firstName"""
+  firstName: Int!
+
+  """hash"""
+  hash: Int!
+
+  """id"""
+  id: Int!
+
+  """lastName"""
+  lastName: Int!
+
+  """name"""
+  name: Int!
+
+  """updatedAt"""
+  updatedAt: Int!
+}
