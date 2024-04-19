@@ -2,6 +2,38 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Account {
+  """balance"""
+  balance: String!
+
+  """createdAt"""
+  createdAt: DateTime!
+
+  """description"""
+  description: String!
+
+  """id"""
+  id: String!
+
+  """name"""
+  name: String!
+
+  """owner"""
+  owner: [Account!]!
+
+  """ownerId"""
+  ownerId: String!
+
+  """transactions"""
+  transactions: [Account!]!
+
+  """type"""
+  type: String!
+
+  """updatedAt"""
+  updatedAt: DateTime!
+}
+
 type Auth {
   """Access token for authentication"""
   access_token: String!
@@ -15,19 +47,35 @@ input AuthInput {
   password: String!
 }
 
+input CreateAccountInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
 
 type Mutation {
+  createAccount(createAccountInput: CreateAccountInput!): Account!
   login(login: AuthInput!): Auth!
+  removeAccount(id: Int!): Account!
   signup(signup: AuthInput!): Auth!
+  updateAccount(updateAccountInput: UpdateAccountInput!): Account!
   updateUser(updateUser: UpdateUserInput!): User!
 }
 
 type Query {
+  account(id: Int!): Account!
+  accounts: [Account!]!
   user: User!
+}
+
+input UpdateAccountInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
 }
 
 input UpdateUserInput {
@@ -39,7 +87,7 @@ input UpdateUserInput {
 
 type User {
   """accounts"""
-  accounts: [String!]
+  accounts: [Account!]!
 
   """createdAt"""
   createdAt: DateTime!

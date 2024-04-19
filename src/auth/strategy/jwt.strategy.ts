@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 
 import { InferSelectModel, eq } from 'drizzle-orm';
@@ -23,6 +23,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     const user = await this.drizzle.db.query.users.findFirst({
       where: eq(users.id, payload.sub),
     });
+
+    if (!user) {
+      throw new UnauthorizedException();
+    }
 
     delete user.hash;
     return user;

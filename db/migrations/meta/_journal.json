@@ -8,6 +8,27 @@
       "when": 1713460803834,
       "tag": "0000_good_boomerang",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1713512296581,
+      "tag": "0001_conscious_tag",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1713512933502,
+      "tag": "0002_fine_leech",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1713513195587,
+      "tag": "0003_wide_wolverine",
+      "breakpoints": true
     }
   ]
 }

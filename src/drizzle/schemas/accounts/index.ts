@@ -23,9 +23,9 @@ export const accounts = pgTable('accounts', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 
-  name: text('name'),
+  name: text('name').notNull(),
   description: text('description'),
-  balance: doublePrecision('balance'),
+  balance: doublePrecision('balance').default(0).notNull(),
   type: accountTypeEnum('account_type').default('asset').notNull(),
   ownerId: uuid('owner_id')
     .notNull()

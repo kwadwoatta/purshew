@@ -9,7 +9,8 @@ import { JwtService } from '@nestjs/jwt';
 import * as argon from 'argon2';
 import { eq } from 'drizzle-orm';
 import { DrizzleService } from 'src/drizzle/drizzle.service';
-import { users } from 'src/drizzle/schemas';
+import { accounts, users } from 'src/drizzle/schemas';
+import { User } from 'src/user/models/user.model';
 import { AuthInput } from './dto';
 
 @Injectable()
@@ -28,12 +29,27 @@ export class AuthService {
     });
     if (user) throw new ConflictException('credentials taken');
 
-    const newUsers = await this.drizzle.db
-      .insert(users)
-      .values({ email, hash })
-      .returning();
+    let newUser: User;
 
-    return this.signToken(newUsers[0].id, newUsers[0].email);
+    await this.drizzle.db.transaction(async (tx) => {
+      const u = (await tx.insert(users).values({ email, hash }).returning())[0];
+
+      const accountTypes = accounts.type.enumValues;
+      for (const [index, type] of Object.entries(accountTypes)) {
+        await tx
+          .insert(accounts)
+          .values({
+            type: accountTypes[index],
+            ownerId: u.id,
+            name: type,
+          })
+          .returning();
+      }
+
+      newUser = { ...u, accounts: [] };
+    });
+
+    return this.signToken(newUser.id, newUser.email);
   }
 
   async login({ email, password }: AuthInput) {

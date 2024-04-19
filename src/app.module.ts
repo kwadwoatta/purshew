@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { DrizzleModule } from './drizzle/drizzle.module';
 import { PgClientModule } from './pg-client/pg-client.module';
 import { UserModule } from './user/user.module';
+import { AccountModule } from './account/account.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { UserModule } from './user/user.module';
     PgClientModule,
     AuthModule,
     UserModule,
+    AccountModule,
   ],
   providers: [],
 })
