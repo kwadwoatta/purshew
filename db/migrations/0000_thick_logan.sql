@@ -16,7 +16,9 @@ CREATE TABLE IF NOT EXISTS "accounts_receivable" (
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	"customer_id" uuid,
 	"amount" numeric NOT NULL,
-	"account_id" uuid NOT NULL
+	"account_type" "account_type" DEFAULT 'asset' NOT NULL,
+	"account_id" uuid NOT NULL,
+	"owner_id" uuid NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "equipment" (
@@ -25,7 +27,9 @@ CREATE TABLE IF NOT EXISTS "equipment" (
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	"equipment_name" text NOT NULL,
 	"equipment_value" numeric NOT NULL,
-	"account_id" uuid NOT NULL
+	"account_type" "account_type" DEFAULT 'asset' NOT NULL,
+	"account_id" uuid NOT NULL,
+	"owner_id" uuid NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "inventory" (
@@ -37,7 +41,9 @@ CREATE TABLE IF NOT EXISTS "inventory" (
 	"quantity" integer NOT NULL,
 	"purchase_price" numeric NOT NULL,
 	"sale_price" numeric NOT NULL,
-	"account_id" uuid NOT NULL
+	"account_type" "account_type" DEFAULT 'asset' NOT NULL,
+	"account_id" uuid NOT NULL,
+	"owner_id" uuid NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "property" (
@@ -46,7 +52,9 @@ CREATE TABLE IF NOT EXISTS "property" (
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	"property_name" text NOT NULL,
 	"property_value" numeric NOT NULL,
-	"account_id" uuid NOT NULL
+	"account_type" "account_type" DEFAULT 'asset' NOT NULL,
+	"account_id" uuid NOT NULL,
+	"owner_id" uuid NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "common_stock" (
@@ -58,7 +66,9 @@ CREATE TABLE IF NOT EXISTS "common_stock" (
 	"quantity" integer NOT NULL,
 	"purchase_price" numeric NOT NULL,
 	"sale_price" numeric NOT NULL,
-	"account_id" uuid NOT NULL
+	"account_type" "account_type" DEFAULT 'equity' NOT NULL,
+	"account_id" uuid NOT NULL,
+	"owner_id" uuid NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "retained_earnings" (
@@ -66,7 +76,9 @@ CREATE TABLE IF NOT EXISTS "retained_earnings" (
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	"earnings" numeric NOT NULL,
-	"account_id" uuid NOT NULL
+	"account_type" "account_type" DEFAULT 'equity' NOT NULL,
+	"account_id" uuid NOT NULL,
+	"owner_id" uuid NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "cost_of_goods_sold" (
@@ -78,7 +90,9 @@ CREATE TABLE IF NOT EXISTS "cost_of_goods_sold" (
 	"quantity" integer NOT NULL,
 	"purchase_price" numeric NOT NULL,
 	"sale_price" numeric NOT NULL,
-	"account_id" uuid NOT NULL
+	"account_type" "account_type" DEFAULT 'expense' NOT NULL,
+	"account_id" uuid NOT NULL,
+	"owner_id" uuid NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "interest_expense" (
@@ -86,7 +100,9 @@ CREATE TABLE IF NOT EXISTS "interest_expense" (
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	"interest" numeric NOT NULL,
-	"account_id" uuid NOT NULL
+	"account_type" "account_type" DEFAULT 'expense' NOT NULL,
+	"account_id" uuid NOT NULL,
+	"owner_id" uuid NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "rent_expense" (
@@ -94,7 +110,9 @@ CREATE TABLE IF NOT EXISTS "rent_expense" (
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	"rent" numeric NOT NULL,
-	"account_id" uuid NOT NULL
+	"account_type" "account_type" DEFAULT 'expense' NOT NULL,
+	"account_id" uuid NOT NULL,
+	"owner_id" uuid NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "wages_expense" (
@@ -102,16 +120,18 @@ CREATE TABLE IF NOT EXISTS "wages_expense" (
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	"wages" numeric NOT NULL,
-	"account_id" uuid NOT NULL
+	"account_type" "account_type" DEFAULT 'expense' NOT NULL,
+	"account_id" uuid NOT NULL,
+	"owner_id" uuid NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "accounts" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
-	"name" text,
+	"name" text NOT NULL,
 	"description" text,
-	"balance" double precision,
+	"balance" numeric DEFAULT '0.0' NOT NULL,
 	"account_type" "account_type" DEFAULT 'asset' NOT NULL,
 	"owner_id" uuid NOT NULL
 );
@@ -125,7 +145,9 @@ CREATE TABLE IF NOT EXISTS "accounts_payable" (
 	"quantity" integer NOT NULL,
 	"purchase_price" numeric NOT NULL,
 	"sale_price" numeric NOT NULL,
-	"account_id" uuid NOT NULL
+	"account_type" "account_type" DEFAULT 'liability' NOT NULL,
+	"account_id" uuid NOT NULL,
+	"owner_id" uuid NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "bonds_payable" (
@@ -134,7 +156,9 @@ CREATE TABLE IF NOT EXISTS "bonds_payable" (
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	"bondholder_id" uuid,
 	"amount" numeric NOT NULL,
-	"account_id" uuid NOT NULL
+	"account_type" "account_type" DEFAULT 'liability' NOT NULL,
+	"account_id" uuid NOT NULL,
+	"owner_id" uuid NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "loans" (
@@ -143,7 +167,9 @@ CREATE TABLE IF NOT EXISTS "loans" (
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	"lender_id" uuid,
 	"amount" numeric NOT NULL,
-	"account_id" uuid NOT NULL
+	"account_type" "account_type" DEFAULT 'liability' NOT NULL,
+	"account_id" uuid NOT NULL,
+	"owner_id" uuid NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "unearned_revenue" (
@@ -152,7 +178,9 @@ CREATE TABLE IF NOT EXISTS "unearned_revenue" (
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	"customer_id" uuid,
 	"amount" numeric NOT NULL,
-	"account_id" uuid NOT NULL
+	"account_type" "account_type" DEFAULT 'liability' NOT NULL,
+	"account_id" uuid NOT NULL,
+	"owner_id" uuid NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "interest_revenue" (
@@ -160,7 +188,9 @@ CREATE TABLE IF NOT EXISTS "interest_revenue" (
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	"interest_amount" numeric NOT NULL,
-	"account_id" uuid NOT NULL
+	"account_type" "account_type" DEFAULT 'revenue' NOT NULL,
+	"account_id" uuid NOT NULL,
+	"owner_id" uuid NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "revenue" (
@@ -170,7 +200,9 @@ CREATE TABLE IF NOT EXISTS "revenue" (
 	"revenue_name" text NOT NULL,
 	"revenue_description" text,
 	"amount" numeric NOT NULL,
-	"account_id" uuid NOT NULL
+	"account_type" "account_type" DEFAULT 'revenue' NOT NULL,
+	"account_id" uuid NOT NULL,
+	"owner_id" uuid NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "sales" (
@@ -179,7 +211,9 @@ CREATE TABLE IF NOT EXISTS "sales" (
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	"customer_id" uuid,
 	"sales_amount" numeric NOT NULL,
-	"account_id" uuid NOT NULL
+	"account_type" "account_type" DEFAULT 'revenue' NOT NULL,
+	"account_id" uuid NOT NULL,
+	"owner_id" uuid NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "service_revenue" (
@@ -188,7 +222,9 @@ CREATE TABLE IF NOT EXISTS "service_revenue" (
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	"customer_id" uuid,
 	"service_fee" numeric NOT NULL,
-	"account_id" uuid NOT NULL
+	"account_type" "account_type" DEFAULT 'revenue' NOT NULL,
+	"account_id" uuid NOT NULL,
+	"owner_id" uuid NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "transactions" (
@@ -228,7 +264,19 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
+ ALTER TABLE "accounts_receivable" ADD CONSTRAINT "accounts_receivable_owner_id_users_id_fk" FOREIGN KEY ("owner_id") REFERENCES "users"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
  ALTER TABLE "equipment" ADD CONSTRAINT "equipment_account_id_accounts_id_fk" FOREIGN KEY ("account_id") REFERENCES "accounts"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "equipment" ADD CONSTRAINT "equipment_owner_id_users_id_fk" FOREIGN KEY ("owner_id") REFERENCES "users"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
@@ -240,7 +288,19 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
+ ALTER TABLE "inventory" ADD CONSTRAINT "inventory_owner_id_users_id_fk" FOREIGN KEY ("owner_id") REFERENCES "users"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
  ALTER TABLE "property" ADD CONSTRAINT "property_account_id_accounts_id_fk" FOREIGN KEY ("account_id") REFERENCES "accounts"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "property" ADD CONSTRAINT "property_owner_id_users_id_fk" FOREIGN KEY ("owner_id") REFERENCES "users"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
@@ -252,7 +312,19 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
+ ALTER TABLE "common_stock" ADD CONSTRAINT "common_stock_owner_id_users_id_fk" FOREIGN KEY ("owner_id") REFERENCES "users"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
  ALTER TABLE "retained_earnings" ADD CONSTRAINT "retained_earnings_account_id_accounts_id_fk" FOREIGN KEY ("account_id") REFERENCES "accounts"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "retained_earnings" ADD CONSTRAINT "retained_earnings_owner_id_users_id_fk" FOREIGN KEY ("owner_id") REFERENCES "users"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
@@ -264,7 +336,19 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
+ ALTER TABLE "cost_of_goods_sold" ADD CONSTRAINT "cost_of_goods_sold_owner_id_users_id_fk" FOREIGN KEY ("owner_id") REFERENCES "users"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
  ALTER TABLE "interest_expense" ADD CONSTRAINT "interest_expense_account_id_accounts_id_fk" FOREIGN KEY ("account_id") REFERENCES "accounts"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "interest_expense" ADD CONSTRAINT "interest_expense_owner_id_users_id_fk" FOREIGN KEY ("owner_id") REFERENCES "users"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
@@ -276,7 +360,19 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
+ ALTER TABLE "rent_expense" ADD CONSTRAINT "rent_expense_owner_id_users_id_fk" FOREIGN KEY ("owner_id") REFERENCES "users"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
  ALTER TABLE "wages_expense" ADD CONSTRAINT "wages_expense_account_id_accounts_id_fk" FOREIGN KEY ("account_id") REFERENCES "accounts"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "wages_expense" ADD CONSTRAINT "wages_expense_owner_id_users_id_fk" FOREIGN KEY ("owner_id") REFERENCES "users"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
@@ -294,6 +390,12 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
+ ALTER TABLE "accounts_payable" ADD CONSTRAINT "accounts_payable_owner_id_users_id_fk" FOREIGN KEY ("owner_id") REFERENCES "users"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
  ALTER TABLE "bonds_payable" ADD CONSTRAINT "bonds_payable_bondholder_id_users_id_fk" FOREIGN KEY ("bondholder_id") REFERENCES "users"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
@@ -301,6 +403,12 @@ END $$;
 --> statement-breakpoint
 DO $$ BEGIN
  ALTER TABLE "bonds_payable" ADD CONSTRAINT "bonds_payable_account_id_accounts_id_fk" FOREIGN KEY ("account_id") REFERENCES "accounts"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "bonds_payable" ADD CONSTRAINT "bonds_payable_owner_id_users_id_fk" FOREIGN KEY ("owner_id") REFERENCES "users"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
@@ -318,6 +426,12 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
+ ALTER TABLE "loans" ADD CONSTRAINT "loans_owner_id_users_id_fk" FOREIGN KEY ("owner_id") REFERENCES "users"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
  ALTER TABLE "unearned_revenue" ADD CONSTRAINT "unearned_revenue_customer_id_users_id_fk" FOREIGN KEY ("customer_id") REFERENCES "users"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
@@ -330,13 +444,31 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
+ ALTER TABLE "unearned_revenue" ADD CONSTRAINT "unearned_revenue_owner_id_users_id_fk" FOREIGN KEY ("owner_id") REFERENCES "users"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
  ALTER TABLE "interest_revenue" ADD CONSTRAINT "interest_revenue_account_id_accounts_id_fk" FOREIGN KEY ("account_id") REFERENCES "accounts"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
+ ALTER TABLE "interest_revenue" ADD CONSTRAINT "interest_revenue_owner_id_users_id_fk" FOREIGN KEY ("owner_id") REFERENCES "users"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
  ALTER TABLE "revenue" ADD CONSTRAINT "revenue_account_id_accounts_id_fk" FOREIGN KEY ("account_id") REFERENCES "accounts"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "revenue" ADD CONSTRAINT "revenue_owner_id_users_id_fk" FOREIGN KEY ("owner_id") REFERENCES "users"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
@@ -354,6 +486,12 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
+ ALTER TABLE "sales" ADD CONSTRAINT "sales_owner_id_users_id_fk" FOREIGN KEY ("owner_id") REFERENCES "users"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
  ALTER TABLE "service_revenue" ADD CONSTRAINT "service_revenue_customer_id_users_id_fk" FOREIGN KEY ("customer_id") REFERENCES "users"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
@@ -361,6 +499,12 @@ END $$;
 --> statement-breakpoint
 DO $$ BEGIN
  ALTER TABLE "service_revenue" ADD CONSTRAINT "service_revenue_account_id_accounts_id_fk" FOREIGN KEY ("account_id") REFERENCES "accounts"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "service_revenue" ADD CONSTRAINT "service_revenue_owner_id_users_id_fk" FOREIGN KEY ("owner_id") REFERENCES "users"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;

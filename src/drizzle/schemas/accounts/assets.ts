@@ -8,6 +8,7 @@ import {
 } from 'drizzle-orm/pg-core';
 import { accounts } from '.';
 import { users } from '../users';
+import { AccountTypeEnum, accountTypeEnum } from './account-type.enum';
 
 export const inventory = pgTable('inventory', {
   id: uuid('id').notNull().defaultRandom().primaryKey(),
@@ -20,9 +21,18 @@ export const inventory = pgTable('inventory', {
   quantity: integer('quantity').notNull(),
   purchasePrice: decimal('purchase_price').notNull(),
   salePrice: decimal('sale_price').notNull(),
+  account_type: accountTypeEnum('account_type')
+    .default(AccountTypeEnum.asset)
+    .notNull(),
+
   accountId: uuid('account_id')
     .notNull()
     .references(() => accounts.id, { onDelete: 'cascade' }),
+  ownerId: uuid('owner_id')
+    .notNull()
+    .references(() => users.id, {
+      onDelete: 'cascade',
+    }),
 });
 
 export const property = pgTable('property', {
@@ -33,9 +43,18 @@ export const property = pgTable('property', {
 
   propertyName: text('property_name').notNull(),
   propertyValue: decimal('property_value').notNull(),
+  account_type: accountTypeEnum('account_type')
+    .default(AccountTypeEnum.asset)
+    .notNull(),
+
   accountId: uuid('account_id')
     .notNull()
     .references(() => accounts.id, {
+      onDelete: 'cascade',
+    }),
+  ownerId: uuid('owner_id')
+    .notNull()
+    .references(() => users.id, {
       onDelete: 'cascade',
     }),
 });
@@ -48,9 +67,18 @@ export const equipment = pgTable('equipment', {
 
   equipmentName: text('equipment_name').notNull(),
   equipmentValue: decimal('equipment_value').notNull(),
+  account_type: accountTypeEnum('account_type')
+    .default(AccountTypeEnum.asset)
+    .notNull(),
+
   accountId: uuid('account_id')
     .notNull()
     .references(() => accounts.id, {
+      onDelete: 'cascade',
+    }),
+  ownerId: uuid('owner_id')
+    .notNull()
+    .references(() => users.id, {
       onDelete: 'cascade',
     }),
 });
@@ -63,9 +91,18 @@ export const accountsReceivable = pgTable('accounts_receivable', {
 
   customerId: uuid('customer_id').references(() => users.id),
   amount: decimal('amount').notNull(),
+  account_type: accountTypeEnum('account_type')
+    .default(AccountTypeEnum.asset)
+    .notNull(),
+
   accountId: uuid('account_id')
     .notNull()
     .references(() => accounts.id, {
+      onDelete: 'cascade',
+    }),
+  ownerId: uuid('owner_id')
+    .notNull()
+    .references(() => users.id, {
       onDelete: 'cascade',
     }),
 });

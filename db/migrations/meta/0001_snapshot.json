@@ -1,6 +1,6 @@
 {
-  "id": "e8bb0280-9f3c-4211-b6bd-2d4122998a9b",
-  "prevId": "fdbfa7fb-69ee-4880-a572-55105e98ee14",
+  "id": "fa5cce7a-3803-4499-8e37-605c31e5ecf4",
+  "prevId": "e1a3d8f9-cd44-45fa-a3b8-2aeec93728b1",
   "version": "5",
   "dialect": "pg",
   "tables": {
@@ -46,6 +46,12 @@
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
@@ -69,6 +75,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "accounts_receivable_owner_id_users_id_fk": {
+          "name": "accounts_receivable_owner_id_users_id_fk",
+          "tableFrom": "accounts_receivable",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"
@@ -122,6 +141,12 @@
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
@@ -132,6 +157,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "equipment_owner_id_users_id_fk": {
+          "name": "equipment_owner_id_users_id_fk",
+          "tableFrom": "equipment",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"
@@ -203,6 +241,12 @@
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
@@ -213,6 +257,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "inventory_owner_id_users_id_fk": {
+          "name": "inventory_owner_id_users_id_fk",
+          "tableFrom": "inventory",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"
@@ -266,6 +323,12 @@
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
@@ -276,6 +339,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "property_owner_id_users_id_fk": {
+          "name": "property_owner_id_users_id_fk",
+          "tableFrom": "property",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"
@@ -347,6 +423,12 @@
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
@@ -357,6 +439,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "common_stock_owner_id_users_id_fk": {
+          "name": "common_stock_owner_id_users_id_fk",
+          "tableFrom": "common_stock",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"
@@ -404,6 +499,12 @@
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
@@ -414,6 +515,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "retained_earnings_owner_id_users_id_fk": {
+          "name": "retained_earnings_owner_id_users_id_fk",
+          "tableFrom": "retained_earnings",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"
@@ -485,6 +599,12 @@
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
@@ -495,6 +615,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "cost_of_goods_sold_owner_id_users_id_fk": {
+          "name": "cost_of_goods_sold_owner_id_users_id_fk",
+          "tableFrom": "cost_of_goods_sold",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"
@@ -542,6 +675,12 @@
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
@@ -552,6 +691,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "interest_expense_owner_id_users_id_fk": {
+          "name": "interest_expense_owner_id_users_id_fk",
+          "tableFrom": "interest_expense",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"
@@ -599,6 +751,12 @@
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
@@ -609,6 +767,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "rent_expense_owner_id_users_id_fk": {
+          "name": "rent_expense_owner_id_users_id_fk",
+          "tableFrom": "rent_expense",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"
@@ -656,6 +827,12 @@
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
@@ -666,6 +843,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "wages_expense_owner_id_users_id_fk": {
+          "name": "wages_expense_owner_id_users_id_fk",
+          "tableFrom": "wages_expense",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"
@@ -706,7 +896,7 @@
           "name": "name",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "description": {
           "name": "description",
@@ -716,10 +906,10 @@
         },
         "balance": {
           "name": "balance",
-          "type": "double precision",
+          "type": "numeric",
           "primaryKey": false,
           "notNull": true,
-          "default": 0
+          "default": "'0.0'"
         },
         "account_type": {
           "name": "account_type",
@@ -814,6 +1004,12 @@
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
@@ -824,6 +1020,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "accounts_payable_owner_id_users_id_fk": {
+          "name": "accounts_payable_owner_id_users_id_fk",
+          "tableFrom": "accounts_payable",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"
@@ -877,6 +1086,12 @@
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
@@ -900,6 +1115,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "bonds_payable_owner_id_users_id_fk": {
+          "name": "bonds_payable_owner_id_users_id_fk",
+          "tableFrom": "bonds_payable",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"
@@ -953,6 +1181,12 @@
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
@@ -976,6 +1210,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "loans_owner_id_users_id_fk": {
+          "name": "loans_owner_id_users_id_fk",
+          "tableFrom": "loans",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"
@@ -1029,6 +1276,12 @@
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
@@ -1052,6 +1305,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "unearned_revenue_owner_id_users_id_fk": {
+          "name": "unearned_revenue_owner_id_users_id_fk",
+          "tableFrom": "unearned_revenue",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"
@@ -1099,6 +1365,12 @@
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
@@ -1109,6 +1381,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "interest_revenue_owner_id_users_id_fk": {
+          "name": "interest_revenue_owner_id_users_id_fk",
+          "tableFrom": "interest_revenue",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"
@@ -1168,6 +1453,12 @@
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
@@ -1178,6 +1469,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "revenue_owner_id_users_id_fk": {
+          "name": "revenue_owner_id_users_id_fk",
+          "tableFrom": "revenue",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"
@@ -1231,6 +1535,12 @@
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
@@ -1254,6 +1564,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "sales_owner_id_users_id_fk": {
+          "name": "sales_owner_id_users_id_fk",
+          "tableFrom": "sales",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"
@@ -1307,6 +1630,12 @@
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
@@ -1330,6 +1659,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "service_revenue_owner_id_users_id_fk": {
+          "name": "service_revenue_owner_id_users_id_fk",
+          "tableFrom": "service_revenue",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"

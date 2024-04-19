@@ -25,10 +25,58 @@ type Account {
   ownerId: String!
 
   """type"""
-  type: String!
+  type: AccountTypeEnum!
 
   """updatedAt"""
   updatedAt: DateTime!
+}
+
+enum AccountTypeEnum {
+  asset
+  equity
+  expense
+  liability
+  revenue
+}
+
+type AccountsPayable {
+  """accountId"""
+  accountId: String!
+
+  """account_type"""
+  account_type: AccountTypeEnum!
+
+  """createdAt"""
+  createdAt: DateTime!
+
+  """id"""
+  id: String!
+
+  """itemDescription"""
+  itemDescription: String!
+
+  """itemName"""
+  itemName: String!
+
+  """ownerId"""
+  ownerId: String!
+
+  """purchasePrice"""
+  purchasePrice: String!
+
+  """quantity"""
+  quantity: Int!
+
+  """salePrice"""
+  salePrice: String!
+
+  """updatedAt"""
+  updatedAt: DateTime!
+}
+
+type AccountsReceivable {
+  """Example field (placeholder)"""
+  exampleField: String!
 }
 
 type Auth {
@@ -45,13 +93,28 @@ input AuthInput {
 }
 
 input CreateAccountInput {
+  """name"""
+  name: String!
+}
+
+input CreateAccountsPayableInput {
+  """GL Account ID"""
+  accountId: String!
+}
+
+input CreateAccountsReceivableInput {
   """Example field (placeholder)"""
-  exampleField: Int!
+  exampleField: String!
+}
+
+input CreateInventoryInput {
+  """Example field (placeholder)"""
+  exampleField: String!
 }
 
 input CreateTransactionInput {
   """Example field (placeholder)"""
-  exampleField: Int!
+  exampleField: String!
 }
 
 """
@@ -59,22 +122,38 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Inventory {
+  """Example field (placeholder)"""
+  exampleField: String!
+}
+
 type Mutation {
   createAccount(createAccountInput: CreateAccountInput!): Account!
+  createAccountsPayable(createAccountsPayableInput: CreateAccountsPayableInput!): AccountsPayable!
+  createAccountsReceivable(createAccountsReceivableInput: CreateAccountsReceivableInput!): AccountsReceivable!
+  createInventory(createInventoryInput: CreateInventoryInput!): Inventory!
   createTransaction(createTransactionInput: CreateTransactionInput!): Transaction!
   login(login: AuthInput!): Auth!
-  removeAccount(id: Int!): Account!
-  removeTransaction(id: Int!): Transaction!
+  removeAccountsPayable(id: String!): AccountsPayable!
+  removeAccountsReceivable(id: String!): AccountsReceivable!
+  removeInventory(id: String!): Inventory!
+  removeTransaction(id: String!): Transaction!
   signup(signup: AuthInput!): Auth!
-  updateAccount(updateAccountInput: UpdateAccountInput!): Account!
+  updateAccountsPayable(updateAccountsPayableInput: UpdateAccountsPayableInput!): AccountsPayable!
+  updateAccountsReceivable(updateAccountsReceivableInput: UpdateAccountsReceivableInput!): AccountsReceivable!
+  updateInventory(updateInventoryInput: UpdateInventoryInput!): Inventory!
   updateTransaction(updateTransactionInput: UpdateTransactionInput!): Transaction!
   updateUser(updateUser: UpdateUserInput!): User!
 }
 
 type Query {
-  account(id: Int!): Account!
+  account(id: String!): Account!
   accounts: [Account!]!
-  transaction(id: Int!): Transaction!
+  accountsPayable(id: String!): AccountsPayable!
+  accountsPayableAll: [AccountsPayable!]!
+  accountsReceivable(id: String!): AccountsReceivable!
+  inventory(id: String!): Inventory!
+  transaction(id: String!): Transaction!
   user: User!
 }
 
@@ -101,29 +180,68 @@ type Transaction {
   toAccountId: String!
 
   """transactionType"""
-  transactionType: Int!
+  transactionType: String!
 
   """updatedAt"""
   updatedAt: DateTime!
 }
 
-input UpdateAccountInput {
+input UpdateAccountsPayableInput {
+  """accountId"""
+  accountId: String
+
+  """account_type"""
+  account_type: AccountTypeEnum
+
+  """createdAt"""
+  createdAt: DateTime
+  id: String!
+
+  """itemDescription"""
+  itemDescription: String
+
+  """itemName"""
+  itemName: String
+
+  """ownerId"""
+  ownerId: String
+
+  """purchasePrice"""
+  purchasePrice: String
+
+  """quantity"""
+  quantity: Int
+
+  """salePrice"""
+  salePrice: String
+
+  """updatedAt"""
+  updatedAt: DateTime
+}
+
+input UpdateAccountsReceivableInput {
   """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  exampleField: String
+  id: String!
+}
+
+input UpdateInventoryInput {
+  """Example field (placeholder)"""
+  exampleField: String
+  id: String!
 }
 
 input UpdateTransactionInput {
   """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  exampleField: String
+  id: String!
 }
 
 input UpdateUserInput {
   """Example field (placeholder)"""
-  exampleField: Int
-  firstName: Int
-  lastName: Int
+  exampleField: String
+  firstName: String
+  lastName: String
 }
 
 type User {

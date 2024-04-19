@@ -1,4 +1,4 @@
-import { Field, GraphQLISODateTime, Int, ObjectType } from '@nestjs/graphql';
+import { Field, GraphQLISODateTime, ObjectType } from '@nestjs/graphql';
 import { InferDrizzleModel } from 'src/common';
 
 @ObjectType()
@@ -34,7 +34,7 @@ export class Transaction implements InferDrizzleModel<'transactions'> {
   @Field(() => String, { description: 'amount' })
   amount: string;
 
-  @Field(() => Int, { description: 'transactionType' })
+  @Field(() => String, { description: 'transactionType' })
   transactionType: 'debit' | 'credit';
 
   @Field(() => String, { description: 'fromAccountId' })

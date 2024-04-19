@@ -1,26 +1,52 @@
 import { Injectable } from '@nestjs/common';
+import { and, eq } from 'drizzle-orm';
+import { DrizzleService } from 'src/drizzle/drizzle.service';
+import { accounts, users } from 'src/drizzle/schemas';
+import { User } from 'src/user/models/user.model';
 import { CreateAccountInput } from './dto/create-account.input';
 import { UpdateAccountInput } from './dto/update-account.input';
 
 @Injectable()
 export class AccountService {
-  create({}: CreateAccountInput) {
-    return 'This action adds a new account';
+  constructor(private readonly drizzle: DrizzleService) {}
+
+  create(input: CreateAccountInput, user: User) {
+    return this.drizzle.db
+      .insert(accounts)
+      .values({
+        ownerId: user.id,
+        ...input,
+      })
+      .returning();
   }
 
-  findAll() {
-    return `This action returns all account`;
+  findAll(userId: string) {
+    return this.drizzle.db
+      .select()
+      .from(users)
+      .where(and(eq(accounts.ownerId, userId)));
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} account`;
+  findOne(accountId: string, userId: string) {
+    return this.drizzle.db
+      .select()
+      .from(users)
+      .where(and(eq(accounts.ownerId, userId), eq(accounts.id, accountId)));
   }
 
-  update(id: number, {}: UpdateAccountInput) {
-    return `This action updates a #${id} account`;
+  update(userId: string, input: UpdateAccountInput) {
+    return this.drizzle.db
+      .update(users)
+      .set({
+        ...input,
+      })
+      .where(and(eq(accounts.ownerId, userId), eq(accounts.id, input.id)));
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} account`;
+  remove(id: string, userId: string) {
+    return this.drizzle.db
+      .select()
+      .from(users)
+      .where(and(eq(accounts.ownerId, userId), eq(accounts.id, id)));
   }
 }

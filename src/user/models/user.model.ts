@@ -26,7 +26,4 @@ export class User implements InferDrizzleModel<'users'> {
 
   @Field(() => String, { description: 'lastName', nullable: true })
   lastName: string | undefined;
-
-  // @Field(() => [Account], { description: 'accounts' })
-  // accounts: InferDrizzleModel<'accounts', { owner; transactions }>[];
 }

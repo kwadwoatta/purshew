@@ -1,6 +1,6 @@
 {
-  "id": "48a1ef86-f169-44aa-a559-3e07399f188d",
-  "prevId": "e8bb0280-9f3c-4211-b6bd-2d4122998a9b",
+  "id": "fe745930-f241-4940-9820-8724c47a5bbb",
+  "prevId": "fa5cce7a-3803-4499-8e37-605c31e5ecf4",
   "version": "5",
   "dialect": "pg",
   "tables": {
@@ -41,8 +41,21 @@
           "primaryKey": false,
           "notNull": true
         },
+        "account_type": {
+          "name": "account_type",
+          "type": "account_type",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'asset'"
+        },
         "account_id": {
           "name": "account_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -69,6 +82,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "accounts_receivable_owner_id_users_id_fk": {
+          "name": "accounts_receivable_owner_id_users_id_fk",
+          "tableFrom": "accounts_receivable",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"
@@ -117,8 +143,21 @@
           "primaryKey": false,
           "notNull": true
         },
+        "account_type": {
+          "name": "account_type",
+          "type": "account_type",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'asset'"
+        },
         "account_id": {
           "name": "account_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -132,6 +171,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "equipment_owner_id_users_id_fk": {
+          "name": "equipment_owner_id_users_id_fk",
+          "tableFrom": "equipment",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"
@@ -198,8 +250,21 @@
           "primaryKey": false,
           "notNull": true
         },
+        "account_type": {
+          "name": "account_type",
+          "type": "account_type",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'asset'"
+        },
         "account_id": {
           "name": "account_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -213,6 +278,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "inventory_owner_id_users_id_fk": {
+          "name": "inventory_owner_id_users_id_fk",
+          "tableFrom": "inventory",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"
@@ -261,8 +339,21 @@
           "primaryKey": false,
           "notNull": true
         },
+        "account_type": {
+          "name": "account_type",
+          "type": "account_type",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'asset'"
+        },
         "account_id": {
           "name": "account_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -276,6 +367,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "property_owner_id_users_id_fk": {
+          "name": "property_owner_id_users_id_fk",
+          "tableFrom": "property",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"
@@ -342,8 +446,21 @@
           "primaryKey": false,
           "notNull": true
         },
+        "account_type": {
+          "name": "account_type",
+          "type": "account_type",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'equity'"
+        },
         "account_id": {
           "name": "account_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -357,6 +474,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "common_stock_owner_id_users_id_fk": {
+          "name": "common_stock_owner_id_users_id_fk",
+          "tableFrom": "common_stock",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"
@@ -399,8 +529,21 @@
           "primaryKey": false,
           "notNull": true
         },
+        "account_type": {
+          "name": "account_type",
+          "type": "account_type",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'equity'"
+        },
         "account_id": {
           "name": "account_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -414,6 +557,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "retained_earnings_owner_id_users_id_fk": {
+          "name": "retained_earnings_owner_id_users_id_fk",
+          "tableFrom": "retained_earnings",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"
@@ -480,8 +636,21 @@
           "primaryKey": false,
           "notNull": true
         },
+        "account_type": {
+          "name": "account_type",
+          "type": "account_type",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'expense'"
+        },
         "account_id": {
           "name": "account_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -495,6 +664,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "cost_of_goods_sold_owner_id_users_id_fk": {
+          "name": "cost_of_goods_sold_owner_id_users_id_fk",
+          "tableFrom": "cost_of_goods_sold",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"
@@ -537,8 +719,21 @@
           "primaryKey": false,
           "notNull": true
         },
+        "account_type": {
+          "name": "account_type",
+          "type": "account_type",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'expense'"
+        },
         "account_id": {
           "name": "account_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -552,6 +747,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "interest_expense_owner_id_users_id_fk": {
+          "name": "interest_expense_owner_id_users_id_fk",
+          "tableFrom": "interest_expense",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"
@@ -594,8 +802,21 @@
           "primaryKey": false,
           "notNull": true
         },
+        "account_type": {
+          "name": "account_type",
+          "type": "account_type",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'expense'"
+        },
         "account_id": {
           "name": "account_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -609,6 +830,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "rent_expense_owner_id_users_id_fk": {
+          "name": "rent_expense_owner_id_users_id_fk",
+          "tableFrom": "rent_expense",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"
@@ -651,8 +885,21 @@
           "primaryKey": false,
           "notNull": true
         },
+        "account_type": {
+          "name": "account_type",
+          "type": "account_type",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'expense'"
+        },
         "account_id": {
           "name": "account_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -666,6 +913,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "wages_expense_owner_id_users_id_fk": {
+          "name": "wages_expense_owner_id_users_id_fk",
+          "tableFrom": "wages_expense",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"
@@ -716,10 +976,10 @@
         },
         "balance": {
           "name": "balance",
-          "type": "double precision",
+          "type": "numeric",
           "primaryKey": false,
           "notNull": true,
-          "default": 0
+          "default": "'0.0'"
         },
         "account_type": {
           "name": "account_type",
@@ -752,22 +1012,7 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "accounts_name_unique": {
-          "name": "accounts_name_unique",
-          "nullsNotDistinct": false,
-          "columns": [
-            "name"
-          ]
-        },
-        "accounts_account_type_unique": {
-          "name": "accounts_account_type_unique",
-          "nullsNotDistinct": false,
-          "columns": [
-            "account_type"
-          ]
-        }
-      }
+      "uniqueConstraints": {}
     },
     "accounts_payable": {
       "name": "accounts_payable",
@@ -824,8 +1069,21 @@
           "primaryKey": false,
           "notNull": true
         },
+        "account_type": {
+          "name": "account_type",
+          "type": "account_type",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'liability'"
+        },
         "account_id": {
           "name": "account_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -839,6 +1097,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "accounts_payable_owner_id_users_id_fk": {
+          "name": "accounts_payable_owner_id_users_id_fk",
+          "tableFrom": "accounts_payable",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"
@@ -887,8 +1158,21 @@
           "primaryKey": false,
           "notNull": true
         },
+        "account_type": {
+          "name": "account_type",
+          "type": "account_type",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'liability'"
+        },
         "account_id": {
           "name": "account_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -915,6 +1199,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "bonds_payable_owner_id_users_id_fk": {
+          "name": "bonds_payable_owner_id_users_id_fk",
+          "tableFrom": "bonds_payable",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"
@@ -963,8 +1260,21 @@
           "primaryKey": false,
           "notNull": true
         },
+        "account_type": {
+          "name": "account_type",
+          "type": "account_type",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'liability'"
+        },
         "account_id": {
           "name": "account_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -991,6 +1301,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "loans_owner_id_users_id_fk": {
+          "name": "loans_owner_id_users_id_fk",
+          "tableFrom": "loans",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"
@@ -1039,8 +1362,21 @@
           "primaryKey": false,
           "notNull": true
         },
+        "account_type": {
+          "name": "account_type",
+          "type": "account_type",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'liability'"
+        },
         "account_id": {
           "name": "account_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -1067,6 +1403,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "unearned_revenue_owner_id_users_id_fk": {
+          "name": "unearned_revenue_owner_id_users_id_fk",
+          "tableFrom": "unearned_revenue",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"
@@ -1109,8 +1458,21 @@
           "primaryKey": false,
           "notNull": true
         },
+        "account_type": {
+          "name": "account_type",
+          "type": "account_type",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'revenue'"
+        },
         "account_id": {
           "name": "account_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -1124,6 +1486,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "interest_revenue_owner_id_users_id_fk": {
+          "name": "interest_revenue_owner_id_users_id_fk",
+          "tableFrom": "interest_revenue",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"
@@ -1178,8 +1553,21 @@
           "primaryKey": false,
           "notNull": true
         },
+        "account_type": {
+          "name": "account_type",
+          "type": "account_type",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'revenue'"
+        },
         "account_id": {
           "name": "account_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -1193,6 +1581,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "revenue_owner_id_users_id_fk": {
+          "name": "revenue_owner_id_users_id_fk",
+          "tableFrom": "revenue",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"
@@ -1241,8 +1642,21 @@
           "primaryKey": false,
           "notNull": true
         },
+        "account_type": {
+          "name": "account_type",
+          "type": "account_type",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'revenue'"
+        },
         "account_id": {
           "name": "account_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -1269,6 +1683,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "sales_owner_id_users_id_fk": {
+          "name": "sales_owner_id_users_id_fk",
+          "tableFrom": "sales",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"
@@ -1317,8 +1744,21 @@
           "primaryKey": false,
           "notNull": true
         },
+        "account_type": {
+          "name": "account_type",
+          "type": "account_type",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'revenue'"
+        },
         "account_id": {
           "name": "account_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "owner_id": {
+          "name": "owner_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -1345,6 +1785,19 @@
           "tableTo": "accounts",
           "columnsFrom": [
             "account_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "service_revenue_owner_id_users_id_fk": {
+          "name": "service_revenue_owner_id_users_id_fk",
+          "tableFrom": "service_revenue",
+          "tableTo": "users",
+          "columnsFrom": [
+            "owner_id"
           ],
           "columnsTo": [
             "id"

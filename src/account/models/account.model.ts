@@ -1,5 +1,6 @@
 import { Field, GraphQLISODateTime, ObjectType } from '@nestjs/graphql';
 import { InferDrizzleModel } from 'src/common';
+import { AccountTypeEnum } from 'src/drizzle/schemas/accounts/account-type.enum';
 import { User } from 'src/user/models/user.model';
 
 @ObjectType()
@@ -22,8 +23,8 @@ export class Account implements InferDrizzleModel<'accounts'> {
   @Field(() => String, { description: 'balance' })
   balance: string;
 
-  @Field(() => String, { description: 'type' })
-  type: 'revenue' | 'asset' | 'liability' | 'equity' | 'expense';
+  @Field(() => AccountTypeEnum, { description: 'type' })
+  type: AccountTypeEnum;
 
   @Field(() => String, { description: 'ownerId' })
   ownerId: string;

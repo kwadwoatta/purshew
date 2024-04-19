@@ -1,21 +1,7 @@
 import { relations } from 'drizzle-orm';
-import {
-  decimal,
-  pgEnum,
-  pgTable,
-  text,
-  timestamp,
-  uuid,
-} from 'drizzle-orm/pg-core';
+import { decimal, pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core';
 import { transactions, users } from '..';
-
-export const accountTypeEnum = pgEnum('account_type', [
-  'asset',
-  'liability',
-  'equity',
-  'revenue',
-  'expense',
-]);
+import { AccountTypeEnum, accountTypeEnum } from './account-type.enum';
 
 export const accounts = pgTable('accounts', {
   id: uuid('id').notNull().defaultRandom().primaryKey(),
@@ -26,7 +12,10 @@ export const accounts = pgTable('accounts', {
   name: text('name').notNull(),
   description: text('description'),
   balance: decimal('balance').default('0.0').notNull(),
-  type: accountTypeEnum('account_type').default('asset').notNull(),
+  type: accountTypeEnum('account_type')
+    .default(AccountTypeEnum.asset)
+    .notNull(),
+
   ownerId: uuid('owner_id')
     .notNull()
     .references(() => users.id, {

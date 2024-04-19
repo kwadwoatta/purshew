@@ -1,9 +1,10 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { GetUser } from 'src/auth/decorator';
 import { JwtGuard } from 'src/auth/guard';
+import { User } from 'src/user/models/user.model';
 import { AccountService } from './account.service';
 import { CreateAccountInput } from './dto/create-account.input';
-import { UpdateAccountInput } from './dto/update-account.input';
 import { Account } from './models/account.model';
 
 @UseGuards(JwtGuard)
@@ -13,33 +14,38 @@ export class AccountResolver {
 
   @Mutation(() => Account)
   createAccount(
+    @GetUser() user: User,
     @Args('createAccountInput') createAccountInput: CreateAccountInput,
   ) {
-    return this.accountService.create(createAccountInput);
+    return this.accountService.create(createAccountInput, user);
   }
 
   @Query(() => [Account], { name: 'accounts' })
-  findAll() {
-    return this.accountService.findAll();
+  findAll(@GetUser() user: User) {
+    return this.accountService.findAll(user.id);
   }
 
   @Query(() => Account, { name: 'account' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.accountService.findOne(id);
-  }
-
-  @Mutation(() => Account)
-  updateAccount(
-    @Args('updateAccountInput') updateAccountInput: UpdateAccountInput,
+  findOne(
+    @GetUser() user: User,
+    @Args('id', { type: () => String }) id: string,
   ) {
-    return this.accountService.update(
-      updateAccountInput.id,
-      updateAccountInput,
-    );
+    return this.accountService.findOne(id, user.id);
   }
 
-  @Mutation(() => Account)
-  removeAccount(@Args('id', { type: () => Int }) id: number) {
-    return this.accountService.remove(id);
-  }
+  // @Mutation(() => Account)
+  // updateAccount(
+  //   @GetUser() user: User,
+  //   @Args('updateAccountInput') updateAccountInput: UpdateAccountInput,
+  // ) {
+  //   return this.accountService.update(user.id, updateAccountInput);
+  // }
+
+  // @Mutation(() => Account)
+  // removeAccount(
+  //   @GetUser() user: User,
+  //   @Args('id', { type: () => String }) id: string,
+  // ) {
+  //   return this.accountService.remove(id, user.id);
+  // }
 }
