@@ -1,4 +1,4 @@
-import { Field, GraphQLISODateTime, Int, ObjectType } from '@nestjs/graphql';
+import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { InferSelectModel } from 'drizzle-orm';
 import { accountsReceivable } from 'src/drizzle/schemas';
 import { AccountTypeEnum } from 'src/drizzle/schemas/accounts/account-type.enum';
@@ -7,27 +7,27 @@ import { AccountTypeEnum } from 'src/drizzle/schemas/accounts/account-type.enum'
 export class AccountsReceivable
   implements InferSelectModel<typeof accountsReceivable>
 {
-  @Field(() => Int)
+  @Field(() => ID)
   id: string;
 
-  @Field(() => GraphQLISODateTime)
+  @Field()
   createdAt: Date;
 
-  @Field(() => GraphQLISODateTime)
+  @Field()
   updatedAt: Date;
 
-  @Field(() => String)
+  @Field(() => ID)
   customerId: string;
 
-  @Field(() => String)
+  @Field()
   amount: string;
 
   @Field(() => AccountTypeEnum)
   account_type: AccountTypeEnum;
 
-  @Field(() => String)
+  @Field(() => ID)
   ownerId: string;
 
-  @Field(() => String)
+  @Field(() => ID)
   accountId: string;
 }

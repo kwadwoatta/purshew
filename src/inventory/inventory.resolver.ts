@@ -1,8 +1,8 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CreateInventoryInput } from './dto/create-inventory.input';
 import { UpdateInventoryInput } from './dto/update-inventory.input';
-import { Inventory } from './entities/inventory.entity';
 import { InventoryService } from './inventory.service';
+import { Inventory } from './models/inventory.model';
 
 @Resolver(() => Inventory)
 export class InventoryResolver {

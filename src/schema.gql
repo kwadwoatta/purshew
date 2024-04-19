@@ -3,31 +3,14 @@
 # ------------------------------------------------------
 
 type Account {
-  """balance"""
   balance: String!
-
-  """createdAt"""
   createdAt: DateTime!
-
-  """description"""
   description: String!
-
-  """id"""
-  id: String!
-
-  """name"""
+  id: ID!
   name: String!
-
-  """owner"""
   owner: User!
-
-  """ownerId"""
-  ownerId: String!
-
-  """type"""
+  ownerId: ID!
   type: AccountTypeEnum!
-
-  """updatedAt"""
   updatedAt: DateTime!
 }
 
@@ -40,48 +23,27 @@ enum AccountTypeEnum {
 }
 
 type AccountsPayable {
-  """accountId"""
-  accountId: String!
-
-  """account_type"""
+  accountId: ID!
   account_type: AccountTypeEnum!
-
-  """createdAt"""
   createdAt: DateTime!
-
-  """id"""
-  id: String!
-
-  """itemDescription"""
+  id: ID!
   itemDescription: String!
-
-  """itemName"""
   itemName: String!
-
-  """ownerId"""
-  ownerId: String!
-
-  """purchasePrice"""
+  ownerId: ID!
   purchasePrice: String!
-
-  """quantity"""
   quantity: Int!
-
-  """salePrice"""
   salePrice: String!
-
-  """updatedAt"""
   updatedAt: DateTime!
 }
 
 type AccountsReceivable {
-  accountId: String!
+  accountId: ID!
   account_type: AccountTypeEnum!
   amount: String!
   createdAt: DateTime!
-  customerId: String!
-  id: Int!
-  ownerId: String!
+  customerId: ID!
+  id: ID!
+  ownerId: ID!
   updatedAt: DateTime!
 }
 
@@ -91,39 +53,34 @@ type Auth {
 }
 
 input AuthInput {
-  """Example field (placeholder)"""
   email: String!
-
-  """Example field (placeholder)"""
   password: String!
 }
 
 input CreateAccountInput {
-  balance: String
-  createdAt: DateTime
-  description: String
-  id: String
-
-  """name"""
+  balance: String!
+  createdAt: DateTime!
+  description: String!
+  id: ID!
   name: String!
-  ownerId: String
-  type: String
-  updatedAt: String
+  ownerId: ID!
+  type: AccountTypeEnum!
+  updatedAt: DateTime!
 }
 
 input CreateAccountsPayableInput {
   """GL Account ID"""
-  accountId: String!
-  account_type: String
-  createdAt: String
-  id: String
-  itemDescription: String
-  itemName: String
-  ownerId: String
-  purchasePrice: String
-  quantity: String
-  salePrice: String
-  updatedAt: String
+  accountId: ID!
+  account_type: AccountTypeEnum!
+  createdAt: DateTime!
+  id: ID!
+  itemDescription: String!
+  itemName: String!
+  ownerId: String!
+  purchasePrice: String!
+  quantity: Float!
+  salePrice: String!
+  updatedAt: DateTime!
 }
 
 input CreateAccountsReceivableInput {
@@ -134,29 +91,29 @@ input CreateAccountsReceivableInput {
 }
 
 input CreateInventoryInput {
-  accountId: String
-  account_type: String
-  createdAt: String
-  id: String
-  itemDescription: String
-  itemName: String
-  ownerId: String
-  purchasePrice: String
-  quantity: String
-  salePrice: String
-  updatedAt: String
+  accountId: String!
+  account_type: AccountTypeEnum!
+  createdAt: DateTime!
+  id: String!
+  itemDescription: String!
+  itemName: String!
+  ownerId: ID!
+  purchasePrice: String!
+  quantity: Float!
+  salePrice: String!
+  updatedAt: DateTime!
 }
 
 input CreateTransactionInput {
-  amount: String
-  createdAt: String
-  description: String
-  fromAccountId: String
-  id: String
-  ownerId: String
-  toAccountId: String
-  transactionType: String
-  updatedAt: String
+  amount: String!
+  createdAt: DateTime!
+  description: String!
+  fromAccountId: ID!
+  id: String!
+  ownerId: ID!
+  toAccountId: ID!
+  transactionType: TransactionTypeEnum!
+  updatedAt: DateTime!
 }
 
 """
@@ -165,8 +122,18 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type Inventory {
-  """Example field (placeholder)"""
-  exampleField: String!
+  accountId: ID!
+  account_type: AccountTypeEnum!
+  createdAt: DateTime!
+  exampleField: Float!
+  id: ID!
+  itemDescription: String!
+  itemName: String!
+  ownerId: ID!
+  purchasePrice: String!
+  quantity: Float!
+  salePrice: String!
+  updatedAt: DateTime!
 }
 
 type Mutation {
@@ -201,47 +168,35 @@ type Query {
 }
 
 type Transaction {
-  """amount"""
   amount: String!
-
-  """createdAt"""
   createdAt: DateTime!
-
-  """description"""
   description: String!
-
-  """fromAccountId"""
-  fromAccountId: String!
-
-  """id"""
-  id: String!
-
-  """ownerId"""
-  ownerId: String!
-
-  """toAccountId"""
-  toAccountId: String!
-
-  """transactionType"""
-  transactionType: String!
-
-  """updatedAt"""
+  fromAccountId: ID!
+  id: ID!
+  ownerId: ID!
+  toAccountId: ID!
+  transactionType: TransactionTypeEnum!
   updatedAt: DateTime!
+}
+
+enum TransactionTypeEnum {
+  credit
+  debit
 }
 
 input UpdateAccountsPayableInput {
   """GL Account ID"""
-  accountId: String
-  account_type: String
-  createdAt: String
+  accountId: ID
+  account_type: AccountTypeEnum
+  createdAt: DateTime
   id: String!
   itemDescription: String
   itemName: String
   ownerId: String
   purchasePrice: String
-  quantity: String
+  quantity: Float
   salePrice: String
-  updatedAt: String
+  updatedAt: DateTime
 }
 
 input UpdateAccountsReceivableInput {
@@ -254,28 +209,28 @@ input UpdateAccountsReceivableInput {
 
 input UpdateInventoryInput {
   accountId: String
-  account_type: String
-  createdAt: String
+  account_type: AccountTypeEnum
+  createdAt: DateTime
   id: String!
   itemDescription: String
   itemName: String
-  ownerId: String
+  ownerId: ID
   purchasePrice: String
-  quantity: String
+  quantity: Float
   salePrice: String
-  updatedAt: String
+  updatedAt: DateTime
 }
 
 input UpdateTransactionInput {
   amount: String
-  createdAt: String
+  createdAt: DateTime
   description: String
-  fromAccountId: String
+  fromAccountId: ID
   id: String!
-  ownerId: String
-  toAccountId: String
-  transactionType: String
-  updatedAt: String
+  ownerId: ID
+  toAccountId: ID
+  transactionType: TransactionTypeEnum
+  updatedAt: DateTime
 }
 
 input UpdateUserInput {
@@ -290,27 +245,12 @@ input UpdateUserInput {
 }
 
 type User {
-  """createdAt"""
   createdAt: DateTime!
-
-  """email"""
   email: String!
-
-  """firstName"""
   firstName: String
-
-  """id"""
   hash: String!
-
-  """id"""
-  id: String!
-
-  """lastName"""
+  id: ID!
   lastName: String
-
-  """name"""
   name: String
-
-  """updatedAt"""
   updatedAt: DateTime!
 }

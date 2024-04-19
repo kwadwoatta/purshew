@@ -5,11 +5,11 @@ import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 export class AuthInput {
   @IsEmail()
   @IsNotEmpty()
-  @Field(() => String, { description: 'Example field (placeholder)' })
+  @Field(() => String)
   email: string;
 
   @IsString()
   @IsNotEmpty()
-  @Field(() => String, { description: 'Example field (placeholder)' })
+  @Field(() => String)
   password: string;
 }

@@ -1,12 +1,10 @@
-import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
+import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { InferSelectModel } from 'drizzle-orm';
-import { accountsPayable } from 'src/drizzle/schemas';
+import { inventory } from 'src/drizzle/schemas';
 import { AccountTypeEnum } from 'src/drizzle/schemas/accounts/account-type.enum';
 
 @ObjectType()
-export class AccountsPayable
-  implements InferSelectModel<typeof accountsPayable>
-{
+export class Inventory implements InferSelectModel<typeof inventory> {
   @Field(() => ID)
   id: string;
 
@@ -22,7 +20,7 @@ export class AccountsPayable
   @Field()
   itemDescription: string;
 
-  @Field(() => Int)
+  @Field()
   quantity: number;
 
   @Field()
@@ -31,7 +29,7 @@ export class AccountsPayable
   @Field()
   salePrice: string;
 
-  @Field(() => AccountTypeEnum)
+  @Field()
   account_type: AccountTypeEnum;
 
   @Field(() => ID)
@@ -39,4 +37,7 @@ export class AccountsPayable
 
   @Field(() => ID)
   accountId: string;
+
+  @Field()
+  exampleField: number;
 }

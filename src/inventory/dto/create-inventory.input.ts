@@ -1,4 +1,4 @@
-import { Field, InputType } from '@nestjs/graphql';
+import { Field, ID, InputType } from '@nestjs/graphql';
 import { InferInsertModel } from 'drizzle-orm';
 import { inventory } from 'src/drizzle/schemas';
 import { AccountTypeEnum } from 'src/drizzle/schemas/accounts/account-type.enum';
@@ -7,36 +7,36 @@ import { AccountTypeEnum } from 'src/drizzle/schemas/accounts/account-type.enum'
 export class CreateInventoryInput
   implements InferInsertModel<typeof inventory>
 {
-  @Field(() => String, { nullable: true })
+  @Field(() => ID)
   ownerId: string;
 
-  @Field(() => String, { nullable: true })
+  @Field()
   itemName: string;
 
-  @Field(() => String, { nullable: true })
+  @Field()
   quantity: number;
 
-  @Field(() => String, { nullable: true })
+  @Field()
   purchasePrice: string;
 
-  @Field(() => String, { nullable: true })
+  @Field()
   salePrice: string;
 
-  @Field(() => String, { nullable: true })
+  @Field()
   accountId: string;
 
-  @Field(() => String, { nullable: true })
-  id?: string;
+  @Field()
+  id: string;
 
-  @Field(() => String, { nullable: true })
-  createdAt?: Date;
+  @Field()
+  createdAt: Date;
 
-  @Field(() => String, { nullable: true })
-  updatedAt?: Date;
+  @Field()
+  updatedAt: Date;
 
-  @Field(() => String, { nullable: true })
-  account_type?: AccountTypeEnum;
+  @Field(() => AccountTypeEnum)
+  account_type: AccountTypeEnum;
 
-  @Field(() => String, { nullable: true })
-  itemDescription?: string;
+  @Field()
+  itemDescription: string;
 }

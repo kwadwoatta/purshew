@@ -3,7 +3,7 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { JwtGuard } from 'src/auth/guard';
 import { CreateTransactionInput } from './dto/create-transaction.input';
 import { UpdateTransactionInput } from './dto/update-transaction.input';
-import { Transaction } from './entities/transaction.entity';
+import { Transaction } from './models/transaction.model';
 import { TransactionService } from './transaction.service';
 
 @UseGuards(JwtGuard)

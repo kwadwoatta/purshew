@@ -3,10 +3,24 @@ import { decimal, pgEnum, pgTable, timestamp, uuid } from 'drizzle-orm/pg-core';
 import { accounts } from '../accounts';
 import { users } from '../users';
 
-export const transactionTypeEnum = pgEnum('transaction_type', [
-  'debit',
-  'credit',
-]);
+import { registerEnumType } from '@nestjs/graphql';
+
+export enum TransactionTypeEnum {
+  debit = 'debit',
+  credit = 'credit',
+}
+
+registerEnumType(TransactionTypeEnum, { name: 'TransactionTypeEnum' });
+
+const accountTypes = Object.values(TransactionTypeEnum) as [
+  TransactionTypeEnum,
+  ...TransactionTypeEnum[],
+];
+
+export const transactionTypeEnum = pgEnum<
+  TransactionTypeEnum,
+  [TransactionTypeEnum, ...TransactionTypeEnum[]]
+>('account_type', accountTypes);
 
 export const transactions = pgTable('transactions', {
   id: uuid('id').notNull().defaultRandom().primaryKey(),
@@ -17,7 +31,7 @@ export const transactions = pgTable('transactions', {
   amount: decimal('amount'),
   description: decimal('description'),
   transactionType: transactionTypeEnum('transaction_type')
-    .default('credit')
+    .default(TransactionTypeEnum.credit)
     .notNull(),
   ownerId: uuid('owner_id')
     .notNull()

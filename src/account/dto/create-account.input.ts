@@ -1,30 +1,31 @@
-import { Field, GraphQLISODateTime, InputType } from '@nestjs/graphql';
+import { Field, ID, InputType } from '@nestjs/graphql';
 import { InferInsertModel } from 'drizzle-orm';
 import { accounts } from 'src/drizzle/schemas';
 import { AccountTypeEnum } from 'src/drizzle/schemas/accounts/account-type.enum';
 
 @InputType()
 export class CreateAccountInput implements InferInsertModel<typeof accounts> {
-  @Field(() => String, { nullable: true })
+  @Field(() => ID)
   ownerId: string;
 
-  @Field(() => String, { nullable: true })
-  id?: string;
+  @Field(() => ID)
+  id: string;
 
-  @Field(() => GraphQLISODateTime, { nullable: true })
-  createdAt?: Date;
+  @Field()
+  createdAt: Date;
 
-  @Field(() => String, { nullable: true })
-  updatedAt?: Date;
+  @Field()
+  updatedAt: Date;
 
-  @Field(() => String, { nullable: true })
-  description?: string;
+  @Field()
+  description: string;
 
-  @Field(() => String, { nullable: true })
-  balance?: string;
+  @Field()
+  balance: string;
 
-  @Field(() => String, { nullable: true })
-  type?: AccountTypeEnum;
-  @Field(() => String, { description: 'name' })
+  @Field(() => AccountTypeEnum)
+  type: AccountTypeEnum;
+
+  @Field()
   name: string;
 }

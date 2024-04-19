@@ -1,37 +1,35 @@
-import { Field, GraphQLISODateTime, ObjectType } from '@nestjs/graphql';
-import { InferDrizzleModel } from 'src/common';
+import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { InferSelectModel } from 'drizzle-orm';
+import { accounts } from 'src/drizzle/schemas';
 import { AccountTypeEnum } from 'src/drizzle/schemas/accounts/account-type.enum';
 import { User } from 'src/user/models/user.model';
 
 @ObjectType()
-export class Account implements InferDrizzleModel<'accounts'> {
-  @Field(() => String, { description: 'id' })
+export class Account implements InferSelectModel<typeof accounts> {
+  @Field(() => ID)
   id: string;
 
-  @Field(() => String, { description: 'name' })
+  @Field()
   name: string;
 
-  @Field(() => GraphQLISODateTime, { description: 'createdAt' })
+  @Field()
   createdAt: Date;
 
-  @Field(() => GraphQLISODateTime, { description: 'updatedAt' })
+  @Field()
   updatedAt: Date;
 
-  @Field(() => String, { description: 'description' })
+  @Field()
   description: string;
 
-  @Field(() => String, { description: 'balance' })
+  @Field()
   balance: string;
 
-  @Field(() => AccountTypeEnum, { description: 'type' })
+  @Field(() => AccountTypeEnum)
   type: AccountTypeEnum;
 
-  @Field(() => String, { description: 'ownerId' })
+  @Field(() => ID)
   ownerId: string;
 
-  // @Field(() => [Transaction], { description: 'transactions' })
-  // transactions: Transaction[];
-
-  @Field(() => User, { description: 'owner' })
+  @Field(() => User)
   owner: User;
 }

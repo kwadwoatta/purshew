@@ -1,29 +1,30 @@
-import { Field, GraphQLISODateTime, ObjectType } from '@nestjs/graphql';
-import { InferDrizzleModel } from 'src/common';
+import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { InferSelectModel } from 'drizzle-orm';
+import { users } from 'src/drizzle/schemas';
 
 @ObjectType()
-export class User implements InferDrizzleModel<'users'> {
-  @Field(() => String, { description: 'id' })
+export class User implements InferSelectModel<typeof users> {
+  @Field(() => String)
   hash: string;
 
-  @Field(() => String, { description: 'id' })
+  @Field(() => ID)
   id: string;
 
-  @Field(() => String, { description: 'name', nullable: true })
+  @Field(() => String, { nullable: true })
   name: string | undefined;
 
-  @Field(() => GraphQLISODateTime, { description: 'createdAt' })
+  @Field()
   createdAt: Date;
 
-  @Field(() => GraphQLISODateTime, { description: 'updatedAt' })
+  @Field()
   updatedAt: Date;
 
-  @Field(() => String, { description: 'email' })
+  @Field(() => String)
   email: string;
 
-  @Field(() => String, { description: 'firstName', nullable: true })
+  @Field(() => String, { nullable: true })
   firstName: string | undefined;
 
-  @Field(() => String, { description: 'lastName', nullable: true })
+  @Field(() => String, { nullable: true })
   lastName: string | undefined;
 }
