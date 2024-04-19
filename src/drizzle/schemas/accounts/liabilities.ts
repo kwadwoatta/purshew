@@ -40,6 +40,7 @@ export const loans = pgTable('loans', {
 
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
+
   lenderId: uuid('lender_id').references(() => users.id),
   amount: decimal('amount').notNull(),
   account_type: accountTypeEnum('account_type')
@@ -63,6 +64,7 @@ export const bondsPayable = pgTable('bonds_payable', {
 
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
+
   bondholderId: uuid('bondholder_id').references(() => users.id),
   amount: decimal('amount').notNull(),
   account_type: accountTypeEnum('account_type')
@@ -86,6 +88,7 @@ export const unearnedRevenue = pgTable('unearned_revenue', {
 
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
+
   customerId: uuid('customer_id').references(() => users.id),
   amount: decimal('amount').notNull(),
   account_type: accountTypeEnum('account_type')

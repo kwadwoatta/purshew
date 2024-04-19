@@ -75,8 +75,14 @@ type AccountsPayable {
 }
 
 type AccountsReceivable {
-  """Example field (placeholder)"""
-  exampleField: String!
+  accountId: String!
+  account_type: AccountTypeEnum!
+  amount: String!
+  createdAt: DateTime!
+  customerId: String!
+  id: Int!
+  ownerId: String!
+  updatedAt: DateTime!
 }
 
 type Auth {
@@ -93,28 +99,64 @@ input AuthInput {
 }
 
 input CreateAccountInput {
+  balance: String
+  createdAt: DateTime
+  description: String
+  id: String
+
   """name"""
   name: String!
+  ownerId: String
+  type: String
+  updatedAt: String
 }
 
 input CreateAccountsPayableInput {
   """GL Account ID"""
   accountId: String!
+  account_type: String
+  createdAt: String
+  id: String
+  itemDescription: String
+  itemName: String
+  ownerId: String
+  purchasePrice: String
+  quantity: String
+  salePrice: String
+  updatedAt: String
 }
 
 input CreateAccountsReceivableInput {
-  """Example field (placeholder)"""
-  exampleField: String!
+  accountId: String!
+  amount: String!
+  customerId: String!
+  ownerId: String!
 }
 
 input CreateInventoryInput {
-  """Example field (placeholder)"""
-  exampleField: String!
+  accountId: String
+  account_type: String
+  createdAt: String
+  id: String
+  itemDescription: String
+  itemName: String
+  ownerId: String
+  purchasePrice: String
+  quantity: String
+  salePrice: String
+  updatedAt: String
 }
 
 input CreateTransactionInput {
-  """Example field (placeholder)"""
-  exampleField: String!
+  amount: String
+  createdAt: String
+  description: String
+  fromAccountId: String
+  id: String
+  ownerId: String
+  toAccountId: String
+  transactionType: String
+  updatedAt: String
 }
 
 """
@@ -152,6 +194,7 @@ type Query {
   accountsPayable(id: String!): AccountsPayable!
   accountsPayableAll: [AccountsPayable!]!
   accountsReceivable(id: String!): AccountsReceivable!
+  accountsReceivableAll: [AccountsReceivable!]!
   inventory(id: String!): Inventory!
   transaction(id: String!): Transaction!
   user: User!
@@ -187,61 +230,63 @@ type Transaction {
 }
 
 input UpdateAccountsPayableInput {
-  """accountId"""
+  """GL Account ID"""
   accountId: String
-
-  """account_type"""
-  account_type: AccountTypeEnum
-
-  """createdAt"""
-  createdAt: DateTime
+  account_type: String
+  createdAt: String
   id: String!
-
-  """itemDescription"""
   itemDescription: String
-
-  """itemName"""
   itemName: String
-
-  """ownerId"""
   ownerId: String
-
-  """purchasePrice"""
   purchasePrice: String
-
-  """quantity"""
-  quantity: Int
-
-  """salePrice"""
+  quantity: String
   salePrice: String
-
-  """updatedAt"""
-  updatedAt: DateTime
+  updatedAt: String
 }
 
 input UpdateAccountsReceivableInput {
-  """Example field (placeholder)"""
-  exampleField: String
+  accountId: String
+  amount: String
+  customerId: String
   id: String!
+  ownerId: String
 }
 
 input UpdateInventoryInput {
-  """Example field (placeholder)"""
-  exampleField: String
+  accountId: String
+  account_type: String
+  createdAt: String
   id: String!
+  itemDescription: String
+  itemName: String
+  ownerId: String
+  purchasePrice: String
+  quantity: String
+  salePrice: String
+  updatedAt: String
 }
 
 input UpdateTransactionInput {
-  """Example field (placeholder)"""
-  exampleField: String
+  amount: String
+  createdAt: String
+  description: String
+  fromAccountId: String
   id: String!
+  ownerId: String
+  toAccountId: String
+  transactionType: String
+  updatedAt: String
 }
 
 input UpdateUserInput {
-  """Example field (placeholder)"""
-  exampleField: String
+  createdAt: String
+  email: String
   firstName: String
+  hash: String
+  id: String
   lastName: String
+  name: String
+  updatedAt: String
 }
 
 type User {

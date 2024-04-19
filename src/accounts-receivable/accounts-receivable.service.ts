@@ -1,29 +1,72 @@
 import { Injectable } from '@nestjs/common';
+import { and, eq } from 'drizzle-orm';
+import { accountsReceivable } from 'src/drizzle/schemas';
+
+import { DrizzleService } from 'src/drizzle/drizzle.service';
+
 import { CreateAccountsReceivableInput } from './dto/create-accounts-receivable.input';
 import { UpdateAccountsReceivableInput } from './dto/update-accounts-receivable.input';
 
 @Injectable()
 export class AccountsReceivableService {
-  create(createAccountsReceivableInput: CreateAccountsReceivableInput) {
-    return 'This action adds a new accountsReceivable';
+  constructor(private readonly drizzle: DrizzleService) {}
+
+  create(input: CreateAccountsReceivableInput, userId: string) {
+    return this.drizzle.db
+      .insert(accountsReceivable)
+      .values({
+        ...input,
+        ownerId: userId,
+        customerId: '',
+        amount: '',
+        accountId: '',
+      })
+      .returning();
   }
 
-  findAll() {
-    return `This action returns all accountsReceivable`;
+  findAll(userId: string) {
+    return this.drizzle.db
+      .select()
+      .from(accountsReceivable)
+      .where(and(eq(accountsReceivable.ownerId, userId)));
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} accountsReceivable`;
+  findOne(userId: string, accountReceivableId: string) {
+    return this.drizzle.db
+      .select()
+      .from(accountsReceivable)
+      .where(
+        and(
+          eq(accountsReceivable.ownerId, userId),
+          eq(accountsReceivable.id, accountReceivableId),
+        ),
+      );
   }
 
-  update(
-    id: string,
-    updateAccountsReceivableInput: UpdateAccountsReceivableInput,
-  ) {
-    return `This action updates a #${id} accountsReceivable`;
+  update(userId: string, input: UpdateAccountsReceivableInput) {
+    return this.drizzle.db
+      .update(accountsReceivable)
+      .set({
+        ...input,
+        ownerId: userId,
+      })
+      .where(
+        and(
+          eq(accountsReceivable.ownerId, userId),
+          eq(accountsReceivable.id, input.id),
+        ),
+      );
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} accountsReceivable`;
+  remove(id: string, userId: string) {
+    return this.drizzle.db
+      .select()
+      .from(accountsReceivable)
+      .where(
+        and(
+          eq(accountsReceivable.ownerId, userId),
+          eq(accountsReceivable.id, id),
+        ),
+      );
   }
 }

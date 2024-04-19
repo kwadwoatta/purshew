@@ -7,4 +7,13 @@ export class UpdateAccountsReceivableInput extends PartialType(
 ) {
   @Field(() => String)
   id: string;
+
+  @Field(() => String, { nullable: true })
+  customerId: string | undefined;
+
+  @Field(() => String, { nullable: true })
+  amount: string | undefined;
+
+  @Field(() => String, { nullable: true })
+  accountId: string | undefined;
 }

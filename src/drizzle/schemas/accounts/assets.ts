@@ -89,7 +89,9 @@ export const accountsReceivable = pgTable('accounts_receivable', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 
-  customerId: uuid('customer_id').references(() => users.id),
+  customerId: uuid('customer_id')
+    .notNull()
+    .references(() => users.id),
   amount: decimal('amount').notNull(),
   account_type: accountTypeEnum('account_type')
     .default(AccountTypeEnum.asset)
