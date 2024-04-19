@@ -1,9 +1,11 @@
 import { Field, GraphQLISODateTime, ObjectType } from '@nestjs/graphql';
-import { Account } from 'src/account/models/account.model';
 import { InferDrizzleModel } from 'src/common';
 
 @ObjectType()
-export class User implements Partial<InferDrizzleModel<'users', { accounts }>> {
+export class User implements InferDrizzleModel<'users'> {
+  @Field(() => String, { description: 'id' })
+  hash: string;
+
   @Field(() => String, { description: 'id' })
   id: string;
 
@@ -25,6 +27,6 @@ export class User implements Partial<InferDrizzleModel<'users', { accounts }>> {
   @Field(() => String, { description: 'lastName', nullable: true })
   lastName: string | undefined;
 
-  @Field(() => [Account], { description: 'accounts' })
-  accounts: InferDrizzleModel<'accounts', { owner; transactions }>[];
+  // @Field(() => [Account], { description: 'accounts' })
+  // accounts: InferDrizzleModel<'accounts', { owner; transactions }>[];
 }

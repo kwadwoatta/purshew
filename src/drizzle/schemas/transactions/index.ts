@@ -41,9 +41,4 @@ export const transactionsRelations = relations(transactions, ({ one }) => ({
     fields: [transactions.fromAccountId],
     relationName: 'from_account',
   }),
-  toAccount: one(accounts, {
-    references: [accounts.id],
-    fields: [transactions.toAccountId],
-    relationName: 'to_account',
-  }),
 }));

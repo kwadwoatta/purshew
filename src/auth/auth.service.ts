@@ -46,7 +46,7 @@ export class AuthService {
           .returning();
       }
 
-      newUser = { ...u, accounts: [] };
+      newUser = u;
     });
 
     return this.signToken(newUser.id, newUser.email);

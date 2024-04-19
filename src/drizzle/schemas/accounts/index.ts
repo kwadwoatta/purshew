@@ -1,6 +1,6 @@
 import { relations } from 'drizzle-orm';
 import {
-  doublePrecision,
+  decimal,
   pgEnum,
   pgTable,
   text,
@@ -25,7 +25,7 @@ export const accounts = pgTable('accounts', {
 
   name: text('name').notNull(),
   description: text('description'),
-  balance: doublePrecision('balance').default(0).notNull(),
+  balance: decimal('balance').default('0.0').notNull(),
   type: accountTypeEnum('account_type').default('asset').notNull(),
   ownerId: uuid('owner_id')
     .notNull()

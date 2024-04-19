@@ -22,6 +22,6 @@ export class UserService {
 
     delete user.hash;
 
-    return { ...user, accounts: [] };
+    return user;
   }
 }

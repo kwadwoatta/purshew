@@ -19,13 +19,10 @@ type Account {
   name: String!
 
   """owner"""
-  owner: [Account!]!
+  owner: User!
 
   """ownerId"""
   ownerId: String!
-
-  """transactions"""
-  transactions: [Account!]!
 
   """type"""
   type: String!
@@ -52,6 +49,11 @@ input CreateAccountInput {
   exampleField: Int!
 }
 
+input CreateTransactionInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
@@ -59,20 +61,59 @@ scalar DateTime
 
 type Mutation {
   createAccount(createAccountInput: CreateAccountInput!): Account!
+  createTransaction(createTransactionInput: CreateTransactionInput!): Transaction!
   login(login: AuthInput!): Auth!
   removeAccount(id: Int!): Account!
+  removeTransaction(id: Int!): Transaction!
   signup(signup: AuthInput!): Auth!
   updateAccount(updateAccountInput: UpdateAccountInput!): Account!
+  updateTransaction(updateTransactionInput: UpdateTransactionInput!): Transaction!
   updateUser(updateUser: UpdateUserInput!): User!
 }
 
 type Query {
   account(id: Int!): Account!
   accounts: [Account!]!
+  transaction(id: Int!): Transaction!
   user: User!
 }
 
+type Transaction {
+  """amount"""
+  amount: String!
+
+  """createdAt"""
+  createdAt: DateTime!
+
+  """description"""
+  description: String!
+
+  """fromAccountId"""
+  fromAccountId: String!
+
+  """id"""
+  id: String!
+
+  """ownerId"""
+  ownerId: String!
+
+  """toAccountId"""
+  toAccountId: String!
+
+  """transactionType"""
+  transactionType: Int!
+
+  """updatedAt"""
+  updatedAt: DateTime!
+}
+
 input UpdateAccountInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input UpdateTransactionInput {
   """Example field (placeholder)"""
   exampleField: Int
   id: Int!
@@ -86,9 +127,6 @@ input UpdateUserInput {
 }
 
 type User {
-  """accounts"""
-  accounts: [Account!]!
-
   """createdAt"""
   createdAt: DateTime!
 
@@ -97,6 +135,9 @@ type User {
 
   """firstName"""
   firstName: String
+
+  """id"""
+  hash: String!
 
   """id"""
   id: String!
