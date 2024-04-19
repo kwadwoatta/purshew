@@ -1,32 +1,29 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, GraphQLISODateTime, ObjectType } from '@nestjs/graphql';
 import { InferDrizzleModel } from 'src/common';
 
 @ObjectType()
-export class User implements InferDrizzleModel<'users', { accounts }> {
-  @Field(() => Int, { description: 'id' })
+export class User implements Partial<InferDrizzleModel<'users', { accounts }>> {
+  @Field(() => String, { description: 'id' })
   id: string;
 
-  @Field(() => Int, { description: 'name' })
-  name: string;
+  @Field(() => String, { description: 'name', nullable: true })
+  name: string | undefined;
 
-  @Field(() => Int, { description: 'createdAt' })
+  @Field(() => GraphQLISODateTime, { description: 'createdAt' })
   createdAt: Date;
 
-  @Field(() => Int, { description: 'updatedAt' })
+  @Field(() => GraphQLISODateTime, { description: 'updatedAt' })
   updatedAt: Date;
 
-  @Field(() => Int, { description: 'email' })
+  @Field(() => String, { description: 'email' })
   email: string;
 
-  @Field(() => Int, { description: 'hash' })
-  hash: string;
+  @Field(() => String, { description: 'firstName', nullable: true })
+  firstName: string | undefined;
 
-  @Field(() => Int, { description: 'firstName' })
-  firstName: string;
+  @Field(() => String, { description: 'lastName', nullable: true })
+  lastName: string | undefined;
 
-  @Field(() => Int, { description: 'lastName' })
-  lastName: string;
-
-  @Field(() => Int, { description: 'accounts' })
+  @Field(() => [String], { description: 'accounts', nullable: true })
   accounts: InferDrizzleModel<'accounts', { owner; transactions }>[];
 }

@@ -9,11 +9,11 @@ export class AuthResolver {
 
   @Mutation(() => Auth)
   signup(@Args('signup') authInput: AuthInput) {
-    return this.authService.login(authInput);
+    return this.authService.signup(authInput);
   }
 
   @Mutation(() => Auth)
   login(@Args('login') authInput: AuthInput) {
-    return this.authService.signup(authInput);
+    return this.authService.login(authInput);
   }
 }

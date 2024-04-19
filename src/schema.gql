@@ -15,6 +15,11 @@ input AuthInput {
   password: String!
 }
 
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type Mutation {
   login(login: AuthInput!): Auth!
   signup(signup: AuthInput!): Auth!
@@ -22,7 +27,7 @@ type Mutation {
 }
 
 type Query {
-  user: [User!]!
+  user: User!
 }
 
 input UpdateUserInput {
@@ -34,29 +39,26 @@ input UpdateUserInput {
 
 type User {
   """accounts"""
-  accounts: Int!
+  accounts: [String!]
 
   """createdAt"""
-  createdAt: Int!
+  createdAt: DateTime!
 
   """email"""
-  email: Int!
+  email: String!
 
   """firstName"""
-  firstName: Int!
-
-  """hash"""
-  hash: Int!
+  firstName: String
 
   """id"""
-  id: Int!
+  id: String!
 
   """lastName"""
-  lastName: Int!
+  lastName: String
 
   """name"""
-  name: Int!
+  name: String
 
   """updatedAt"""
-  updatedAt: Int!
+  updatedAt: DateTime!
 }
