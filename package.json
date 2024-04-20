@@ -8,6 +8,7 @@
   "scripts": {
     "drizzle:generate": "drizzle-kit generate:pg",
     "drizzle:push": "tsx db/migrate.ts",
+    "db:seed": "tsx db/seed.ts",
     "db:dev:rm": "docker compose rm dev-db -s -f -v",
     "db:dev:up": "docker compose up dev-db -d",
     "db:dev:restart": "pnpm db:dev:rm && pnpm db:dev:up && sleep 1 && pnpm drizzle:generate && pnpm drizzle:push",
@@ -56,7 +57,7 @@
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "dotenv-cli": "^7.4.1",
-    "drizzle-kit": "^0.20.14",
+    "drizzle-kit": "^0.20.16",
     "eslint": "^8.42.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",

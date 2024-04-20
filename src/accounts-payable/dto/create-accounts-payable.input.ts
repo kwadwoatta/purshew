@@ -1,42 +1,42 @@
-import { Field, ID, InputType } from '@nestjs/graphql';
-import { InferInsertModel } from 'drizzle-orm';
-import { accountsPayable } from 'src/drizzle/schemas';
-import { AccountTypeEnum } from 'src/drizzle/schemas/accounts/account-type.enum';
+import { Field, ID, InputType } from '@nestjs/graphql'
+import { InferInsertModel } from 'drizzle-orm'
+import { accountsPayable } from 'src/drizzle/schemas'
+import { AccountTypeEnum } from 'src/drizzle/schemas/accounts/account-type.enum'
 
 @InputType()
 export class CreateAccountsPayableInput
   implements InferInsertModel<typeof accountsPayable>
 {
   @Field()
-  itemName: string;
+  itemName: string
 
   @Field()
-  quantity: number;
+  quantity: number
 
   @Field()
-  purchasePrice: string;
+  purchasePrice: string
 
   @Field()
-  salePrice: string;
+  salePrice: string
 
   @Field()
-  ownerId: string;
+  ownerId: string
 
   @Field(() => ID)
-  id: string;
+  id: string
 
   @Field()
-  createdAt: Date;
+  createdAt: Date
 
   @Field()
-  updatedAt: Date;
+  updatedAt: Date
 
   @Field()
-  itemDescription: string;
+  itemDescription: string
 
   @Field(() => AccountTypeEnum)
-  account_type: AccountTypeEnum;
+  accountType: AccountTypeEnum
 
   @Field(() => ID, { description: 'GL Account ID' })
-  accountId: string;
+  accountId: string
 }

@@ -5,10 +5,10 @@ import {
   text,
   timestamp,
   uuid,
-} from 'drizzle-orm/pg-core';
-import { accounts } from '.';
-import { users } from '../users';
-import { AccountTypeEnum, accountTypeEnum } from './account-type.enum';
+} from 'drizzle-orm/pg-core'
+import { accounts } from '.'
+import { users } from '../users'
+import { AccountTypeEnum, accountTypeEnum } from './account-type.enum'
 
 export const commonStock = pgTable('common_stock', {
   id: uuid('id').notNull().defaultRandom().primaryKey(),
@@ -21,7 +21,7 @@ export const commonStock = pgTable('common_stock', {
   quantity: integer('quantity').notNull(),
   purchasePrice: decimal('purchase_price').notNull(),
   salePrice: decimal('sale_price').notNull(),
-  account_type: accountTypeEnum('account_type')
+  accountType: accountTypeEnum('account_type')
     .default(AccountTypeEnum.equity)
     .notNull(),
 
@@ -33,7 +33,7 @@ export const commonStock = pgTable('common_stock', {
     .references(() => users.id, {
       onDelete: 'cascade',
     }),
-});
+})
 
 export const retainedEarnings = pgTable('retained_earnings', {
   id: uuid('id').notNull().defaultRandom().primaryKey(),
@@ -42,7 +42,7 @@ export const retainedEarnings = pgTable('retained_earnings', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 
   earnings: decimal('earnings').notNull(),
-  account_type: accountTypeEnum('account_type')
+  accountType: accountTypeEnum('account_type')
     .default(AccountTypeEnum.equity)
     .notNull(),
 
@@ -56,4 +56,4 @@ export const retainedEarnings = pgTable('retained_earnings', {
     .references(() => users.id, {
       onDelete: 'cascade',
     }),
-});
+})

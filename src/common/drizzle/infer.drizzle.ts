@@ -1,19 +1,19 @@
-import type {
-  BuildQueryResult,
-  DBQueryConfig,
-  ExtractTablesWithRelations,
-} from 'drizzle-orm';
-import * as schema from 'src/drizzle/schemas';
+import {
+  type BuildQueryResult,
+  type DBQueryConfig,
+  type ExtractTablesWithRelations,
+} from 'drizzle-orm'
+import * as schema from 'src/drizzle/schemas'
 
-type Schema = typeof schema;
-type TSchema = ExtractTablesWithRelations<Schema>;
+type Schema = typeof schema
+type TSchema = ExtractTablesWithRelations<Schema>
 
 type IncludeRelation<TableName extends keyof TSchema> = DBQueryConfig<
   'one' | 'many',
   boolean,
   TSchema,
   TSchema[TableName]
->['with'];
+>['with']
 
 export type InferDrizzleModel<
   TableName extends keyof TSchema,
@@ -22,6 +22,15 @@ export type InferDrizzleModel<
   TSchema,
   TSchema[TableName],
   {
-    with: With | undefined;
+    with: With | undefined
   }
->;
+>
+
+export type InferTableColumns<TableName extends keyof TSchema> =
+  BuildQueryResult<
+    TSchema,
+    TSchema[TableName],
+    {
+      t: any
+    }
+  >

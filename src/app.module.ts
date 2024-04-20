@@ -12,6 +12,7 @@ import { InventoryModule } from './inventory/inventory.module';
 import { PgClientModule } from './pg-client/pg-client.module';
 import { TransactionModule } from './transaction/transaction.module';
 import { UserModule } from './user/user.module';
+import { TransactionTemplateModule } from './transaction_template/transaction_template.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { UserModule } from './user/user.module';
     InventoryModule,
     AccountsPayableModule,
     AccountsReceivableModule,
+    TransactionTemplateModule,
   ],
   providers: [],
 })

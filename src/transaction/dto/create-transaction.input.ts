@@ -1,35 +1,35 @@
-import { Field, ID, InputType } from '@nestjs/graphql';
-import { InferInsertModel } from 'drizzle-orm';
-import { TransactionTypeEnum, transactions } from 'src/drizzle/schemas';
+import { Field, ID, InputType } from '@nestjs/graphql'
+import { InferInsertModel } from 'drizzle-orm'
+import { transactions } from 'src/drizzle/schemas'
 
 @InputType()
 export class CreateTransactionInput
   implements InferInsertModel<typeof transactions>
 {
   @Field(() => ID)
-  ownerId: string;
+  id: string
 
   @Field(() => ID)
-  fromAccountId: string;
+  ownerId: string
 
   @Field(() => ID)
-  toAccountId: string;
+  creditAccountId: string
+
+  @Field(() => ID)
+  debitAccountId: string
 
   @Field()
-  id: string;
+  createdAt: Date
 
   @Field()
-  createdAt: Date;
+  updatedAt: Date
 
   @Field()
-  updatedAt: Date;
+  amount: string
 
   @Field()
-  amount: string;
+  description: string
 
-  @Field()
-  description: string;
-
-  @Field()
-  transactionType: TransactionTypeEnum;
+  // @Field()
+  // transactionType: TransactionTypeEnum;
 }

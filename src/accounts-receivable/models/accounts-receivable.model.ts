@@ -1,33 +1,33 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { InferSelectModel } from 'drizzle-orm';
-import { accountsReceivable } from 'src/drizzle/schemas';
-import { AccountTypeEnum } from 'src/drizzle/schemas/accounts/account-type.enum';
+import { Field, ID, ObjectType } from '@nestjs/graphql'
+import { InferSelectModel } from 'drizzle-orm'
+import { accountsReceivable } from 'src/drizzle/schemas'
+import { AccountTypeEnum } from 'src/drizzle/schemas/accounts/account-type.enum'
 
 @ObjectType()
 export class AccountsReceivable
   implements InferSelectModel<typeof accountsReceivable>
 {
   @Field(() => ID)
-  id: string;
+  id: string
 
   @Field()
-  createdAt: Date;
+  createdAt: Date
 
   @Field()
-  updatedAt: Date;
+  updatedAt: Date
 
   @Field(() => ID)
-  customerId: string;
+  customerId: string
 
   @Field()
-  amount: string;
+  amount: string
 
   @Field(() => AccountTypeEnum)
-  account_type: AccountTypeEnum;
+  accountType: AccountTypeEnum
 
   @Field(() => ID)
-  ownerId: string;
+  ownerId: string
 
   @Field(() => ID)
-  accountId: string;
+  accountId: string
 }
