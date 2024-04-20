@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common'
 import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { GetAccount } from 'src/account/decorator/get-account.decorator'
+import { GetAccounts } from 'src/account/decorator/get-account.decorator'
 import { Account } from 'src/account/models/account.model'
 import { GetUser } from 'src/auth/decorator'
 import { JwtGuard } from 'src/auth/guard'
@@ -39,7 +39,7 @@ export class AccountsPayableResolver {
   findOne(
     @Args('id', { type: () => ID }) id: string,
     @GetUser() user: User,
-    @GetAccount(AccountTypeEnum.liability) account: Account,
+    @GetAccounts(AccountTypeEnum.liability) account: Account,
   ) {
     console.log({ account })
     return this.accountsPayableService.findOne(user.id, id)

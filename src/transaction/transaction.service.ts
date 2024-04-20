@@ -2,18 +2,33 @@ import { Injectable, NotFoundException } from '@nestjs/common'
 import { and, eq } from 'drizzle-orm'
 import { DrizzleService } from 'src/drizzle/drizzle.service'
 import { transactions } from 'src/drizzle/schemas'
+import { CreateTransactionInput } from './dto/create-transaction.input'
 import { UpdateTransactionInput } from './dto/update-transaction.input'
 
 @Injectable()
 export class TransactionService {
   constructor(private readonly drizzle: DrizzleService) {}
 
-  create(input: any, userId: string) {
+  create(input: CreateTransactionInput, userId: string) {
+    const {
+      amount,
+      creditAccountId,
+      debitAccountId,
+      description,
+      creditAccountAccountId,
+      debitAccountAccountId,
+    } = input
     return this.drizzle.db
       .insert(transactions)
       .values({
-        userId: userId,
-        ...input,
+        ownerId: userId,
+        amount,
+        updatedAt: new Date(),
+        description,
+        creditAccountId,
+        debitAccountId,
+        creditAccountAccountId,
+        debitAccountAccountId,
       })
       .returning()
   }

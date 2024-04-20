@@ -1,7 +1,7 @@
 import { decimal, pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core'
-import { accounts } from '.'
-import { users } from '../users'
-import { AccountTypeEnum, accountTypeEnum } from './account-type.enum'
+import { accounts } from '..'
+import { users } from '../../users'
+import { AccountTypeEnum, accountTypeEnum } from '../account-type.enum'
 
 export const revenue = pgTable('revenue', {
   id: uuid('id').notNull().defaultRandom().primaryKey(),
@@ -9,9 +9,11 @@ export const revenue = pgTable('revenue', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 
-  revenueName: text('revenue_name').notNull(),
+  amount: decimal('amount').default('0.0').notNull(),
+
+  revenueName: text('revenue_name'),
   revenueDescription: text('revenue_description'),
-  amount: decimal('amount').notNull(),
+
   accountType: accountTypeEnum('account_type')
     .default(AccountTypeEnum.revenue)
     .notNull(),
@@ -31,12 +33,15 @@ export const sales = pgTable('sales', {
 
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
-  customerId: uuid('customer_id').references(() => users.id),
-  salesAmount: decimal('sales_amount').notNull(),
+
+  amount: decimal('amount').default('0.0').notNull(),
+
+  salesAmount: decimal('sales_amount'),
   accountType: accountTypeEnum('account_type')
     .default(AccountTypeEnum.revenue)
     .notNull(),
 
+  customerId: uuid('customer_id').references(() => users.id),
   accountId: uuid('account_id')
     .notNull()
     .references(() => accounts.id, {
@@ -54,12 +59,15 @@ export const serviceRevenue = pgTable('service_revenue', {
 
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
-  customerId: uuid('customer_id').references(() => users.id),
-  serviceFee: decimal('service_fee').notNull(),
+
+  amount: decimal('amount').default('0.0').notNull(),
+
+  serviceFee: decimal('service_fee'),
   accountType: accountTypeEnum('account_type')
     .default(AccountTypeEnum.revenue)
     .notNull(),
 
+  customerId: uuid('customer_id').references(() => users.id),
   accountId: uuid('account_id')
     .notNull()
     .references(() => accounts.id, {
@@ -77,7 +85,10 @@ export const interestRevenue = pgTable('interest_revenue', {
 
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
-  interestAmount: decimal('interest_amount').notNull(),
+
+  amount: decimal('amount').default('0.0').notNull(),
+
+  interestAmount: decimal('interest_amount'),
   accountType: accountTypeEnum('account_type')
     .default(AccountTypeEnum.revenue)
     .notNull(),

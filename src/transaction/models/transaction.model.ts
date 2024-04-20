@@ -5,6 +5,12 @@ import { transactions } from 'src/drizzle/schemas'
 @ObjectType()
 export class Transaction implements InferSelectModel<typeof transactions> {
   @Field(() => ID)
+  debitAccountAccountId: string
+
+  @Field(() => ID)
+  creditAccountAccountId: string
+
+  @Field(() => ID)
   id: string
 
   @Field()
@@ -21,9 +27,6 @@ export class Transaction implements InferSelectModel<typeof transactions> {
 
   @Field()
   amount: string
-
-  // @Field()
-  // transactionType: TransactionTypeEnum;
 
   @Field(() => ID)
   debitAccountId: string

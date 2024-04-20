@@ -10,15 +10,18 @@ export const transactions = pgTable('transactions', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 
   amount: decimal('amount').notNull().default('0.0'),
-  description: text('description'),
+  description: text('description').notNull(),
   ownerId: uuid('owner_id')
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
 
-  debitAccountId: uuid('debit_account_id')
+  debitAccountId: uuid('debit_account_id').notNull(),
+  creditAccountId: uuid('credit_account_id').notNull(),
+
+  debitAccountAccountId: uuid('debit_account_account_id')
     .notNull()
     .references(() => accounts.id, { onDelete: 'cascade' }),
-  creditAccountId: uuid('credit_account_id')
+  creditAccountAccountId: uuid('credit_account_account_id')
     .notNull()
     .references(() => accounts.id, { onDelete: 'cascade' }),
 })

@@ -15,6 +15,20 @@
       "when": 1713621723201,
       "tag": "0001_stale_namor",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1713649884528,
+      "tag": "0002_acoustic_psynapse",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1713651630148,
+      "tag": "0003_previous_star_brand",
+      "breakpoints": true
     }
   ]
 }

@@ -38,5 +38,5 @@ export class Inventory implements InferSelectModel<typeof inventory> {
   accountId: string
 
   @Field()
-  exampleField: number
+  amount: string
 }

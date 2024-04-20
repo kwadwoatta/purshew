@@ -16,7 +16,7 @@ export class GetTransactionTemplatePipe implements PipeTransform {
   }) {
     const templates = await this.drizzle.db.select().from(transactionTemplates)
 
-    if (!templates) {
+    if (!templates || templates.length === 0) {
       throw new NotFoundException('no templates found')
     }
 

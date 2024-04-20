@@ -6,20 +6,22 @@ import {
   timestamp,
   uuid,
 } from 'drizzle-orm/pg-core'
-import { accounts } from '.'
-import { users } from '../users'
-import { AccountTypeEnum, accountTypeEnum } from './account-type.enum'
+import { accounts } from '..'
+import { users } from '../../users'
+import { AccountTypeEnum, accountTypeEnum } from '../account-type.enum'
 
-export const creditCardPayable = pgTable('credit_card_payable', {
+export const generalExpense = pgTable('general_expense', {
   id: uuid('id').notNull().defaultRandom().primaryKey(),
 
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 
-  cardName: text('card_name').notNull(),
-  cardValue: decimal('card_value').notNull(),
+  amount: decimal('amount').default('0.0').notNull(),
+
+  expenseName: text('expense_name'),
+  expenseValue: decimal('expense_value'),
   accountType: accountTypeEnum('account_type')
-    .default(AccountTypeEnum.liability)
+    .default(AccountTypeEnum.expense)
     .notNull(),
 
   accountId: uuid('account_id')
@@ -32,19 +34,45 @@ export const creditCardPayable = pgTable('credit_card_payable', {
     }),
 })
 
-export const accountsPayable = pgTable('accounts_payable', {
+export const salaryExpense = pgTable('salary_expense', {
   id: uuid('id').notNull().defaultRandom().primaryKey(),
 
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 
-  itemName: text('item_name').notNull(),
+  amount: decimal('amount').default('0.0').notNull(),
+
+  expenseName: text('expense_name'),
+  expenseValue: decimal('expense_value'),
+  accountType: accountTypeEnum('account_type')
+    .default(AccountTypeEnum.expense)
+    .notNull(),
+
+  accountId: uuid('account_id')
+    .notNull()
+    .references(() => accounts.id, { onDelete: 'cascade' }),
+  ownerId: uuid('owner_id')
+    .notNull()
+    .references(() => users.id, {
+      onDelete: 'cascade',
+    }),
+})
+
+export const costOfGoodsSold = pgTable('cost_of_goods_sold', {
+  id: uuid('id').notNull().defaultRandom().primaryKey(),
+
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+
+  amount: decimal('amount').default('0.0').notNull(),
+
+  itemName: text('item_name'),
   itemDescription: text('item_description'),
-  quantity: integer('quantity').notNull(),
-  purchasePrice: decimal('purchase_price').notNull(),
-  salePrice: decimal('sale_price').notNull(),
+  quantity: integer('quantity'),
+  purchasePrice: decimal('purchase_price'),
+  salePrice: decimal('sale_price'),
   accountType: accountTypeEnum('account_type')
-    .default(AccountTypeEnum.liability)
+    .default(AccountTypeEnum.expense)
     .notNull(),
 
   accountId: uuid('account_id')
@@ -57,38 +85,17 @@ export const accountsPayable = pgTable('accounts_payable', {
     }),
 })
 
-export const loanPayable = pgTable('loan_payable', {
+export const wagesExpense = pgTable('wages_expense', {
   id: uuid('id').notNull().defaultRandom().primaryKey(),
 
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 
-  loanName: text('loan_name').notNull(),
-  loanValue: decimal('loan_value').notNull(),
+  amount: decimal('amount').default('0.0').notNull(),
+
+  wages: decimal('wages'),
   accountType: accountTypeEnum('account_type')
-    .default(AccountTypeEnum.liability)
-    .notNull(),
-
-  accountId: uuid('account_id')
-    .notNull()
-    .references(() => accounts.id, { onDelete: 'cascade' }),
-  ownerId: uuid('owner_id')
-    .notNull()
-    .references(() => users.id, {
-      onDelete: 'cascade',
-    }),
-})
-
-export const loans = pgTable('loans', {
-  id: uuid('id').notNull().defaultRandom().primaryKey(),
-
-  createdAt: timestamp('created_at').defaultNow().notNull(),
-  updatedAt: timestamp('updated_at').defaultNow().notNull(),
-
-  lenderId: uuid('lender_id').references(() => users.id),
-  amount: decimal('amount').notNull(),
-  accountType: accountTypeEnum('account_type')
-    .default(AccountTypeEnum.liability)
+    .default(AccountTypeEnum.expense)
     .notNull(),
 
   accountId: uuid('account_id')
@@ -103,16 +110,17 @@ export const loans = pgTable('loans', {
     }),
 })
 
-export const bondsPayable = pgTable('bonds_payable', {
+export const rentExpense = pgTable('rent_expense', {
   id: uuid('id').notNull().defaultRandom().primaryKey(),
 
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 
-  bondholderId: uuid('bondholder_id').references(() => users.id),
-  amount: decimal('amount').notNull(),
+  amount: decimal('amount').default('0.0').notNull(),
+
+  rent: decimal('rent'),
   accountType: accountTypeEnum('account_type')
-    .default(AccountTypeEnum.liability)
+    .default(AccountTypeEnum.expense)
     .notNull(),
 
   accountId: uuid('account_id')
@@ -127,16 +135,17 @@ export const bondsPayable = pgTable('bonds_payable', {
     }),
 })
 
-export const unearnedRevenue = pgTable('unearned_revenue', {
+export const interestExpense = pgTable('interest_expense', {
   id: uuid('id').notNull().defaultRandom().primaryKey(),
 
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 
-  customerId: uuid('customer_id').references(() => users.id),
-  amount: decimal('amount').notNull(),
+  amount: decimal('amount').default('0.0').notNull(),
+
+  interest: decimal('interest'),
   accountType: accountTypeEnum('account_type')
-    .default(AccountTypeEnum.liability)
+    .default(AccountTypeEnum.expense)
     .notNull(),
 
   accountId: uuid('account_id')

@@ -5,7 +5,7 @@ import { User } from 'src/user/models/user.model'
 import { DrizzleService } from '../../drizzle/drizzle.service'
 
 @Injectable()
-export class ValidateAccountPipe implements PipeTransform {
+export class GetAccountPipe implements PipeTransform {
   constructor(readonly drizzle: DrizzleService) {}
 
   async transform({
@@ -13,21 +13,21 @@ export class ValidateAccountPipe implements PipeTransform {
     accountType,
   }: {
     user: User
-    accountType: AccountTypeEnum
+    accountType?: AccountTypeEnum
   }) {
-    const acc = (
-      await this.drizzle.db
-        .select()
-        .from(accounts)
-        .where(
-          and(eq(accounts.type, accountType), eq(accounts.ownerId, user.id)),
-        )
-    )[0]
+    const userAccounts = await this.drizzle.db
+      .select()
+      .from(accounts)
+      .where(and(eq(accounts.ownerId, user.id)))
 
-    if (!acc) {
-      throw new NotFoundException('no account for given account_id')
+    if (!userAccounts || userAccounts.length === 0) {
+      throw new NotFoundException('no accounts found')
     }
 
-    return acc
+    if (accountType) {
+      return userAccounts.find((a) => a.type === accountType)
+    }
+
+    return userAccounts
   }
 }

@@ -25,6 +25,7 @@ enum AccountTypeEnum {
 type AccountsPayable {
   accountId: ID!
   accountType: AccountTypeEnum!
+  amount: String!
   createdAt: DateTime!
   id: ID!
   itemDescription: String!
@@ -106,13 +107,11 @@ input CreateInventoryInput {
 
 input CreateTransactionInput {
   amount: String!
-  createdAt: DateTime!
+  creditAccountAccountId: ID!
   creditAccountId: ID!
+  debitAccountAccountId: ID!
   debitAccountId: ID!
   description: String!
-  id: ID!
-  ownerId: ID!
-  updatedAt: DateTime!
 }
 
 """
@@ -131,8 +130,8 @@ input ExecuteTransactionTemplateInput {
 type Inventory {
   accountId: ID!
   accountType: AccountTypeEnum!
+  amount: String!
   createdAt: DateTime!
-  exampleField: Float!
   id: ID!
   itemDescription: String!
   itemName: String!
@@ -149,7 +148,7 @@ type Mutation {
   createAccountsReceivable(createAccountsReceivableInput: CreateAccountsReceivableInput!): AccountsReceivable!
   createInventory(createInventoryInput: CreateInventoryInput!): Inventory!
   createTransaction(createTransactionInput: CreateTransactionInput!): Transaction!
-  executeTransactionTemplate(executeTransactionTemplateInput: ExecuteTransactionTemplateInput!): TransactionTemplate!
+  executeTransactionTemplate(executeTransactionTemplateInput: ExecuteTransactionTemplateInput!): Transaction!
   login(login: AuthInput!): Auth!
   removeAccountsPayable(id: ID!): AccountsPayable!
   removeAccountsReceivable(id: ID!): AccountsReceivable!
@@ -182,7 +181,9 @@ type Query {
 type Transaction {
   amount: String!
   createdAt: DateTime!
+  creditAccountAccountId: ID!
   creditAccountId: ID!
+  debitAccountAccountId: ID!
   debitAccountId: ID!
   description: String!
   id: ID!
@@ -257,13 +258,12 @@ input UpdateInventoryInput {
 
 input UpdateTransactionInput {
   amount: String
-  createdAt: DateTime
+  creditAccountAccountId: ID
   creditAccountId: ID
+  debitAccountAccountId: ID
   debitAccountId: ID
   description: String
   id: String!
-  ownerId: ID
-  updatedAt: DateTime
 }
 
 input UpdateUserInput {

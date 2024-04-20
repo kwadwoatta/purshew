@@ -9,7 +9,7 @@ import { JwtService } from '@nestjs/jwt'
 import * as argon from 'argon2'
 import { eq } from 'drizzle-orm'
 import { DrizzleService } from 'src/drizzle/drizzle.service'
-import { accounts, users } from 'src/drizzle/schemas'
+import { AccountTypeEnum, accounts, users } from 'src/drizzle/schemas'
 import { User } from 'src/user/models/user.model'
 import { AuthInput } from './dto'
 
@@ -36,12 +36,36 @@ export class AuthService {
 
       const accountTypes = accounts.type.enumValues
       for (const [index, type] of Object.entries(accountTypes)) {
+        let description: string
+
+        switch (type) {
+          case AccountTypeEnum.asset:
+            description =
+              'Resources owned by a business with future economic value'
+            break
+          case AccountTypeEnum.liability:
+            description = 'Financial obligations owed by a business'
+            break
+          case AccountTypeEnum.equity:
+            description =
+              "Owner's claim on the business's assets after subtracting liabilities"
+            break
+          case AccountTypeEnum.expense:
+            description = 'Resources owned that hold value'
+            break
+          case AccountTypeEnum.revenue:
+            description =
+              'Costs incurred by a business in its day-to-day operations'
+            break
+        }
+
         await tx
           .insert(accounts)
           .values({
             type: accountTypes[index],
             ownerId: u.id,
             name: type,
+            description,
           })
           .returning()
       }

@@ -6,6 +6,9 @@ import { AccountTypeEnum, accountsPayable } from 'src/drizzle/schemas'
 export class AccountsPayable
   implements InferSelectModel<typeof accountsPayable>
 {
+  @Field()
+  amount: string
+
   @Field(() => ID)
   id: string
 

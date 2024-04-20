@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common'
 import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { GetAccount } from 'src/account/decorator/get-account.decorator'
+import { GetAccounts } from 'src/account/decorator/get-account.decorator'
 import { Account } from 'src/account/models/account.model'
 import { GetUser } from 'src/auth/decorator'
 import { JwtGuard } from 'src/auth/guard'
@@ -34,7 +34,7 @@ export class TransactionResolver {
   findOne(
     @Args('id', { type: () => ID }) id: string,
     @GetUser() user: User,
-    @GetAccount(AccountTypeEnum.asset) account: Account,
+    @GetAccounts(AccountTypeEnum.asset) account: Account,
   ) {
     console.log({ account })
     return this.transactionService.findOne(user.id, id)

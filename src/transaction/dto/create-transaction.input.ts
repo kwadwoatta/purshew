@@ -4,13 +4,13 @@ import { transactions } from 'src/drizzle/schemas'
 
 @InputType()
 export class CreateTransactionInput
-  implements InferInsertModel<typeof transactions>
+  implements Omit<InferInsertModel<typeof transactions>, 'ownerId'>
 {
   @Field(() => ID)
-  id: string
+  debitAccountAccountId: string
 
   @Field(() => ID)
-  ownerId: string
+  creditAccountAccountId: string
 
   @Field(() => ID)
   creditAccountId: string
@@ -19,17 +19,8 @@ export class CreateTransactionInput
   debitAccountId: string
 
   @Field()
-  createdAt: Date
-
-  @Field()
-  updatedAt: Date
-
-  @Field()
   amount: string
 
   @Field()
   description: string
-
-  // @Field()
-  // transactionType: TransactionTypeEnum;
 }

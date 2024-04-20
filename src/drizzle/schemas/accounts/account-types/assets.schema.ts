@@ -8,9 +8,9 @@ import {
   timestamp,
   uuid,
 } from 'drizzle-orm/pg-core'
-import { accounts } from '.'
-import { users } from '../users'
-import { AccountTypeEnum, accountTypeEnum } from './account-type.enum'
+import { accounts } from '..'
+import { users } from '../../users'
+import { AccountTypeEnum, accountTypeEnum } from '../account-type.enum'
 
 export enum CashNameEnum {
   US_DOLLAR = 'US_DOLLAR',
@@ -36,8 +36,9 @@ export const cash = pgTable('cash', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 
+  amount: decimal('amount').default('0.0').notNull(),
+
   cashName: cashNameEnum('cash_name').default(CashNameEnum.US_DOLLAR).notNull(),
-  cashValue: decimal('cash_value').notNull(),
   accountType: accountTypeEnum('account_type')
     .default(AccountTypeEnum.asset)
     .notNull(),
@@ -58,11 +59,13 @@ export const inventory = pgTable('inventory', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 
-  itemName: text('item_name').notNull(),
+  amount: decimal('amount').default('0.0').notNull(),
+
+  itemName: text('item_name'),
   itemDescription: text('item_description'),
-  quantity: integer('quantity').notNull(),
-  purchasePrice: decimal('purchase_price').notNull(),
-  salePrice: decimal('sale_price').notNull(),
+  quantity: integer('quantity'),
+  purchasePrice: decimal('purchase_price'),
+  salePrice: decimal('sale_price'),
   accountType: accountTypeEnum('account_type')
     .default(AccountTypeEnum.asset)
     .notNull(),
@@ -83,8 +86,10 @@ export const property = pgTable('property', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 
-  propertyName: text('property_name').notNull(),
-  propertyValue: decimal('property_value').notNull(),
+  amount: decimal('amount').default('0.0').notNull(),
+
+  propertyName: text('property_name'),
+  propertyValue: decimal('property_value'),
   accountType: accountTypeEnum('account_type')
     .default(AccountTypeEnum.asset)
     .notNull(),
@@ -106,6 +111,8 @@ export const equipment = pgTable('equipment', {
 
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
+
+  amount: decimal('amount').default('0.0').notNull(),
 
   equipmentName: text('equipment_name').notNull(),
   equipmentValue: decimal('equipment_value').notNull(),
@@ -131,10 +138,11 @@ export const accountsReceivable = pgTable('accounts_receivable', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 
+  amount: decimal('amount').default('0.0').notNull(),
+
   customerId: uuid('customer_id')
     .notNull()
     .references(() => users.id),
-  amount: decimal('amount').notNull(),
   accountType: accountTypeEnum('account_type')
     .default(AccountTypeEnum.asset)
     .notNull(),
@@ -177,6 +185,8 @@ export const officeEquipment = pgTable('office_equipment', {
 
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
+
+  amount: decimal('amount').default('0.0').notNull(),
 
   officeEquipmentName: officeEquipmentNameEnum('office_equipment_name')
     .default(OfficeEquipmentNameEnum.COMPUTER)

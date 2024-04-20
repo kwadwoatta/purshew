@@ -1,6 +1,7 @@
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
+import { EventEmitterModule } from '@nestjs/event-emitter'
 import { GraphQLModule } from '@nestjs/graphql'
 import { join } from 'path'
 import { AccountModule } from './account/account.module'
@@ -32,6 +33,7 @@ import { UserModule } from './user/user.module'
       //   return graphQLFormattedError;
       // },
     }),
+    EventEmitterModule.forRoot(),
     DrizzleModule,
     PgClientModule,
     AuthModule,

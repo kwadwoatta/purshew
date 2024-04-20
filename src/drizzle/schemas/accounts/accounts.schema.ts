@@ -9,9 +9,10 @@ export const accounts = pgTable('accounts', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 
-  name: text('name').notNull(),
-  description: text('description'),
   balance: decimal('balance').default('0.0').notNull(),
+  description: text('description').notNull(),
+
+  name: text('name'),
   type: accountTypeEnum('account_type')
     .default(AccountTypeEnum.asset)
     .notNull(),
