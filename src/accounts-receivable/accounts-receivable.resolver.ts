@@ -1,5 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GetUser } from 'src/auth/decorator';
 import { JwtGuard } from 'src/auth/guard';
 import { User } from 'src/user/models/user.model';
@@ -8,7 +8,7 @@ import { CreateAccountsReceivableInput } from './dto/create-accounts-receivable.
 import { UpdateAccountsReceivableInput } from './dto/update-accounts-receivable.input';
 import { AccountsReceivable } from './models/accounts-receivable.model';
 
-UseGuards(JwtGuard);
+@UseGuards(JwtGuard)
 @Resolver(() => AccountsReceivable)
 export class AccountsReceivableResolver {
   constructor(
@@ -33,10 +33,7 @@ export class AccountsReceivableResolver {
   }
 
   @Query(() => AccountsReceivable, { name: 'accountsReceivable' })
-  findOne(
-    @Args('id', { type: () => String }) id: string,
-    @GetUser() user: User,
-  ) {
+  findOne(@Args('id', { type: () => ID }) id: string, @GetUser() user: User) {
     return this.accountsReceivableService.findOne(user.id, id);
   }
 
@@ -54,7 +51,7 @@ export class AccountsReceivableResolver {
 
   @Mutation(() => AccountsReceivable)
   removeAccountsReceivable(
-    @Args('id', { type: () => String }) id: string,
+    @Args('id', { type: () => ID }) id: string,
     @GetUser() user: User,
   ) {
     return this.accountsReceivableService.remove(user.id, id);

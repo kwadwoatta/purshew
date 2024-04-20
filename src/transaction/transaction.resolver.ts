@@ -1,6 +1,11 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { GetAccount } from 'src/account/decorator/get-account.decorator';
+import { Account } from 'src/account/models/account.model';
+import { GetUser } from 'src/auth/decorator';
 import { JwtGuard } from 'src/auth/guard';
+import { AccountTypeEnum } from 'src/drizzle/schemas/accounts/account-type.enum';
+import { User } from 'src/user/models/user.model';
 import { CreateTransactionInput } from './dto/create-transaction.input';
 import { UpdateTransactionInput } from './dto/update-transaction.input';
 import { Transaction } from './models/transaction.model';
@@ -15,33 +20,40 @@ export class TransactionResolver {
   createTransaction(
     @Args('createTransactionInput')
     createTransactionInput: CreateTransactionInput,
+    @GetUser() user: User,
   ) {
-    return this.transactionService.create(createTransactionInput);
+    return this.transactionService.create(createTransactionInput, user.id);
   }
 
-  @Query(() => [Transaction], { name: 'transaction' })
-  findAll() {
-    return this.transactionService.findAll();
+  @Query(() => [Transaction], { name: 'transactionAll' })
+  findAll(@GetUser() user: User) {
+    return this.transactionService.findAll(user.id);
   }
 
   @Query(() => Transaction, { name: 'transaction' })
-  findOne(@Args('id', { type: () => String }) id: string) {
-    return this.transactionService.findOne(id);
+  findOne(
+    @Args('id', { type: () => ID }) id: string,
+    @GetUser() user: User,
+    @GetAccount(AccountTypeEnum.asset) account: Account,
+  ) {
+    console.log({ account });
+    return this.transactionService.findOne(user.id, id);
   }
 
   @Mutation(() => Transaction)
   updateTransaction(
     @Args('updateTransactionInput')
     updateTransactionInput: UpdateTransactionInput,
+    @GetUser() user: User,
   ) {
-    return this.transactionService.update(
-      updateTransactionInput.id,
-      updateTransactionInput,
-    );
+    return this.transactionService.update(user.id, updateTransactionInput);
   }
 
   @Mutation(() => Transaction)
-  removeTransaction(@Args('id', { type: () => String }) id: string) {
-    return this.transactionService.remove(id);
+  removeTransaction(
+    @Args('id', { type: () => ID }) id: string,
+    @GetUser() user: User,
+  ) {
+    return this.transactionService.remove(user.id, id);
   }
 }

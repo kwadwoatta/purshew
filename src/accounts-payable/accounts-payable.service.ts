@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { and, eq } from 'drizzle-orm';
 import { accountsPayable } from 'src/drizzle/schemas';
 
@@ -26,16 +26,24 @@ export class AccountsPayableService {
       .where(and(eq(accountsPayable.ownerId, userId)));
   }
 
-  findOne(userId: string, accountPayableId: string) {
-    return this.drizzle.db
-      .select()
-      .from(accountsPayable)
-      .where(
-        and(
-          eq(accountsPayable.ownerId, userId),
-          eq(accountsPayable.id, accountPayableId),
-        ),
-      );
+  async findOne(userId: string, accountPayableId: string) {
+    const accountPayable = (
+      await this.drizzle.db
+        .select()
+        .from(accountsPayable)
+        .where(
+          and(
+            eq(accountsPayable.ownerId, userId),
+            eq(accountsPayable.id, accountPayableId),
+          ),
+        )
+    )[0];
+
+    if (!accountPayable) {
+      throw new NotFoundException();
+    }
+
+    return accountPayable;
   }
 
   update(userId: string, input: UpdateAccountsPayableInput) {

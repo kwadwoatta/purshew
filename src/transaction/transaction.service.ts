@@ -1,26 +1,65 @@
-import { Injectable } from '@nestjs/common';
-import { CreateTransactionInput } from './dto/create-transaction.input';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { and, eq } from 'drizzle-orm';
+import { DrizzleService } from 'src/drizzle/drizzle.service';
+import { transactions } from 'src/drizzle/schemas';
 import { UpdateTransactionInput } from './dto/update-transaction.input';
 
 @Injectable()
 export class TransactionService {
-  create(createTransactionInput: CreateTransactionInput) {
-    return 'This action adds a new transaction';
+  constructor(private readonly drizzle: DrizzleService) {}
+
+  create(input: any, userId: string) {
+    return this.drizzle.db
+      .insert(transactions)
+      .values({
+        userId: userId,
+        ...input,
+      })
+      .returning();
   }
 
-  findAll() {
-    return `This action returns all transaction`;
+  findAll(userId: string) {
+    return this.drizzle.db
+      .select()
+      .from(transactions)
+      .where(and(eq(transactions.ownerId, userId)));
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} transaction`;
+  async findOne(userId: string, accountPayableId: string) {
+    const tx = (
+      await this.drizzle.db
+        .select()
+        .from(transactions)
+        .where(
+          and(
+            eq(transactions.ownerId, userId),
+            eq(transactions.id, accountPayableId),
+          ),
+        )
+    )[0];
+
+    if (!tx) {
+      throw new NotFoundException();
+    }
+
+    return tx;
   }
 
-  update(id: string, updateTransactionInput: UpdateTransactionInput) {
-    return `This action updates a #${id} transaction`;
+  update(userId: string, input: UpdateTransactionInput) {
+    return this.drizzle.db
+      .update(transactions)
+      .set({
+        ...input,
+      })
+      .where(
+        and(eq(transactions.ownerId, userId), eq(transactions.id, input.id)),
+      );
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} transaction`;
+  remove(id: string, userId: string) {
+    return this.drizzle.db
+      .select()
+      .from(transactions)
+      .where(and(eq(transactions.ownerId, userId), eq(transactions.id, id)));
   }
 }

@@ -1,5 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GetUser } from 'src/auth/decorator';
 import { JwtGuard } from 'src/auth/guard';
 import { User } from 'src/user/models/user.model';
@@ -26,10 +26,7 @@ export class AccountResolver {
   }
 
   @Query(() => Account, { name: 'account' })
-  findOne(
-    @GetUser() user: User,
-    @Args('id', { type: () => String }) id: string,
-  ) {
+  findOne(@GetUser() user: User, @Args('id', { type: () => ID }) id: string) {
     return this.accountService.findOne(id, user.id);
   }
 
@@ -44,7 +41,7 @@ export class AccountResolver {
   // @Mutation(() => Account)
   // removeAccount(
   //   @GetUser() user: User,
-  //   @Args('id', { type: () => String }) id: string,
+  //   @Args('id', { type: () => ID }) id: string,
   // ) {
   //   return this.accountService.remove(id, user.id);
   // }

@@ -143,10 +143,10 @@ type Mutation {
   createInventory(createInventoryInput: CreateInventoryInput!): Inventory!
   createTransaction(createTransactionInput: CreateTransactionInput!): Transaction!
   login(login: AuthInput!): Auth!
-  removeAccountsPayable(id: String!): AccountsPayable!
-  removeAccountsReceivable(id: String!): AccountsReceivable!
-  removeInventory(id: String!): Inventory!
-  removeTransaction(id: String!): Transaction!
+  removeAccountsPayable(id: ID!): AccountsPayable!
+  removeAccountsReceivable(id: ID!): AccountsReceivable!
+  removeInventory(id: ID!): Inventory!
+  removeTransaction(id: ID!): Transaction!
   signup(signup: AuthInput!): Auth!
   updateAccountsPayable(updateAccountsPayableInput: UpdateAccountsPayableInput!): AccountsPayable!
   updateAccountsReceivable(updateAccountsReceivableInput: UpdateAccountsReceivableInput!): AccountsReceivable!
@@ -156,14 +156,16 @@ type Mutation {
 }
 
 type Query {
-  account(id: String!): Account!
+  account(id: ID!): Account!
   accounts: [Account!]!
-  accountsPayable(id: String!): AccountsPayable!
+  accountsPayable(id: ID!): AccountsPayable!
   accountsPayableAll: [AccountsPayable!]!
-  accountsReceivable(id: String!): AccountsReceivable!
+  accountsReceivable(id: ID!): AccountsReceivable!
   accountsReceivableAll: [AccountsReceivable!]!
-  inventory(id: String!): Inventory!
-  transaction(id: String!): Transaction!
+  inventory(id: ID!): Inventory!
+  inventoryAll: [Inventory!]!
+  transaction(id: ID!): Transaction!
+  transactionAll: [Transaction!]!
   user: User!
 }
 

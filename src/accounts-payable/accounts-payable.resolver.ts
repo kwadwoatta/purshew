@@ -1,5 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GetAccount } from 'src/account/decorator/get-account.decorator';
 import { Account } from 'src/account/models/account.model';
 import { GetUser } from 'src/auth/decorator';
@@ -37,9 +37,9 @@ export class AccountsPayableResolver {
 
   @Query(() => AccountsPayable, { name: 'accountsPayable' })
   findOne(
-    @Args('id', { type: () => String }) id: string,
+    @Args('id', { type: () => ID }) id: string,
     @GetUser() user: User,
-    @GetAccount(AccountTypeEnum.asset) account: Account,
+    @GetAccount(AccountTypeEnum.liability) account: Account,
   ) {
     console.log({ account });
     return this.accountsPayableService.findOne(user.id, id);
@@ -59,7 +59,7 @@ export class AccountsPayableResolver {
 
   @Mutation(() => AccountsPayable)
   removeAccountsPayable(
-    @Args('id', { type: () => String }) id: string,
+    @Args('id', { type: () => ID }) id: string,
     @GetUser() user: User,
   ) {
     return this.accountsPayableService.remove(user.id, id);

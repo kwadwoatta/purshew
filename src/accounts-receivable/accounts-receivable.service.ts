@@ -1,11 +1,11 @@
-import { Injectable } from '@nestjs/common';
-import { and, eq } from 'drizzle-orm';
-import { accountsReceivable } from 'src/drizzle/schemas';
+import { Injectable, NotFoundException } from '@nestjs/common'
+import { and, eq } from 'drizzle-orm'
+import { accountsReceivable } from 'src/drizzle/schemas'
 
-import { DrizzleService } from 'src/drizzle/drizzle.service';
+import { DrizzleService } from 'src/drizzle/drizzle.service'
 
-import { CreateAccountsReceivableInput } from './dto/create-accounts-receivable.input';
-import { UpdateAccountsReceivableInput } from './dto/update-accounts-receivable.input';
+import { CreateAccountsReceivableInput } from './dto/create-accounts-receivable.input'
+import { UpdateAccountsReceivableInput } from './dto/update-accounts-receivable.input'
 
 @Injectable()
 export class AccountsReceivableService {
@@ -21,26 +21,34 @@ export class AccountsReceivableService {
         amount: '',
         accountId: '',
       })
-      .returning();
+      .returning()
   }
 
   findAll(userId: string) {
     return this.drizzle.db
       .select()
       .from(accountsReceivable)
-      .where(and(eq(accountsReceivable.ownerId, userId)));
+      .where(and(eq(accountsReceivable.ownerId, userId)))
   }
 
-  findOne(userId: string, accountReceivableId: string) {
-    return this.drizzle.db
-      .select()
-      .from(accountsReceivable)
-      .where(
-        and(
-          eq(accountsReceivable.ownerId, userId),
-          eq(accountsReceivable.id, accountReceivableId),
-        ),
-      );
+  async findOne(userId: string, accountReceivableId: string) {
+    const accountReceivable = (
+      await this.drizzle.db
+        .select()
+        .from(accountsReceivable)
+        .where(
+          and(
+            eq(accountsReceivable.ownerId, userId),
+            eq(accountsReceivable.id, accountReceivableId),
+          ),
+        )
+    )[0]
+
+    if (!accountReceivable) {
+      throw new NotFoundException()
+    }
+
+    return accountReceivable
   }
 
   update(userId: string, input: UpdateAccountsReceivableInput) {
@@ -55,7 +63,7 @@ export class AccountsReceivableService {
           eq(accountsReceivable.ownerId, userId),
           eq(accountsReceivable.id, input.id),
         ),
-      );
+      )
   }
 
   remove(id: string, userId: string) {
@@ -67,6 +75,6 @@ export class AccountsReceivableService {
           eq(accountsReceivable.ownerId, userId),
           eq(accountsReceivable.id, id),
         ),
-      );
+      )
   }
 }

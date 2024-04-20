@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS "accounts_receivable" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
-	"customer_id" uuid,
+	"customer_id" uuid NOT NULL,
 	"amount" numeric NOT NULL,
 	"account_type" "account_type" DEFAULT 'asset' NOT NULL,
 	"account_id" uuid NOT NULL,

@@ -1,26 +1,26 @@
-import { relations } from 'drizzle-orm';
-import { decimal, pgEnum, pgTable, timestamp, uuid } from 'drizzle-orm/pg-core';
-import { accounts } from '../accounts';
-import { users } from '../users';
+import { relations } from 'drizzle-orm'
+import { decimal, pgEnum, pgTable, timestamp, uuid } from 'drizzle-orm/pg-core'
+import { accounts } from '../accounts'
+import { users } from '../users'
 
-import { registerEnumType } from '@nestjs/graphql';
+import { registerEnumType } from '@nestjs/graphql'
 
 export enum TransactionTypeEnum {
   debit = 'debit',
   credit = 'credit',
 }
 
-registerEnumType(TransactionTypeEnum, { name: 'TransactionTypeEnum' });
+registerEnumType(TransactionTypeEnum, { name: 'TransactionTypeEnum' })
 
-const accountTypes = Object.values(TransactionTypeEnum) as [
+const transactionType = Object.values(TransactionTypeEnum) as [
   TransactionTypeEnum,
   ...TransactionTypeEnum[],
-];
+]
 
 export const transactionTypeEnum = pgEnum<
   TransactionTypeEnum,
   [TransactionTypeEnum, ...TransactionTypeEnum[]]
->('account_type', accountTypes);
+>('transaction_type', transactionType)
 
 export const transactions = pgTable('transactions', {
   id: uuid('id').notNull().defaultRandom().primaryKey(),
@@ -28,7 +28,7 @@ export const transactions = pgTable('transactions', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 
-  amount: decimal('amount'),
+  amount: decimal('amount').notNull().default('0.0'),
   description: decimal('description'),
   transactionType: transactionTypeEnum('transaction_type')
     .default(TransactionTypeEnum.credit)
@@ -42,7 +42,7 @@ export const transactions = pgTable('transactions', {
   toAccountId: uuid('to_account_id')
     .notNull()
     .references(() => accounts.id, { onDelete: 'cascade' }),
-});
+})
 
 export const transactionsRelations = relations(transactions, ({ one }) => ({
   owner: one(users, {
@@ -55,4 +55,4 @@ export const transactionsRelations = relations(transactions, ({ one }) => ({
     fields: [transactions.fromAccountId],
     relationName: 'from_account',
   }),
-}));
+}))

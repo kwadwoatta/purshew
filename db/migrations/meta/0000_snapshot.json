@@ -1,5 +1,5 @@
 {
-  "id": "e1a3d8f9-cd44-45fa-a3b8-2aeec93728b1",
+  "id": "e9dda516-d839-4c1e-b18e-01771bc82df2",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -33,7 +33,7 @@
           "name": "customer_id",
           "type": "uuid",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "amount": {
           "name": "amount",
