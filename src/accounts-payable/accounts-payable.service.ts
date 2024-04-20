@@ -1,9 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { and, eq } from 'drizzle-orm';
-import { accountsPayable } from 'src/drizzle/schemas';
+import { Injectable, NotFoundException } from '@nestjs/common'
+import { and, eq } from 'drizzle-orm'
+import { accountsPayable } from 'src/drizzle/schemas'
 
-import { DrizzleService } from 'src/drizzle/drizzle.service';
-import { UpdateAccountsPayableInput } from './dto/update-accounts-payable.input';
+import { DrizzleService } from 'src/drizzle/drizzle.service'
+import { UpdateAccountsPayableInput } from './dto/update-accounts-payable.input'
 
 @Injectable()
 export class AccountsPayableService {
@@ -16,14 +16,14 @@ export class AccountsPayableService {
         userId: userId,
         ...input,
       })
-      .returning();
+      .returning()
   }
 
   findAll(userId: string) {
     return this.drizzle.db
       .select()
       .from(accountsPayable)
-      .where(and(eq(accountsPayable.ownerId, userId)));
+      .where(and(eq(accountsPayable.ownerId, userId)))
   }
 
   async findOne(userId: string, accountPayableId: string) {
@@ -37,13 +37,13 @@ export class AccountsPayableService {
             eq(accountsPayable.id, accountPayableId),
           ),
         )
-    )[0];
+    )[0]
 
     if (!accountPayable) {
-      throw new NotFoundException();
+      throw new NotFoundException()
     }
 
-    return accountPayable;
+    return accountPayable
   }
 
   update(userId: string, input: UpdateAccountsPayableInput) {
@@ -57,7 +57,7 @@ export class AccountsPayableService {
           eq(accountsPayable.ownerId, userId),
           eq(accountsPayable.id, input.id),
         ),
-      );
+      )
   }
 
   remove(id: string, userId: string) {
@@ -66,6 +66,6 @@ export class AccountsPayableService {
       .from(accountsPayable)
       .where(
         and(eq(accountsPayable.ownerId, userId), eq(accountsPayable.id, id)),
-      );
+      )
   }
 }

@@ -1,30 +1,30 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { InferSelectModel } from 'drizzle-orm';
-import { users } from 'src/drizzle/schemas';
+import { Field, ID, ObjectType } from '@nestjs/graphql'
+import { InferSelectModel } from 'drizzle-orm'
+import { users } from 'src/drizzle/schemas'
 
 @ObjectType()
 export class User implements InferSelectModel<typeof users> {
   @Field(() => String)
-  hash: string;
+  hash: string
 
   @Field(() => ID)
-  id: string;
+  id: string
 
   @Field(() => String, { nullable: true })
-  name: string | undefined;
+  name: string | undefined
 
   @Field()
-  createdAt: Date;
+  createdAt: Date
 
   @Field()
-  updatedAt: Date;
+  updatedAt: Date
 
   @Field(() => String)
-  email: string;
+  email: string
 
   @Field(() => String, { nullable: true })
-  firstName: string | undefined;
+  firstName: string | undefined
 
   @Field(() => String, { nullable: true })
-  lastName: string | undefined;
+  lastName: string | undefined
 }

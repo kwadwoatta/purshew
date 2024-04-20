@@ -1,15 +1,15 @@
-import { UseGuards } from '@nestjs/common';
-import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { GetAccount } from 'src/account/decorator/get-account.decorator';
-import { Account } from 'src/account/models/account.model';
-import { GetUser } from 'src/auth/decorator';
-import { JwtGuard } from 'src/auth/guard';
-import { AccountTypeEnum } from 'src/drizzle/schemas/accounts/account-type.enum';
-import { User } from 'src/user/models/user.model';
-import { CreateTransactionInput } from './dto/create-transaction.input';
-import { UpdateTransactionInput } from './dto/update-transaction.input';
-import { Transaction } from './models/transaction.model';
-import { TransactionService } from './transaction.service';
+import { UseGuards } from '@nestjs/common'
+import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { GetAccount } from 'src/account/decorator/get-account.decorator'
+import { Account } from 'src/account/models/account.model'
+import { GetUser } from 'src/auth/decorator'
+import { JwtGuard } from 'src/auth/guard'
+import { AccountTypeEnum } from 'src/drizzle/schemas'
+import { User } from 'src/user/models/user.model'
+import { CreateTransactionInput } from './dto/create-transaction.input'
+import { UpdateTransactionInput } from './dto/update-transaction.input'
+import { Transaction } from './models/transaction.model'
+import { TransactionService } from './transaction.service'
 
 @UseGuards(JwtGuard)
 @Resolver(() => Transaction)
@@ -22,12 +22,12 @@ export class TransactionResolver {
     createTransactionInput: CreateTransactionInput,
     @GetUser() user: User,
   ) {
-    return this.transactionService.create(createTransactionInput, user.id);
+    return this.transactionService.create(createTransactionInput, user.id)
   }
 
   @Query(() => [Transaction], { name: 'transactionAll' })
   findAll(@GetUser() user: User) {
-    return this.transactionService.findAll(user.id);
+    return this.transactionService.findAll(user.id)
   }
 
   @Query(() => Transaction, { name: 'transaction' })
@@ -36,8 +36,8 @@ export class TransactionResolver {
     @GetUser() user: User,
     @GetAccount(AccountTypeEnum.asset) account: Account,
   ) {
-    console.log({ account });
-    return this.transactionService.findOne(user.id, id);
+    console.log({ account })
+    return this.transactionService.findOne(user.id, id)
   }
 
   @Mutation(() => Transaction)
@@ -46,7 +46,7 @@ export class TransactionResolver {
     updateTransactionInput: UpdateTransactionInput,
     @GetUser() user: User,
   ) {
-    return this.transactionService.update(user.id, updateTransactionInput);
+    return this.transactionService.update(user.id, updateTransactionInput)
   }
 
   @Mutation(() => Transaction)
@@ -54,6 +54,6 @@ export class TransactionResolver {
     @Args('id', { type: () => ID }) id: string,
     @GetUser() user: User,
   ) {
-    return this.transactionService.remove(user.id, id);
+    return this.transactionService.remove(user.id, id)
   }
 }

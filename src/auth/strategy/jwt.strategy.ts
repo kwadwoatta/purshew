@@ -1,11 +1,11 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { PassportStrategy } from '@nestjs/passport';
+import { Injectable, UnauthorizedException } from '@nestjs/common'
+import { PassportStrategy } from '@nestjs/passport'
 
-import { eq } from 'drizzle-orm';
-import { ExtractJwt, Strategy } from 'passport-jwt';
-import { DrizzleService } from 'src/drizzle/drizzle.service';
-import { users } from 'src/drizzle/schemas';
-import { User } from 'src/user/models/user.model';
+import { eq } from 'drizzle-orm'
+import { ExtractJwt, Strategy } from 'passport-jwt'
+import { DrizzleService } from 'src/drizzle/drizzle.service'
+import { users } from 'src/drizzle/schemas'
+import { User } from 'src/user/models/user.model'
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -14,7 +14,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
       secretOrKey: process.env.JWT_SECRET,
-    });
+    })
   }
 
   async validate(payload: { sub: string; email: string }): Promise<User> {
@@ -23,15 +23,15 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         .select()
         .from(users)
         .where(eq(users.id, payload.sub))
-    )[0];
+    )[0]
 
     if (!user) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException()
     }
 
-    delete user.hash;
+    delete user.hash
 
-    return { ...user };
+    return { ...user }
   }
 }
 // async validate(payload: { sub: string; email: string }): Promise<User> {

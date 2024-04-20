@@ -1,10 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { and, eq } from 'drizzle-orm';
-import { DrizzleService } from 'src/drizzle/drizzle.service';
-import { accounts, users } from 'src/drizzle/schemas';
-import { User } from 'src/user/models/user.model';
-import { CreateAccountInput } from './dto/create-account.input';
-import { UpdateAccountInput } from './dto/update-account.input';
+import { Injectable, NotFoundException } from '@nestjs/common'
+import { and, eq } from 'drizzle-orm'
+import { DrizzleService } from 'src/drizzle/drizzle.service'
+import { accounts, users } from 'src/drizzle/schemas'
+import { User } from 'src/user/models/user.model'
+import { CreateAccountInput } from './dto/create-account.input'
+import { UpdateAccountInput } from './dto/update-account.input'
 
 @Injectable()
 export class AccountService {
@@ -17,14 +17,14 @@ export class AccountService {
         ownerId: user.id,
         ...input,
       })
-      .returning();
+      .returning()
   }
 
   findAll(userId: string) {
     return this.drizzle.db
       .select()
       .from(users)
-      .where(and(eq(accounts.ownerId, userId)));
+      .where(and(eq(accounts.ownerId, userId)))
   }
 
   async findOne(accountId: string, userId: string) {
@@ -33,13 +33,13 @@ export class AccountService {
         .select()
         .from(users)
         .where(and(eq(accounts.ownerId, userId), eq(accounts.id, accountId)))
-    )[0];
+    )[0]
 
     if (!account) {
-      throw new NotFoundException();
+      throw new NotFoundException()
     }
 
-    return account;
+    return account
   }
 
   update(userId: string, input: UpdateAccountInput) {
@@ -48,13 +48,13 @@ export class AccountService {
       .set({
         ...input,
       })
-      .where(and(eq(accounts.ownerId, userId), eq(accounts.id, input.id)));
+      .where(and(eq(accounts.ownerId, userId), eq(accounts.id, input.id)))
   }
 
   remove(id: string, userId: string) {
     return this.drizzle.db
       .select()
       .from(users)
-      .where(and(eq(accounts.ownerId, userId), eq(accounts.id, id)));
+      .where(and(eq(accounts.ownerId, userId), eq(accounts.id, id)))
   }
 }

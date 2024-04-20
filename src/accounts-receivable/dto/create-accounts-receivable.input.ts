@@ -1,20 +1,20 @@
-import { Field, InputType } from '@nestjs/graphql';
-import { InferInsertModel } from 'drizzle-orm';
-import { accountsReceivable } from 'src/drizzle/schemas';
+import { Field, InputType } from '@nestjs/graphql'
+import { InferInsertModel } from 'drizzle-orm'
+import { accountsReceivable } from 'src/drizzle/schemas'
 
 @InputType()
 export class CreateAccountsReceivableInput
   implements InferInsertModel<typeof accountsReceivable>
 {
   @Field(() => String)
-  customerId: string;
+  customerId: string
 
   @Field(() => String)
-  amount: string;
+  amount: string
 
   @Field(() => String)
-  ownerId: string;
+  ownerId: string
 
   @Field(() => String)
-  accountId: string;
+  accountId: string
 }

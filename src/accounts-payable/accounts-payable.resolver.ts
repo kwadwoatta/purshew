@@ -1,15 +1,15 @@
-import { UseGuards } from '@nestjs/common';
-import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { GetAccount } from 'src/account/decorator/get-account.decorator';
-import { Account } from 'src/account/models/account.model';
-import { GetUser } from 'src/auth/decorator';
-import { JwtGuard } from 'src/auth/guard';
-import { AccountTypeEnum } from 'src/drizzle/schemas/accounts/account-type.enum';
-import { User } from 'src/user/models/user.model';
-import { AccountsPayableService } from './accounts-payable.service';
-import { CreateAccountsPayableInput } from './dto/create-accounts-payable.input';
-import { UpdateAccountsPayableInput } from './dto/update-accounts-payable.input';
-import { AccountsPayable } from './models/accounts-payable.model';
+import { UseGuards } from '@nestjs/common'
+import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { GetAccount } from 'src/account/decorator/get-account.decorator'
+import { Account } from 'src/account/models/account.model'
+import { GetUser } from 'src/auth/decorator'
+import { JwtGuard } from 'src/auth/guard'
+import { AccountTypeEnum } from 'src/drizzle/schemas'
+import { User } from 'src/user/models/user.model'
+import { AccountsPayableService } from './accounts-payable.service'
+import { CreateAccountsPayableInput } from './dto/create-accounts-payable.input'
+import { UpdateAccountsPayableInput } from './dto/update-accounts-payable.input'
+import { AccountsPayable } from './models/accounts-payable.model'
 
 @UseGuards(JwtGuard)
 @Resolver(() => AccountsPayable)
@@ -27,12 +27,12 @@ export class AccountsPayableResolver {
     return this.accountsPayableService.create(
       createAccountsPayableInput,
       user.id,
-    );
+    )
   }
 
   @Query(() => [AccountsPayable], { name: 'accountsPayableAll' })
   findAll(@GetUser() user: User) {
-    return this.accountsPayableService.findAll(user.id);
+    return this.accountsPayableService.findAll(user.id)
   }
 
   @Query(() => AccountsPayable, { name: 'accountsPayable' })
@@ -41,8 +41,8 @@ export class AccountsPayableResolver {
     @GetUser() user: User,
     @GetAccount(AccountTypeEnum.liability) account: Account,
   ) {
-    console.log({ account });
-    return this.accountsPayableService.findOne(user.id, id);
+    console.log({ account })
+    return this.accountsPayableService.findOne(user.id, id)
   }
 
   @Mutation(() => AccountsPayable)
@@ -54,7 +54,7 @@ export class AccountsPayableResolver {
     return this.accountsPayableService.update(
       user.id,
       updateAccountsPayableInput,
-    );
+    )
   }
 
   @Mutation(() => AccountsPayable)
@@ -62,6 +62,6 @@ export class AccountsPayableResolver {
     @Args('id', { type: () => ID }) id: string,
     @GetUser() user: User,
   ) {
-    return this.accountsPayableService.remove(user.id, id);
+    return this.accountsPayableService.remove(user.id, id)
   }
 }

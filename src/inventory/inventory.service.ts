@@ -1,8 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { and, eq } from 'drizzle-orm';
-import { DrizzleService } from 'src/drizzle/drizzle.service';
-import { inventory } from 'src/drizzle/schemas';
-import { UpdateInventoryInput } from './dto/update-inventory.input';
+import { Injectable, NotFoundException } from '@nestjs/common'
+import { and, eq } from 'drizzle-orm'
+import { DrizzleService } from 'src/drizzle/drizzle.service'
+import { inventory } from 'src/drizzle/schemas'
+import { UpdateInventoryInput } from './dto/update-inventory.input'
 
 @Injectable()
 export class InventoryService {
@@ -15,14 +15,14 @@ export class InventoryService {
         userId: userId,
         ...input,
       })
-      .returning();
+      .returning()
   }
 
   findAll(userId: string) {
     return this.drizzle.db
       .select()
       .from(inventory)
-      .where(and(eq(inventory.ownerId, userId)));
+      .where(and(eq(inventory.ownerId, userId)))
   }
 
   async findOne(userId: string, accountPayableId: string) {
@@ -36,13 +36,13 @@ export class InventoryService {
             eq(inventory.id, accountPayableId),
           ),
         )
-    )[0];
+    )[0]
 
     if (!inv) {
-      throw new NotFoundException();
+      throw new NotFoundException()
     }
 
-    return inv;
+    return inv
   }
 
   update(userId: string, input: UpdateInventoryInput) {
@@ -51,13 +51,13 @@ export class InventoryService {
       .set({
         ...input,
       })
-      .where(and(eq(inventory.ownerId, userId), eq(inventory.id, input.id)));
+      .where(and(eq(inventory.ownerId, userId), eq(inventory.id, input.id)))
   }
 
   remove(id: string, userId: string) {
     return this.drizzle.db
       .select()
       .from(inventory)
-      .where(and(eq(inventory.ownerId, userId), eq(inventory.id, id)));
+      .where(and(eq(inventory.ownerId, userId), eq(inventory.id, id)))
   }
 }
