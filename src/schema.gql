@@ -180,11 +180,13 @@ type Mutation {
 
 type Query {
   account(id: ID!): Account!
+  accountTypes: [AccountTypeEnum!]!
   accounts: [Account!]!
   accountsPayable(id: ID!): AccountsPayable!
   accountsPayables: [AccountsPayable!]!
   accountsReceivable(id: ID!): AccountsReceivable!
   accountsReceivables: [AccountsReceivable!]!
+  generalLedgerAccounts: [Account!]!
   inventories: [Inventory!]!
   inventory(id: ID!): Inventory!
   transaction(id: ID!): Transaction!

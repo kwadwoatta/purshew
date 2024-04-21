@@ -1,11 +1,12 @@
-import { UseGuards } from '@nestjs/common';
-import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { GetUser } from 'src/auth/decorator';
-import { JwtGuard } from 'src/auth/guard';
-import { User } from 'src/user/models/user.model';
-import { AccountService } from './account.service';
-import { CreateAccountInput } from './dto/create-account.input';
-import { Account } from './models/account.model';
+import { UseGuards } from '@nestjs/common'
+import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { GetUser } from 'src/auth/decorator'
+import { JwtGuard } from 'src/auth/guard'
+import { AccountTypeEnum } from 'src/common'
+import { User } from 'src/user/models/user.model'
+import { AccountService } from './account.service'
+import { CreateAccountInput } from './dto/create-account.input'
+import { Account } from './models/account.model'
 
 @UseGuards(JwtGuard)
 @Resolver(() => Account)
@@ -17,17 +18,27 @@ export class AccountResolver {
     @GetUser() user: User,
     @Args('createAccountInput') createAccountInput: CreateAccountInput,
   ) {
-    return this.accountService.create(createAccountInput, user);
+    return this.accountService.create(createAccountInput, user)
   }
 
   @Query(() => [Account], { name: 'accounts' })
   findAll(@GetUser() user: User) {
-    return this.accountService.findAll(user.id);
+    return this.accountService.findAll(user.id)
+  }
+
+  @Query(() => [Account], { name: 'generalLedgerAccounts' })
+  generalLedgerAccounts(@GetUser() user: User) {
+    return this.accountService.findAll(user.id)
+  }
+
+  @Query(() => [AccountTypeEnum], { name: 'accountTypes' })
+  accountTypes() {
+    return this.accountService.findAccountTypes()
   }
 
   @Query(() => Account, { name: 'account' })
   findOne(@GetUser() user: User, @Args('id', { type: () => ID }) id: string) {
-    return this.accountService.findOne(id, user.id);
+    return this.accountService.findOne(id, user.id)
   }
 
   // @Mutation(() => Account)

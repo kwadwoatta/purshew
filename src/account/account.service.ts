@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { and, eq } from 'drizzle-orm'
+import { AccountTypeEnum } from 'src/common'
 import { DrizzleService } from 'src/drizzle/drizzle.service'
 import { accounts, users } from 'src/drizzle/schema'
 import { User } from 'src/user/models/user.model'
@@ -25,6 +26,12 @@ export class AccountService {
       .select()
       .from(users)
       .where(and(eq(accounts.ownerId, userId)))
+  }
+
+  findAccountTypes(): AccountTypeEnum[] {
+    return Object.keys(AccountTypeEnum).map<AccountTypeEnum>(
+      (ace) => AccountTypeEnum[ace],
+    )
   }
 
   async findOne(accountId: string, userId: string) {
