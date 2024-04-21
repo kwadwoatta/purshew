@@ -1,13 +1,10 @@
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
+  <img src="./assets/morgan.png" width="200" alt="Purshew Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
+<p align="center">Purshew: Chase Bank opened a branch in +234</p>
+<p align="center">
+<!-- <a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
 <a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
 <a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
 <a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
@@ -16,58 +13,75 @@
 <a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
 <a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
   <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
+    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a> -->
+  <a href="https://twitter.com/kwadwotheatta" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
 </p>
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
-
-```bash
-$ pnpm install
-```
+<p align="center">Built with NestJS, this service offers a robust and scalable server-side application for accounting purposes. The API leverages GraphQL for efficient data querying and manipulation, ensuring high performance and flexibility. It utilizes Drizzle ORM for seamless database operations, and PostgreSQL for reliable data storage and retrieval.</p>
 
 ## Running the app
 
-```bash
-# development
-$ pnpm run start
+1. clone the repo
 
-# watch mode
-$ pnpm run start:dev
+    ```bash
+    git clone https://github.com/kwadwoatta/purshew.git
+    ```
 
-# production mode
-$ pnpm run start:prod
-```
+2. copy .env.example to .env and fill them out
 
-## Test
+3. install all dependencies
 
-```bash
-# unit tests
-$ pnpm run test
+    ```bash
+    pnpm install
+    ```
 
-# e2e tests
-$ pnpm run test:e2e
+4. [download docker](https://www.docker.com/products/docker-desktop/)
 
-# test coverage
-$ pnpm run test:cov
-```
+5. start the postgres (database) service
 
-## Support
+    ```bash
+    docker compose up dev-db
+    ```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+6. generate SQL migrations for the drizzle schema definitions
+
+    ```bash
+    pnpm drizzle-kit generate:pg
+    ```
+
+7. push the generated SQL migrations to the postgres database
+
+    ```bash
+    pnpm tsx db/migrate.ts
+    ```
+
+8. seed the transaction templates
+
+    ```bash
+    pnpm tsx seed/migrate.ts
+    ```
+
+9. (optional) start the drizzle-kit studio to interact with your database
+
+    ```bash
+    pnpm drizzle-kit studio
+    ```
+
+10. start the app in development mode
+
+    ```bash
+    pnpm start:dev
+    ```
 
 ## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- Author - [Prince Ofori](https://princeofori.webflow.io)
+- Twitter - [@KwadwoTheAtta](https://twitter.com/KwadwoTheAtta)
 
 ## License
 
-Nest is [MIT licensed](LICENSE).
+Purshew API is [MIT licensed](LICENSE).
