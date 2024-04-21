@@ -2,7 +2,7 @@
   <img src="./assets/purshew.png" width="200" alt="Purshew Logo" /></a>
 </p>
 
-<p align="center">Purshew: Chase Bank opened a branch in +234</p>
+<p align="center">Purshew: Chase Bank set up shop in +234</p>
 <p align="center">
 <a href="https://twitter.com/kwadwotheatta" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
 </p>
