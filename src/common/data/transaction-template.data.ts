@@ -1,6 +1,6 @@
 import { ExtractTablesWithRelations } from 'drizzle-orm'
 import * as schema from 'src/drizzle/schemas'
-import { TransactionTemplateTypeEnum } from '../../../common/enum/transaction-template.enum'
+import { TransactionTemplateTypeEnum } from '../enum/transaction-template.enum'
 
 export const transactionTemplatesData: {
   [key in TransactionTemplateTypeEnum]: {
@@ -111,8 +111,8 @@ export const transactionTemplatesData: {
   [TransactionTemplateTypeEnum.kwame_system_unit_sale]: {
     description: 'Selling System Units',
     debit_account: 'cash',
-    credit_account: 'sales',
+    credit_account: 'inventory',
     balancing_transaction:
-      'Increasing cash on hand (asset) and recording the sale (revenue)',
+      'Increasing cash on hand (asset) and decreasing the inventory (asset)',
   },
 }
