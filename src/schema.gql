@@ -112,15 +112,9 @@ input CreateInventoryInput {
 }
 
 input CreateTransactionInput {
-  amount: String!
-  creditAccountAccountId: ID!
-  creditAccountId: ID!
+  amount: Float!
   creditAccountName: String!
-  creditAmount: String!
-  debitAccountAccountId: ID!
-  debitAccountId: ID!
   debitAccountName: String!
-  debitAmount: String!
   description: String!
 }
 
@@ -292,16 +286,19 @@ input UpdateInventoryInput {
 
 input UpdateTransactionInput {
   amount: String
-  creditAccountAccountId: ID
-  creditAccountId: ID
-  creditAccountName: String
+  createdAt: String
+  creditAccountAccountId: String!
+  creditAccountId: String!
+  creditAccountName: String!
   creditAmount: String
-  debitAccountAccountId: ID
-  debitAccountId: ID
-  debitAccountName: String
+  debitAccountAccountId: String!
+  debitAccountId: String!
+  debitAccountName: String!
   debitAmount: String
-  description: String
+  description: String!
   id: String!
+  ownerId: String!
+  updatedAt: String
 }
 
 input UpdateUserInput {

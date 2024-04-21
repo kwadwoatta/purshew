@@ -10,7 +10,9 @@ export class CreateAccountsPayableInput
   @Field(() => TransactionTypeEnum)
   transactionType: TransactionTypeEnum
 
+  @Field()
   amount?: string
+
   @Field()
   itemName: string
 

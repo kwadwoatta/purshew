@@ -21,8 +21,18 @@ export class TransactionResolver {
     @Args('createTransactionInput')
     createTransactionInput: CreateTransactionInput,
     @GetUser() user: User,
+    @GetAccounts() accounts: Account[],
   ) {
-    return this.transactionService.create(createTransactionInput, user.id)
+    const { amount, creditAccountName, debitAccountName, description } =
+      createTransactionInput
+    return this.transactionService.create(
+      amount,
+      creditAccountName as any,
+      debitAccountName as any,
+      user.id,
+      accounts,
+      description,
+    )
   }
 
   @Query(() => [Transaction], { name: 'transactions' })
