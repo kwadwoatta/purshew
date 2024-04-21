@@ -21,59 +21,65 @@
     git clone https://github.com/kwadwoatta/purshew.git
     ```
 
-2. copy .env.example to .env and fill them out
+2. cd into the repo
 
-3. install all dependencies
+    ```bash
+    cd purshew
+    ```
+
+3. copy .env.example to .env and fill them out
+
+4. install all dependencies
 
     ```bash
     pnpm install
     ```
 
-4. [download docker](https://www.docker.com/products/docker-desktop/)
+5. [download docker](https://www.docker.com/products/docker-desktop/)
 
-5. start the postgres (database) service
+6. start the postgres (database) service
 
     ```bash
     docker compose up -d
     ```
 
-6. generate SQL migrations for the drizzle schema definitions
+7. generate SQL migrations for the drizzle schema definitions
 
     ```bash
     pnpm drizzle-kit generate:pg
     ```
 
-7. push the generated SQL migrations to the postgres database
+8. push the generated SQL migrations to the postgres database
 
     ```bash
     pnpm tsx db/migrate.ts
     ```
 
-8. seed the transaction templates
+9. seed the transaction templates
 
     ```bash
     pnpm tsx seed/migrate.ts
     ```
 
-9. (optional) start the drizzle-kit studio to interact with your database
+10. (optional) start the drizzle-kit studio to interact with your database
 
     ```bash
     pnpm drizzle-kit studio
     ```
 
-10. start the app in development mode
+11. start the app in development mode
 
     ```bash
     pnpm start:dev
     ```
 
-11. visit url in Altair or Graphql client of choice
+12. visit url in Altair or Graphql client of choice
 
     ```bash
     http://[::1]:3000/graphql
     ```
 
-12. signing up a user
+13. signing up a user
 
     ```graphql
     mutation {
@@ -83,13 +89,13 @@
     }
     ```
 
-13. copy access token and set as Header for subsequent requests
+14. copy access token and set as Header for subsequent requests
 
     ```graphql
     Authorization: Bearer {your access token}
     ```
 
-14. execute template for Kwame's initial opening balance
+15. execute template for Kwame's initial opening balance
 
     ```graphql
     mutation {
@@ -102,7 +108,7 @@
     }
     ```
 
-15. execute template for Kwame's purchase of GHS 20,000 worth of System Units
+16. execute template for Kwame's purchase of GHS 20,000 worth of System Units
 
     ```graphql
     mutation {
@@ -115,7 +121,7 @@
     }
     ```
 
-16. execute template for Kwame's sale of GHS 10,000 worth of System Units
+17. execute template for Kwame's sale of GHS 10,000 worth of System Units
 
     ```graphql
     mutation {
