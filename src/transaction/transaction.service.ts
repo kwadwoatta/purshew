@@ -17,6 +17,10 @@ export class TransactionService {
       description,
       creditAccountAccountId,
       debitAccountAccountId,
+      debitAccountName,
+      creditAccountName,
+      debitAmount,
+      creditAmount,
     } = input
     return this.drizzle.db
       .insert(transactions)
@@ -29,6 +33,10 @@ export class TransactionService {
         debitAccountId,
         creditAccountAccountId,
         debitAccountAccountId,
+        debitAccountName,
+        creditAccountName,
+        debitAmount,
+        creditAmount,
       })
       .returning()
   }

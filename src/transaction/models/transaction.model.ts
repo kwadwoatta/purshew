@@ -4,6 +4,18 @@ import { transactions } from 'src/drizzle/schemas'
 
 @ObjectType()
 export class Transaction implements InferSelectModel<typeof transactions> {
+  @Field()
+  debitAmount: string
+
+  @Field()
+  creditAmount: string
+
+  @Field()
+  debitAccountName: string
+
+  @Field()
+  creditAccountName: string
+
   @Field(() => ID)
   debitAccountAccountId: string
 

@@ -30,7 +30,7 @@ export class AccountsPayableResolver {
     )
   }
 
-  @Query(() => [AccountsPayable], { name: 'accountsPayableAll' })
+  @Query(() => [AccountsPayable], { name: 'accountsPayables' })
   findAll(@GetUser() user: User) {
     return this.accountsPayableService.findAll(user.id)
   }

@@ -109,8 +109,12 @@ input CreateTransactionInput {
   amount: String!
   creditAccountAccountId: ID!
   creditAccountId: ID!
+  creditAccountName: String!
+  creditAmount: String!
   debitAccountAccountId: ID!
   debitAccountId: ID!
+  debitAccountName: String!
+  debitAmount: String!
   description: String!
 }
 
@@ -171,15 +175,15 @@ type Query {
   account(id: ID!): Account!
   accounts: [Account!]!
   accountsPayable(id: ID!): AccountsPayable!
-  accountsPayableAll: [AccountsPayable!]!
+  accountsPayables: [AccountsPayable!]!
   accountsReceivable(id: ID!): AccountsReceivable!
-  accountsReceivableAll: [AccountsReceivable!]!
+  accountsReceivables: [AccountsReceivable!]!
+  inventories: [Inventory!]!
   inventory(id: ID!): Inventory!
-  inventoryAll: [Inventory!]!
   transaction(id: ID!): Transaction!
-  transactionAll: [Transaction!]!
   transactionTemplate(template: TransactionTemplateTypeEnum!): TransactionTemplate!
   transactionTemplates: [TransactionTemplate!]!
+  transactions: [Transaction!]!
   user: User!
 }
 
@@ -188,8 +192,12 @@ type Transaction {
   createdAt: DateTime!
   creditAccountAccountId: ID!
   creditAccountId: ID!
+  creditAccountName: String!
+  creditAmount: String!
   debitAccountAccountId: ID!
   debitAccountId: ID!
+  debitAccountName: String!
+  debitAmount: String!
   description: String!
   id: ID!
   ownerId: ID!
@@ -268,8 +276,12 @@ input UpdateTransactionInput {
   amount: String
   creditAccountAccountId: ID
   creditAccountId: ID
+  creditAccountName: String
+  creditAmount: String
   debitAccountAccountId: ID
   debitAccountId: ID
+  debitAccountName: String
+  debitAmount: String
   description: String
   id: String!
 }

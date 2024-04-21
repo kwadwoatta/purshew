@@ -23,4 +23,16 @@ export class CreateTransactionInput
 
   @Field()
   description: string
+
+  @Field()
+  debitAmount: string
+
+  @Field()
+  creditAmount: string
+
+  @Field()
+  debitAccountName: string
+
+  @Field()
+  creditAccountName: string
 }

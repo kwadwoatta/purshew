@@ -50,6 +50,13 @@
       "when": 1713684615956,
       "tag": "0006_eminent_alex_power",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1713704738548,
+      "tag": "0007_broken_gladiator",
+      "breakpoints": true
     }
   ]
 }

@@ -5,6 +5,10 @@ export enum TransactionCreatedEventType {
 }
 
 export class TransactionCreatedEvent implements CreateTransactionInput {
+  debitAmount: string
+  creditAmount: string
+  debitAccountName: string
+  creditAccountName: string
   debitAccountAccountId: string
   creditAccountAccountId: string
   creditAccountId: string

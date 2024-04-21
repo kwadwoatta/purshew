@@ -72,11 +72,19 @@ export class TransactionTemplateService {
           .values({
             description,
             ownerId: userId,
+
             debitAccountId,
             creditAccountId,
+
             debitAccountAccountId: accountIdForDebit,
             creditAccountAccountId: accountIdForCredit,
+
+            debitAccountName,
+            creditAccountName,
+
             amount: String(amount),
+            debitAmount: String(amount),
+            creditAmount: String(amount),
           })
           .returning()
       )[0]

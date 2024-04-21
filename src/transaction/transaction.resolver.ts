@@ -25,7 +25,7 @@ export class TransactionResolver {
     return this.transactionService.create(createTransactionInput, user.id)
   }
 
-  @Query(() => [Transaction], { name: 'transactionAll' })
+  @Query(() => [Transaction], { name: 'transactions' })
   findAll(@GetUser() user: User) {
     return this.transactionService.findAll(user.id)
   }
