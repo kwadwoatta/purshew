@@ -1,0 +1,2 @@
+ALTER TABLE "transaction_templates" ADD CONSTRAINT "transaction_templates_type_unique" UNIQUE("type");--> statement-breakpoint
+ALTER TABLE "transaction_templates" ADD CONSTRAINT "transaction_templates_description_unique" UNIQUE("description");

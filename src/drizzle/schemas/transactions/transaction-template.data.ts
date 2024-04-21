@@ -94,17 +94,25 @@ export const transactionTemplatesData: {
     balancing_transaction:
       'Decreasing the amount owed on the credit card (liability) and decreasing the amount of cash on hand (asset)',
   },
+  [TransactionTemplateTypeEnum.kwame_initial_capital]: {
+    description: 'Recording initial capital',
+    debit_account: 'cash',
+    credit_account: 'capital',
+    balancing_transaction:
+      'Increasing cash on hand (asset) and recording the initial capital (equity)',
+  },
+  [TransactionTemplateTypeEnum.kwame_system_unit_purchase]: {
+    description: 'Buying System Units',
+    debit_account: 'inventory',
+    credit_account: 'cash',
+    balancing_transaction:
+      'Increasing inventory (asset) and decreasing cash on hand (asset)',
+  },
+  [TransactionTemplateTypeEnum.kwame_system_unit_sale]: {
+    description: 'Selling System Units',
+    debit_account: 'cash',
+    credit_account: 'sales',
+    balancing_transaction:
+      'Increasing cash on hand (asset) and recording the sale (revenue)',
+  },
 }
-
-// | cash
-//       | inventory
-//       | inventory
-//       | accountsPayable
-//       | accountsReceivable
-//       | cash
-//       | generalExpense
-//       | salaryExpense
-//       | officeEquipment
-//       | accountsReceivable
-//       | accountsPayable
-//       | creditCardPayable

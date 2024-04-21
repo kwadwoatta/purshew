@@ -1,0 +1,1 @@
+ALTER TABLE "capital" ALTER COLUMN "capital_name" DROP NOT NULL;

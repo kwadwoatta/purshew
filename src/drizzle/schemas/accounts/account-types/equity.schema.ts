@@ -10,6 +10,29 @@ import { accounts } from '..'
 import { users } from '../../users'
 import { AccountTypeEnum, accountTypeEnum } from '../account-type.enum'
 
+export const capital = pgTable('capital', {
+  id: uuid('id').notNull().defaultRandom().primaryKey(),
+
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+
+  amount: decimal('amount').default('0.0').notNull(),
+
+  capitalName: text('capital_name'),
+  accountType: accountTypeEnum('account_type')
+    .default(AccountTypeEnum.equity)
+    .notNull(),
+
+  accountId: uuid('account_id')
+    .notNull()
+    .references(() => accounts.id, { onDelete: 'cascade' }),
+  ownerId: uuid('owner_id')
+    .notNull()
+    .references(() => users.id, {
+      onDelete: 'cascade',
+    }),
+})
+
 export const commonStock = pgTable('common_stock', {
   id: uuid('id').notNull().defaultRandom().primaryKey(),
 

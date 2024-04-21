@@ -41,6 +41,7 @@
     "class-validator": "^0.14.1",
     "drizzle-orm": "^0.30.8",
     "graphql": "^16.8.1",
+    "graphql-type-json": "^0.3.2",
     "passport-jwt": "^4.0.1",
     "pg": "^8.11.5",
     "reflect-metadata": "^0.2.0",

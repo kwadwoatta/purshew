@@ -142,13 +142,18 @@ type Inventory {
   updatedAt: DateTime!
 }
 
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
 type Mutation {
   createAccount(createAccountInput: CreateAccountInput!): Account!
   createAccountsPayable(createAccountsPayableInput: CreateAccountsPayableInput!): AccountsPayable!
   createAccountsReceivable(createAccountsReceivableInput: CreateAccountsReceivableInput!): AccountsReceivable!
   createInventory(createInventoryInput: CreateInventoryInput!): Inventory!
   createTransaction(createTransactionInput: CreateTransactionInput!): Transaction!
-  executeTransactionTemplate(executeTransactionTemplateInput: ExecuteTransactionTemplateInput!): Transaction!
+  executeTransactionTemplate(executeTransactionTemplateInput: ExecuteTransactionTemplateInput!): JSON!
   login(login: AuthInput!): Auth!
   removeAccountsPayable(id: ID!): AccountsPayable!
   removeAccountsReceivable(id: ID!): AccountsReceivable!
@@ -213,6 +218,9 @@ enum TransactionTemplateTypeEnum {
   debt_consolidation
   equipment_purchase
   expense
+  kwame_initial_capital
+  kwame_system_unit_purchase
+  kwame_system_unit_sale
   purchase_on_credit
   salary_payment
   sales_invoice

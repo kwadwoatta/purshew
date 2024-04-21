@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { EventEmitterModule } from '@nestjs/event-emitter'
 import { GraphQLModule } from '@nestjs/graphql'
+import GraphQLJSON from 'graphql-type-json'
 import { join } from 'path'
 import { AccountModule } from './account/account.module'
 import { AccountsPayableModule } from './accounts-payable/accounts-payable.module'
@@ -24,6 +25,7 @@ import { UserModule } from './user/user.module'
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       sortSchema: true,
+      resolvers: { JSON: GraphQLJSON },
       // formatError: (error: GraphQLFormattedError) => {
       //   const logger = new Logger();
       //   logger.error(error);

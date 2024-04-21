@@ -31,6 +31,7 @@ async function main() {
           .accountType.default,
       })
     }
+
     // await db.transaction(async (tx) => {
     //   let txTemplate: keyof typeof transactionTemplatesData
     //   for (txTemplate in transactionTemplatesData) {

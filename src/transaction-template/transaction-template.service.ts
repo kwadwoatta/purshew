@@ -1,10 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { ExtractTablesWithRelations, and, eq } from 'drizzle-orm'
+import { ExtractTablesWithRelations, and, eq, sql } from 'drizzle-orm'
 import { Account } from 'src/account/models/account.model'
 import { DrizzleService } from 'src/drizzle/drizzle.service'
-import { transactionTemplates, transactions } from 'src/drizzle/schemas'
+import {
+  accounts,
+  transactionTemplates,
+  transactions,
+} from 'src/drizzle/schemas'
 import * as accountsSchema from 'src/drizzle/schemas/accounts/account-types'
-import { Transaction } from 'src/transaction/models/transaction.model'
 import { TransactionTemplate } from './models/transaction-template.model'
 
 @Injectable()
@@ -15,7 +18,7 @@ export class TransactionTemplateService {
     amount: number,
     txTemplate: TransactionTemplate,
     userId: string,
-    accounts: Account[],
+    userAccounts: Account[],
   ) {
     const { description } = txTemplate
 
@@ -31,14 +34,14 @@ export class TransactionTemplateService {
     const debitAccountTable = accountsSchema[debitAccountName]
     const creditAccountTable = accountsSchema[creditAccountName]
 
-    const accountIdForDebit = accounts.find(
+    const accountIdForDebit = userAccounts.find(
       (a) => a.type === debitAccountTable.accountType.default,
     ).id
-    const accountIdForCredit = accounts.find(
+    const accountIdForCredit = userAccounts.find(
       (a) => a.type === creditAccountTable.accountType.default,
     ).id
 
-    let completedTransaction: Transaction
+    let join: JSON
 
     await this.drizzle.db.transaction(async (tx) => {
       const debitAccountId = (
@@ -63,7 +66,7 @@ export class TransactionTemplateService {
           .returning()
       )[0].id
 
-      completedTransaction = (
+      const completedTransaction = (
         await tx
           .insert(transactions)
           .values({
@@ -77,9 +80,47 @@ export class TransactionTemplateService {
           })
           .returning()
       )[0]
+
+      // update balance of debit account (asset, liability, equity, revenue)
+      await tx
+        .update(accounts)
+        .set({
+          balance: sql`${accounts.balance} + ${String(amount)}`,
+        })
+        .where(
+          and(eq(accounts.ownerId, userId), eq(accounts.id, accountIdForDebit)),
+        )
+
+      // update balance of credit account (asset, liability, equity, revenue)
+      await tx
+        .update(accounts)
+        .set({
+          balance: sql`${accounts.balance} - ${String(amount)}`,
+        })
+        .where(
+          and(
+            eq(accounts.ownerId, userId),
+            eq(accounts.id, accountIdForCredit),
+          ),
+        )
+
+      const j = await tx
+        .select()
+        .from(transactions)
+        .where(eq(transactions.id, completedTransaction.id))
+        .fullJoin(
+          debitAccountTable,
+          eq(debitAccountTable.id, transactions.debitAccountId),
+        )
+        .fullJoin(
+          creditAccountTable,
+          eq(creditAccountTable.id, transactions.creditAccountId),
+        )
+
+      join = JSON.parse(JSON.stringify(j))
     })
 
-    return completedTransaction
+    return join
   }
 
   findAll() {

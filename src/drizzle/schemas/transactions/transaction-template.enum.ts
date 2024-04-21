@@ -14,6 +14,9 @@ export enum TransactionTemplateTypeEnum {
   debt_consolidation = 'debt_consolidation',
   credit_card_payoff = 'credit_card_payoff',
   equipment_purchase = 'equipment_purchase',
+  kwame_initial_capital = 'kwame_initial_capital',
+  kwame_system_unit_purchase = 'kwame_system_unit_purchase',
+  kwame_system_unit_sale = 'kwame_system_unit_sale',
 }
 
 registerEnumType(TransactionTemplateTypeEnum, {

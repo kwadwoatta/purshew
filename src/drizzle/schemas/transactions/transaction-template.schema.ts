@@ -8,8 +8,8 @@ export const transactionTemplates = pgTable('transaction_templates', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 
-  type: transactionTemplateTypeEnum('type').notNull(),
-  description: text('description').notNull(),
+  type: transactionTemplateTypeEnum('type').unique().notNull(),
+  description: text('description').unique().notNull(),
   balancingTransaction: text('balancing_transaction').notNull(),
 
   debitAccountName: text('debit_account_name').notNull(),
