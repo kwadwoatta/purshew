@@ -121,12 +121,6 @@ export class TransactionTemplateService {
           .returning()
       )[0]
 
-      console.log({
-        symbol: String(
-          balancingRules[debitAccountAccountType]['debit'] + amount,
-        ),
-      })
-
       // update balance of debit account (asset, liability, equity, revenue)
       await tx
         .update(accounts)

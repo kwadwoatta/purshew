@@ -22,6 +22,7 @@ export class TransactionService {
       debitAmount,
       creditAmount,
     } = input
+
     return this.drizzle.db
       .insert(transactions)
       .values({
