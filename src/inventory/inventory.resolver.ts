@@ -25,12 +25,12 @@ export class InventoryResolver {
     return this.inventoryService.create(createInventoryInput, user.id)
   }
 
-  @Query(() => [Inventory], { name: 'inventories' })
+  @Query(() => [Inventory], { name: 'inventoryItems' })
   findAll(@GetUser() user: User) {
     return this.inventoryService.findAll(user.id)
   }
 
-  @Query(() => Inventory, { name: 'inventory' })
+  @Query(() => Inventory, { name: 'inventoryItem' })
   findOne(
     @Args('id', { type: () => ID }) id: string,
     @GetUser() user: User,

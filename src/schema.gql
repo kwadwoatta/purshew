@@ -143,12 +143,12 @@ type Inventory {
   amount: String!
   createdAt: DateTime!
   id: ID!
-  itemDescription: String!
-  itemName: String!
+  itemDescription: String
+  itemName: String
   ownerId: ID!
-  purchasePrice: String!
-  quantity: Float!
-  salePrice: String!
+  purchasePrice: String
+  quantity: Float
+  salePrice: String
   transactionType: TransactionTypeEnum!
   updatedAt: DateTime!
 }
@@ -187,8 +187,8 @@ type Query {
   accountsReceivable(id: ID!): AccountsReceivable!
   accountsReceivables: [AccountsReceivable!]!
   generalLedgerAccounts: [Account!]!
-  inventories: [Inventory!]!
-  inventory(id: ID!): Inventory!
+  inventoryItem(id: ID!): Inventory!
+  inventoryItems: [Inventory!]!
   transaction(id: ID!): Transaction!
   transactionTemplate(template: TransactionTemplateTypeEnum!): TransactionTemplate!
   transactionTemplates: [TransactionTemplate!]!

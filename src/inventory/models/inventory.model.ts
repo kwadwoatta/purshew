@@ -1,10 +1,10 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
-import { InferSelectModel } from 'drizzle-orm'
+import { InferInsertModel } from 'drizzle-orm'
 import { AccountTypeEnum, TransactionTypeEnum } from 'src/common'
 import { inventory } from 'src/drizzle/schema'
 
 @ObjectType()
-export class Inventory implements InferSelectModel<typeof inventory> {
+export class Inventory implements InferInsertModel<typeof inventory> {
   @Field(() => ID)
   id: string
 
@@ -14,20 +14,20 @@ export class Inventory implements InferSelectModel<typeof inventory> {
   @Field()
   updatedAt: Date
 
-  @Field()
-  itemName: string
+  @Field({ nullable: true })
+  itemName?: string
 
-  @Field()
-  itemDescription: string
+  @Field({ nullable: true })
+  itemDescription?: string
 
-  @Field()
-  quantity: number
+  @Field({ nullable: true })
+  quantity?: number
 
-  @Field()
-  purchasePrice: string
+  @Field({ nullable: true })
+  purchasePrice?: string
 
-  @Field()
-  salePrice: string
+  @Field({ nullable: true })
+  salePrice?: string
 
   @Field()
   accountType: AccountTypeEnum

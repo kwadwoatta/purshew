@@ -1,9 +1,9 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
-import { InferSelectModel } from 'drizzle-orm'
+import { InferInsertModel } from 'drizzle-orm'
 import { users } from 'src/drizzle/schema'
 
 @ObjectType()
-export class User implements InferSelectModel<typeof users> {
+export class User implements InferInsertModel<typeof users> {
   @Field(() => String)
   hash: string
 
