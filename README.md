@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./assets/morgan.png" width="200" alt="Purshew Logo" /></a>
+  <img src="./assets/purshew.png" width="200" alt="Purshew Logo" /></a>
 </p>
 
 <p align="center">Purshew: Chase Bank opened a branch in +234</p>
