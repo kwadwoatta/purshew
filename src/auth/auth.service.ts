@@ -10,7 +10,7 @@ import * as argon from 'argon2'
 import { eq } from 'drizzle-orm'
 import { AccountTypeEnum } from 'src/common'
 import { DrizzleService } from 'src/drizzle/drizzle.service'
-import { accounts, users } from 'src/drizzle/schemas'
+import { accounts, users } from 'src/drizzle/schema'
 import { User } from 'src/user/models/user.model'
 import { AuthInput } from './dto'
 

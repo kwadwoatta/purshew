@@ -8,8 +8,8 @@ import {
   accounts,
   transactionTemplates,
   transactions,
-} from 'src/drizzle/schemas'
-import * as accountsSchema from 'src/drizzle/schemas/accounts/account-types'
+} from 'src/drizzle/schema'
+import * as accountsSchema from 'src/drizzle/schema/accounts/account-types'
 import { TransactionTemplate } from './models/transaction-template.model'
 
 const balancingRules = {

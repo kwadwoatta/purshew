@@ -1,6 +1,6 @@
 import { Field, ID, InputType } from '@nestjs/graphql'
 import { InferInsertModel } from 'drizzle-orm'
-import { transactions } from 'src/drizzle/schemas'
+import { transactions } from 'src/drizzle/schema'
 
 @InputType()
 export class CreateTransactionInput

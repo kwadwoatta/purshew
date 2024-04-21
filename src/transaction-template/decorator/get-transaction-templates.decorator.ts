@@ -1,6 +1,6 @@
 import { createParamDecorator } from '@nestjs/common'
 
-import { TransactionTemplateTypeEnum } from 'src/drizzle/schemas'
+import { TransactionTemplateTypeEnum } from 'src/common'
 import { GetTransactionTemplatePipe } from '../pipe/get-transaction-template.pipe'
 
 const GetTransactionTemplateType = createParamDecorator(

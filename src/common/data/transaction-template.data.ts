@@ -1,5 +1,5 @@
 import { ExtractTablesWithRelations } from 'drizzle-orm'
-import * as schema from 'src/drizzle/schemas'
+import * as schema from 'src/drizzle/schema'
 import { TransactionTemplateTypeEnum } from '../enum/transaction-template.enum'
 
 export const transactionTemplatesData: {

@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException, PipeTransform } from '@nestjs/common'
 import { and, eq } from 'drizzle-orm'
 import { AccountTypeEnum } from 'src/common'
-import { accounts } from 'src/drizzle/schemas'
+import { accounts } from 'src/drizzle/schema'
 import { User } from 'src/user/models/user.model'
 import { DrizzleService } from '../../drizzle/drizzle.service'
 

@@ -1,8 +1,6 @@
 import { Injectable, NotFoundException, PipeTransform } from '@nestjs/common'
-import {
-  TransactionTemplateTypeEnum,
-  transactionTemplates,
-} from 'src/drizzle/schemas'
+import { TransactionTemplateTypeEnum } from 'src/common'
+import { transactionTemplates } from 'src/drizzle/schema'
 import { DrizzleService } from '../../drizzle/drizzle.service'
 
 @Injectable()

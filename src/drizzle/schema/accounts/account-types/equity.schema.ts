@@ -10,7 +10,7 @@ import {
   AccountTypeEnum,
   accountTypeEnum,
   transactionTypeEnum,
-} from 'src/common'
+} from 'src/common/enum'
 import { accounts } from '..'
 import { users } from '../../users'
 

@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { and, eq } from 'drizzle-orm'
-import { accountsReceivable } from 'src/drizzle/schemas'
+import { accountsReceivable } from 'src/drizzle/schema'
 
 import { DrizzleService } from 'src/drizzle/drizzle.service'
 

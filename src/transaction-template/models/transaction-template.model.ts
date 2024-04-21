@@ -1,10 +1,7 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
 import { InferSelectModel } from 'drizzle-orm'
-import { AccountTypeEnum } from 'src/common'
-import {
-  TransactionTemplateTypeEnum,
-  transactionTemplates,
-} from 'src/drizzle/schemas'
+import { AccountTypeEnum, TransactionTemplateTypeEnum } from 'src/common'
+import { transactionTemplates } from 'src/drizzle/schema'
 
 @ObjectType()
 export class TransactionTemplate

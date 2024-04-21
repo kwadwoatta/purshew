@@ -4,7 +4,7 @@ import { PassportStrategy } from '@nestjs/passport'
 import { eq } from 'drizzle-orm'
 import { ExtractJwt, Strategy } from 'passport-jwt'
 import { DrizzleService } from 'src/drizzle/drizzle.service'
-import { users } from 'src/drizzle/schemas'
+import { users } from 'src/drizzle/schema'
 import { User } from 'src/user/models/user.model'
 
 @Injectable()

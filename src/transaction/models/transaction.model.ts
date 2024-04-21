@@ -1,6 +1,6 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
 import { InferSelectModel } from 'drizzle-orm'
-import { transactions } from 'src/drizzle/schemas'
+import { transactions } from 'src/drizzle/schema'
 
 @ObjectType()
 export class Transaction implements InferSelectModel<typeof transactions> {

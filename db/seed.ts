@@ -1,11 +1,9 @@
 import 'dotenv/config'
 import { drizzle } from 'drizzle-orm/node-postgres'
 import { Client } from 'pg'
-import * as schema from 'src/drizzle/schemas'
-import {
-  transactionTemplates,
-  transactionTemplatesData,
-} from 'src/drizzle/schemas'
+import { transactionTemplatesData } from 'src/common'
+import * as schema from 'src/drizzle/schema'
+import { transactionTemplates } from 'src/drizzle/schema'
 
 async function main() {
   const client = new Client({ connectionString: process.env.DB_URL })

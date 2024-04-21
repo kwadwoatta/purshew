@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { and, eq } from 'drizzle-orm'
 import { DrizzleService } from 'src/drizzle/drizzle.service'
-import { transactions } from 'src/drizzle/schemas'
+import { transactions } from 'src/drizzle/schema'
 import { CreateTransactionInput } from './dto/create-transaction.input'
 import { UpdateTransactionInput } from './dto/update-transaction.input'
 

@@ -1,5 +1,5 @@
 import { Field, Float, InputType } from '@nestjs/graphql'
-import { TransactionTemplateTypeEnum } from 'src/drizzle/schemas'
+import { TransactionTemplateTypeEnum } from 'src/common'
 
 @InputType()
 export class ExecuteTransactionTemplateInput {

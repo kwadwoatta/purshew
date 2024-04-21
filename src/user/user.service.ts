@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { eq } from 'drizzle-orm'
 import { DrizzleService } from 'src/drizzle/drizzle.service'
-import { users } from 'src/drizzle/schemas'
+import { users } from 'src/drizzle/schema'
 import { UpdateUserInput } from './dto'
 import { User } from './models/user.model'
 

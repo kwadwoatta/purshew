@@ -1,7 +1,7 @@
 import { Field, ID, InputType } from '@nestjs/graphql'
 import { InferInsertModel } from 'drizzle-orm'
 import { AccountTypeEnum } from 'src/common'
-import { accounts } from 'src/drizzle/schemas'
+import { accounts } from 'src/drizzle/schema'
 
 @InputType()
 export class CreateAccountInput implements InferInsertModel<typeof accounts> {

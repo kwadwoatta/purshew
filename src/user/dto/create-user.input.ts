@@ -1,6 +1,6 @@
 import { Field, InputType } from '@nestjs/graphql'
 import { InferInsertModel } from 'drizzle-orm'
-import { users } from 'src/drizzle/schemas'
+import { users } from 'src/drizzle/schema'
 
 @InputType()
 export class CreateUserInput implements InferInsertModel<typeof users> {

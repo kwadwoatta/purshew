@@ -1,8 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { NodePgDatabase } from 'drizzle-orm/node-postgres';
-import { migrate } from 'drizzle-orm/node-postgres/migrator';
-import { DrizzleAsyncProvider } from './drizzle.provider';
-import * as schema from './schemas';
+import { Inject, Injectable } from '@nestjs/common'
+import { NodePgDatabase } from 'drizzle-orm/node-postgres'
+import { migrate } from 'drizzle-orm/node-postgres/migrator'
+import { DrizzleAsyncProvider } from './drizzle.provider'
+import * as schema from './schema'
 
 @Injectable()
 export class DrizzleService {
@@ -12,7 +12,7 @@ export class DrizzleService {
   ) {}
 
   async migrate() {
-    await migrate(this.db, { migrationsFolder: 'db/migrations' });
+    await migrate(this.db, { migrationsFolder: 'db/migrations' })
   }
 
   // async cleanDB() {

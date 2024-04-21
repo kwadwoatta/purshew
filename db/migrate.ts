@@ -2,7 +2,7 @@ import 'dotenv/config'
 import { drizzle } from 'drizzle-orm/node-postgres'
 import { migrate } from 'drizzle-orm/node-postgres/migrator'
 import { Client } from 'pg'
-import * as schema from 'src/drizzle/schemas'
+import * as schema from 'src/drizzle/schema'
 
 async function main() {
   const client = new Client({
