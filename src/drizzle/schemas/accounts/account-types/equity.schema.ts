@@ -6,9 +6,13 @@ import {
   timestamp,
   uuid,
 } from 'drizzle-orm/pg-core'
+import {
+  AccountTypeEnum,
+  accountTypeEnum,
+  transactionTypeEnum,
+} from 'src/common'
 import { accounts } from '..'
 import { users } from '../../users'
-import { AccountTypeEnum, accountTypeEnum } from '../account-type.enum'
 
 export const capital = pgTable('capital', {
   id: uuid('id').notNull().defaultRandom().primaryKey(),
@@ -17,6 +21,7 @@ export const capital = pgTable('capital', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 
   amount: decimal('amount').default('0.0').notNull(),
+  transactionType: transactionTypeEnum('transaction_type').notNull(),
 
   capitalName: text('capital_name'),
   accountType: accountTypeEnum('account_type')
@@ -40,6 +45,7 @@ export const commonStock = pgTable('common_stock', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 
   amount: decimal('amount').default('0.0').notNull(),
+  transactionType: transactionTypeEnum('transaction_type').notNull(),
 
   itemName: text('item_name'),
   itemDescription: text('item_description'),
@@ -67,6 +73,7 @@ export const retainedEarnings = pgTable('retained_earnings', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 
   amount: decimal('amount').default('0.0').notNull(),
+  transactionType: transactionTypeEnum('transaction_type').notNull(),
 
   earnings: decimal('earnings'),
   accountType: accountTypeEnum('account_type')

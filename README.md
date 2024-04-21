@@ -44,7 +44,7 @@
 5. start the postgres (database) service
 
     ```bash
-    docker compose up dev-db
+    docker compose up -d
     ```
 
 6. generate SQL migrations for the drizzle schema definitions

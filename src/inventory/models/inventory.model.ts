@@ -1,6 +1,8 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
 import { InferSelectModel } from 'drizzle-orm'
-import { AccountTypeEnum, inventory } from 'src/drizzle/schemas'
+import { AccountTypeEnum } from 'src/common'
+import { TransactionTypeEnum } from 'src/common/enum/transaction-type.enum'
+import { inventory } from 'src/drizzle/schemas'
 
 @ObjectType()
 export class Inventory implements InferSelectModel<typeof inventory> {
@@ -39,4 +41,7 @@ export class Inventory implements InferSelectModel<typeof inventory> {
 
   @Field()
   amount: string
+
+  @Field(() => TransactionTypeEnum)
+  transactionType: TransactionTypeEnum
 }

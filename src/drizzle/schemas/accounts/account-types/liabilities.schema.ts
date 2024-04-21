@@ -6,9 +6,13 @@ import {
   timestamp,
   uuid,
 } from 'drizzle-orm/pg-core'
+import {
+  AccountTypeEnum,
+  accountTypeEnum,
+  transactionTypeEnum,
+} from 'src/common'
 import { accounts } from '..'
 import { users } from '../../users'
-import { AccountTypeEnum, accountTypeEnum } from '../account-type.enum'
 
 export const creditCardPayable = pgTable('credit_card_payable', {
   id: uuid('id').notNull().defaultRandom().primaryKey(),
@@ -17,6 +21,7 @@ export const creditCardPayable = pgTable('credit_card_payable', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 
   amount: decimal('amount').default('0.0').notNull(),
+  transactionType: transactionTypeEnum('transaction_type').notNull(),
 
   cardName: text('card_name'),
   cardValue: decimal('card_value'),
@@ -41,6 +46,7 @@ export const accountsPayable = pgTable('accounts_payable', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 
   amount: decimal('amount').default('0.0').notNull(),
+  transactionType: transactionTypeEnum('transaction_type').notNull(),
 
   itemName: text('item_name'),
   itemDescription: text('item_description'),
@@ -68,6 +74,7 @@ export const loanPayable = pgTable('loan_payable', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 
   amount: decimal('amount').default('0.0').notNull(),
+  transactionType: transactionTypeEnum('transaction_type').notNull(),
 
   loanName: text('loan_name'),
   loanValue: decimal('loan_value'),
@@ -92,6 +99,7 @@ export const loans = pgTable('loans', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 
   amount: decimal('amount').default('0.0').notNull(),
+  transactionType: transactionTypeEnum('transaction_type').notNull(),
 
   lenderId: uuid('lender_id').references(() => users.id),
   accountType: accountTypeEnum('account_type')
@@ -117,6 +125,7 @@ export const bondsPayable = pgTable('bonds_payable', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 
   amount: decimal('amount').default('0.0').notNull(),
+  transactionType: transactionTypeEnum('transaction_type').notNull(),
 
   accountType: accountTypeEnum('account_type')
     .default(AccountTypeEnum.liability)
@@ -142,6 +151,7 @@ export const unearnedRevenue = pgTable('unearned_revenue', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 
   amount: decimal('amount').default('0.0').notNull(),
+  transactionType: transactionTypeEnum('transaction_type').notNull(),
 
   accountType: accountTypeEnum('account_type')
     .default(AccountTypeEnum.liability)

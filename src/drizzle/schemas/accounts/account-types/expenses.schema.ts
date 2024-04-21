@@ -6,9 +6,14 @@ import {
   timestamp,
   uuid,
 } from 'drizzle-orm/pg-core'
+import {
+  AccountTypeEnum,
+  accountTypeEnum,
+  transactionTypeEnum,
+} from 'src/common'
+
 import { accounts } from '..'
 import { users } from '../../users'
-import { AccountTypeEnum, accountTypeEnum } from '../account-type.enum'
 
 export const generalExpense = pgTable('general_expense', {
   id: uuid('id').notNull().defaultRandom().primaryKey(),
@@ -17,6 +22,7 @@ export const generalExpense = pgTable('general_expense', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 
   amount: decimal('amount').default('0.0').notNull(),
+  transactionType: transactionTypeEnum('transaction_type').notNull(),
 
   expenseName: text('expense_name'),
   expenseValue: decimal('expense_value'),
@@ -41,6 +47,7 @@ export const salaryExpense = pgTable('salary_expense', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 
   amount: decimal('amount').default('0.0').notNull(),
+  transactionType: transactionTypeEnum('transaction_type').notNull(),
 
   expenseName: text('expense_name'),
   expenseValue: decimal('expense_value'),
@@ -65,6 +72,7 @@ export const costOfGoodsSold = pgTable('cost_of_goods_sold', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 
   amount: decimal('amount').default('0.0').notNull(),
+  transactionType: transactionTypeEnum('transaction_type').notNull(),
 
   itemName: text('item_name'),
   itemDescription: text('item_description'),
@@ -92,6 +100,7 @@ export const wagesExpense = pgTable('wages_expense', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 
   amount: decimal('amount').default('0.0').notNull(),
+  transactionType: transactionTypeEnum('transaction_type').notNull(),
 
   wages: decimal('wages'),
   accountType: accountTypeEnum('account_type')
@@ -117,6 +126,7 @@ export const rentExpense = pgTable('rent_expense', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 
   amount: decimal('amount').default('0.0').notNull(),
+  transactionType: transactionTypeEnum('transaction_type').notNull(),
 
   rent: decimal('rent'),
   accountType: accountTypeEnum('account_type')
@@ -142,6 +152,7 @@ export const interestExpense = pgTable('interest_expense', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 
   amount: decimal('amount').default('0.0').notNull(),
+  transactionType: transactionTypeEnum('transaction_type').notNull(),
 
   interest: decimal('interest'),
   accountType: accountTypeEnum('account_type')

@@ -1,6 +1,6 @@
 import { ExtractTablesWithRelations } from 'drizzle-orm'
 import * as schema from 'src/drizzle/schemas'
-import { TransactionTemplateTypeEnum } from './transaction-template.enum'
+import { TransactionTemplateTypeEnum } from '../../../common/enum/transaction-template.enum'
 
 export const transactionTemplatesData: {
   [key in TransactionTemplateTypeEnum]: {

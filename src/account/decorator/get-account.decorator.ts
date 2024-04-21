@@ -1,6 +1,6 @@
 import { ExecutionContext, createParamDecorator } from '@nestjs/common'
 import { GqlExecutionContext } from '@nestjs/graphql'
-import { AccountTypeEnum } from 'src/drizzle/schemas'
+import { AccountTypeEnum } from 'src/common'
 import { GetAccountPipe } from '../pipe/get-account.pipe'
 
 const GetAccountId = createParamDecorator(

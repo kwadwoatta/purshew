@@ -1,7 +1,7 @@
 import { relations } from 'drizzle-orm'
 import { decimal, pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core'
+import { AccountTypeEnum, accountTypeEnum } from 'src/common'
 import { transactions, users } from '..'
-import { AccountTypeEnum, accountTypeEnum } from './account-type.enum'
 
 export const accounts = pgTable('accounts', {
   id: uuid('id').notNull().defaultRandom().primaryKey(),

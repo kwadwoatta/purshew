@@ -1,6 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { ExtractTablesWithRelations, and, eq, sql } from 'drizzle-orm'
 import { Account } from 'src/account/models/account.model'
+import { AccountTypeEnum } from 'src/common'
+import { TransactionTypeEnum } from 'src/common/enum'
 import { DrizzleService } from 'src/drizzle/drizzle.service'
 import {
   accounts,
@@ -9,6 +11,29 @@ import {
 } from 'src/drizzle/schemas'
 import * as accountsSchema from 'src/drizzle/schemas/accounts/account-types'
 import { TransactionTemplate } from './models/transaction-template.model'
+
+const balancingRules = {
+  [AccountTypeEnum.asset]: {
+    [TransactionTypeEnum.credit]: '-',
+    [TransactionTypeEnum.debit]: '+',
+  },
+  [AccountTypeEnum.liability]: {
+    [TransactionTypeEnum.credit]: '+',
+    [TransactionTypeEnum.debit]: '-',
+  },
+  [AccountTypeEnum.equity]: {
+    [TransactionTypeEnum.credit]: '+',
+    [TransactionTypeEnum.debit]: '-',
+  },
+  [AccountTypeEnum.revenue]: {
+    [TransactionTypeEnum.credit]: '+',
+    [TransactionTypeEnum.debit]: '-',
+  },
+  [AccountTypeEnum.expense]: {
+    [TransactionTypeEnum.credit]: '-',
+    [TransactionTypeEnum.debit]: '+',
+  },
+}
 
 @Injectable()
 export class TransactionTemplateService {
@@ -34,11 +59,16 @@ export class TransactionTemplateService {
     const debitAccountTable = accountsSchema[debitAccountName]
     const creditAccountTable = accountsSchema[creditAccountName]
 
+    const debitAccountAccountType = debitAccountTable.accountType
+      .default as AccountTypeEnum
+    const creditAccountAccountType = creditAccountTable.accountType
+      .default as AccountTypeEnum
+
     const accountIdForDebit = userAccounts.find(
-      (a) => a.type === debitAccountTable.accountType.default,
+      (a) => a.type === debitAccountAccountType,
     ).id
     const accountIdForCredit = userAccounts.find(
-      (a) => a.type === creditAccountTable.accountType.default,
+      (a) => a.type === creditAccountAccountType,
     ).id
 
     let join: JSON
@@ -51,6 +81,7 @@ export class TransactionTemplateService {
             ownerId: userId,
             amount: String(amount),
             accountId: accountIdForDebit,
+            transactionType: TransactionTypeEnum.debit,
           })
           .returning()
       )[0].id
@@ -62,6 +93,7 @@ export class TransactionTemplateService {
             ownerId: userId,
             amount: String(amount),
             accountId: accountIdForCredit,
+            transactionType: TransactionTypeEnum.credit,
           })
           .returning()
       )[0].id
@@ -89,11 +121,17 @@ export class TransactionTemplateService {
           .returning()
       )[0]
 
+      console.log({
+        symbol: String(
+          balancingRules[debitAccountAccountType]['debit'] + amount,
+        ),
+      })
+
       // update balance of debit account (asset, liability, equity, revenue)
       await tx
         .update(accounts)
         .set({
-          balance: sql`${accounts.balance} + ${String(amount)}`,
+          balance: sql`${accounts.balance} + ${String(balancingRules[debitAccountAccountType]['debit'] + amount)}`,
         })
         .where(
           and(eq(accounts.ownerId, userId), eq(accounts.id, accountIdForDebit)),
@@ -103,7 +141,7 @@ export class TransactionTemplateService {
       await tx
         .update(accounts)
         .set({
-          balance: sql`${accounts.balance} - ${String(amount)}`,
+          balance: sql`${accounts.balance} + ${String(balancingRules[creditAccountAccountType]['credit'] + amount)}`,
         })
         .where(
           and(

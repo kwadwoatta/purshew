@@ -1,6 +1,6 @@
 import { pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core'
-import { accountTypeEnum } from '../accounts/account-type.enum'
-import { transactionTemplateTypeEnum } from './transaction-template.enum'
+import { accountTypeEnum } from '../../../common/enum/account-type.enum'
+import { transactionTemplateTypeEnum } from '../../../common/enum/transaction-template.enum'
 
 export const transactionTemplates = pgTable('transaction_templates', {
   id: uuid('id').notNull().defaultRandom().primaryKey(),

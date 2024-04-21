@@ -34,6 +34,7 @@ type AccountsPayable {
   purchasePrice: String!
   quantity: Int!
   salePrice: String!
+  transactionType: TransactionTypeEnum!
   updatedAt: DateTime!
 }
 
@@ -45,6 +46,7 @@ type AccountsReceivable {
   customerId: ID!
   id: ID!
   ownerId: ID!
+  transactionType: TransactionTypeEnum!
   updatedAt: DateTime!
 }
 
@@ -73,6 +75,7 @@ input CreateAccountsPayableInput {
   """GL Account ID"""
   accountId: ID!
   accountType: AccountTypeEnum!
+  amount: String
   createdAt: DateTime!
   id: ID!
   itemDescription: String!
@@ -81,6 +84,7 @@ input CreateAccountsPayableInput {
   purchasePrice: String!
   quantity: Float!
   salePrice: String!
+  transactionType: TransactionTypeEnum!
   updatedAt: DateTime!
 }
 
@@ -89,6 +93,7 @@ input CreateAccountsReceivableInput {
   amount: String!
   customerId: String!
   ownerId: String!
+  transactionType: TransactionTypeEnum!
 }
 
 input CreateInventoryInput {
@@ -102,6 +107,7 @@ input CreateInventoryInput {
   purchasePrice: String!
   quantity: Float!
   salePrice: String!
+  transactionType: TransactionTypeEnum!
   updatedAt: DateTime!
 }
 
@@ -143,6 +149,7 @@ type Inventory {
   purchasePrice: String!
   quantity: Float!
   salePrice: String!
+  transactionType: TransactionTypeEnum!
   updatedAt: DateTime!
 }
 
@@ -235,10 +242,16 @@ enum TransactionTemplateTypeEnum {
   sales_receipt
 }
 
+enum TransactionTypeEnum {
+  credit
+  debit
+}
+
 input UpdateAccountsPayableInput {
   """GL Account ID"""
   accountId: ID
   accountType: AccountTypeEnum
+  amount: String
   createdAt: DateTime
   id: String!
   itemDescription: String
@@ -247,6 +260,7 @@ input UpdateAccountsPayableInput {
   purchasePrice: String
   quantity: Float
   salePrice: String
+  transactionType: TransactionTypeEnum
   updatedAt: DateTime
 }
 
@@ -256,6 +270,7 @@ input UpdateAccountsReceivableInput {
   customerId: String
   id: String!
   ownerId: String
+  transactionType: TransactionTypeEnum
 }
 
 input UpdateInventoryInput {
@@ -269,6 +284,7 @@ input UpdateInventoryInput {
   purchasePrice: String
   quantity: Float
   salePrice: String
+  transactionType: TransactionTypeEnum
   updatedAt: DateTime
 }
 
