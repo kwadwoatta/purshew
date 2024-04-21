@@ -83,7 +83,13 @@
     }
     ```
 
-13. execute template for Kwame's initial opening balance
+13. copy access token and set as Header for subsequent requests
+
+    ```graphql
+    Authorization: Bearer {your access token}
+    ```
+
+14. execute template for Kwame's initial opening balance
 
     ```graphql
     mutation {
@@ -96,7 +102,7 @@
     }
     ```
 
-14. execute template for Kwame's purchase of GHS 20,000 worth of System Units
+15. execute template for Kwame's purchase of GHS 20,000 worth of System Units
 
     ```graphql
     mutation {
@@ -109,7 +115,7 @@
     }
     ```
 
-15. execute template for Kwame's sale of GHS 10,000 worth of System Units
+16. execute template for Kwame's sale of GHS 10,000 worth of System Units
 
     ```graphql
     mutation {
