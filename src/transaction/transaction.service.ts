@@ -1,5 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
-import { ExtractTablesWithRelations, and, eq, sql } from 'drizzle-orm'
+import {
+  Injectable,
+  NotAcceptableException,
+  NotFoundException,
+} from '@nestjs/common'
+import { ExtractTablesWithRelations, and, desc, eq, sql } from 'drizzle-orm'
 import { Account } from 'src/account/models/account.model'
 import { AccountTypeEnum } from 'src/common'
 import { TransactionTypeEnum } from 'src/common/enum'
@@ -8,7 +12,11 @@ import { accounts, transactions } from 'src/drizzle/schema'
 import * as accountsSchema from 'src/drizzle/schema/accounts/account-types'
 import { UpdateTransactionInput } from './dto/update-transaction.input'
 
-const balancingRules = {
+const balancingRules: {
+  [key in AccountTypeEnum]: {
+    [key in TransactionTypeEnum]: '+' | '-'
+  }
+} = {
   [AccountTypeEnum.asset]: {
     [TransactionTypeEnum.credit]: '-',
     [TransactionTypeEnum.debit]: '+',
@@ -65,6 +73,9 @@ export class TransactionService {
     let join: JSON
 
     await this.drizzle.db.transaction(async (tx) => {
+      const debitOperation = balancingRules[debitAccountAccountType]['debit']
+      const creditOperation = balancingRules[creditAccountAccountType]['credit']
+
       const debitAccountId = (
         await tx
           .insert(debitAccountTable)
@@ -112,11 +123,53 @@ export class TransactionService {
           .returning()
       )[0]
 
+      if (debitOperation === '-') {
+        const newest = (
+          await tx
+            .select()
+            .from(accounts)
+            .where(
+              and(
+                eq(accounts.ownerId, userId),
+                eq(accounts.id, accountIdForDebit),
+              ),
+            )
+            .orderBy(desc(accounts.createdAt))
+            .limit(1)
+        )[0]
+
+        if (newest && newest.balance < String(amount)) {
+          throw new NotAcceptableException(
+            `Your ${debitAccountName} balance is lower than ${amount}. CANNOT DEBIT!`,
+          )
+        }
+      } else if (creditOperation === '-') {
+        const newest = (
+          await tx
+            .select()
+            .from(accounts)
+            .where(
+              and(
+                eq(accounts.ownerId, userId),
+                eq(accounts.id, accountIdForCredit),
+              ),
+            )
+            .orderBy(desc(accounts.createdAt))
+            .limit(1)
+        )[0]
+
+        if (newest && newest.balance < String(amount)) {
+          throw new NotAcceptableException(
+            `Your ${creditAccountName} balance is lower than ${amount}. CANNOT CREDIT!`,
+          )
+        }
+      }
+
       // update balance of debit account (asset, liability, equity, revenue)
       await tx
         .update(accounts)
         .set({
-          balance: sql`${accounts.balance} + ${String(balancingRules[debitAccountAccountType]['debit'] + amount)}`,
+          balance: sql`${accounts.balance} + ${String(debitOperation + amount)}`,
         })
         .where(
           and(eq(accounts.ownerId, userId), eq(accounts.id, accountIdForDebit)),
@@ -126,7 +179,7 @@ export class TransactionService {
       await tx
         .update(accounts)
         .set({
-          balance: sql`${accounts.balance} + ${String(balancingRules[creditAccountAccountType]['credit'] + amount)}`,
+          balance: sql`${accounts.balance} + ${String(creditOperation + amount)}`,
         })
         .where(
           and(
