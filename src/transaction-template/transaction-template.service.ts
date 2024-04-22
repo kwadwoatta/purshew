@@ -1,50 +1,48 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { ExtractTablesWithRelations, and, eq, sql } from 'drizzle-orm'
+import { ExtractTablesWithRelations, and, eq } from 'drizzle-orm'
 import { Account } from 'src/account/models/account.model'
-import { AccountTypeEnum } from 'src/common'
-import { TransactionTypeEnum } from 'src/common/enum'
 import { DrizzleService } from 'src/drizzle/drizzle.service'
-import {
-  accounts,
-  transactionTemplates,
-  transactions,
-} from 'src/drizzle/schema'
+import { transactionTemplates } from 'src/drizzle/schema'
 import * as accountsSchema from 'src/drizzle/schema/accounts/account-types'
+import { TransactionService } from 'src/transaction/transaction.service'
 import { TransactionTemplate } from './models/transaction-template.model'
 
-const balancingRules = {
-  [AccountTypeEnum.asset]: {
-    [TransactionTypeEnum.credit]: '-',
-    [TransactionTypeEnum.debit]: '+',
-  },
-  [AccountTypeEnum.liability]: {
-    [TransactionTypeEnum.credit]: '+',
-    [TransactionTypeEnum.debit]: '-',
-  },
-  [AccountTypeEnum.equity]: {
-    [TransactionTypeEnum.credit]: '+',
-    [TransactionTypeEnum.debit]: '-',
-  },
-  [AccountTypeEnum.revenue]: {
-    [TransactionTypeEnum.credit]: '+',
-    [TransactionTypeEnum.debit]: '-',
-  },
-  [AccountTypeEnum.expense]: {
-    [TransactionTypeEnum.credit]: '-',
-    [TransactionTypeEnum.debit]: '+',
-  },
-}
+// const balancingRules = {
+//   [AccountTypeEnum.asset]: {
+//     [TransactionTypeEnum.credit]: '-',
+//     [TransactionTypeEnum.debit]: '+',
+//   },
+//   [AccountTypeEnum.liability]: {
+//     [TransactionTypeEnum.credit]: '+',
+//     [TransactionTypeEnum.debit]: '-',
+//   },
+//   [AccountTypeEnum.equity]: {
+//     [TransactionTypeEnum.credit]: '+',
+//     [TransactionTypeEnum.debit]: '-',
+//   },
+//   [AccountTypeEnum.revenue]: {
+//     [TransactionTypeEnum.credit]: '+',
+//     [TransactionTypeEnum.debit]: '-',
+//   },
+//   [AccountTypeEnum.expense]: {
+//     [TransactionTypeEnum.credit]: '-',
+//     [TransactionTypeEnum.debit]: '+',
+//   },
+// }
 
 @Injectable()
 export class TransactionTemplateService {
-  constructor(private readonly drizzle: DrizzleService) {}
+  constructor(
+    private readonly drizzle: DrizzleService,
+    private readonly txService: TransactionService,
+  ) {}
 
   async execute(
     amount: number,
     txTemplate: TransactionTemplate,
     userId: string,
     userAccounts: Account[],
-  ) {
+  ): Promise<JSON> {
     const { description } = txTemplate
 
     type AccountTypeAccountKey = keyof ExtractTablesWithRelations<
@@ -56,111 +54,120 @@ export class TransactionTemplateService {
     const debitAccountName: AccountTypeAccountKey =
       txTemplate.debitAccountName as any
 
-    const debitAccountTable = accountsSchema[debitAccountName]
-    const creditAccountTable = accountsSchema[creditAccountName]
+    return this.txService.create(
+      amount,
+      creditAccountName,
+      debitAccountName,
+      userId,
+      userAccounts,
+      description,
+    )
 
-    const debitAccountAccountType = debitAccountTable.accountType
-      .default as AccountTypeEnum
-    const creditAccountAccountType = creditAccountTable.accountType
-      .default as AccountTypeEnum
+    // const debitAccountTable = accountsSchema[debitAccountName]
+    // const creditAccountTable = accountsSchema[creditAccountName]
 
-    const accountIdForDebit = userAccounts.find(
-      (a) => a.type === debitAccountAccountType,
-    ).id
-    const accountIdForCredit = userAccounts.find(
-      (a) => a.type === creditAccountAccountType,
-    ).id
+    // const debitAccountAccountType = debitAccountTable.accountType
+    //   .default as AccountTypeEnum
+    // const creditAccountAccountType = creditAccountTable.accountType
+    //   .default as AccountTypeEnum
 
-    let join: JSON
+    // const accountIdForDebit = userAccounts.find(
+    //   (a) => a.type === debitAccountAccountType,
+    // ).id
+    // const accountIdForCredit = userAccounts.find(
+    //   (a) => a.type === creditAccountAccountType,
+    // ).id
 
-    await this.drizzle.db.transaction(async (tx) => {
-      const debitAccountId = (
-        await tx
-          .insert(debitAccountTable)
-          .values({
-            ownerId: userId,
-            amount: String(amount),
-            accountId: accountIdForDebit,
-            transactionType: TransactionTypeEnum.debit,
-          })
-          .returning()
-      )[0].id
+    // let join: JSON
 
-      const creditAccountId = (
-        await tx
-          .insert(creditAccountTable)
-          .values({
-            ownerId: userId,
-            amount: String(amount),
-            accountId: accountIdForCredit,
-            transactionType: TransactionTypeEnum.credit,
-          })
-          .returning()
-      )[0].id
+    // await this.drizzle.db.transaction(async (tx) => {
+    //   const debitAccountId = (
+    //     await tx
+    //       .insert(debitAccountTable)
+    //       .values({
+    //         ownerId: userId,
+    //         amount: String(amount),
+    //         accountId: accountIdForDebit,
+    //         transactionType: TransactionTypeEnum.debit,
+    //       })
+    //       .returning()
+    //   )[0].id
 
-      const completedTransaction = (
-        await tx
-          .insert(transactions)
-          .values({
-            description,
-            ownerId: userId,
+    //   const creditAccountId = (
+    //     await tx
+    //       .insert(creditAccountTable)
+    //       .values({
+    //         ownerId: userId,
+    //         amount: String(amount),
+    //         accountId: accountIdForCredit,
+    //         transactionType: TransactionTypeEnum.credit,
+    //       })
+    //       .returning()
+    //   )[0].id
 
-            debitAccountId,
-            creditAccountId,
+    //   const completedTransaction = (
+    //     await tx
+    //       .insert(transactions)
+    //       .values({
+    //         description,
+    //         ownerId: userId,
 
-            debitAccountAccountId: accountIdForDebit,
-            creditAccountAccountId: accountIdForCredit,
+    //         debitAccountId,
+    //         creditAccountId,
 
-            debitAccountName,
-            creditAccountName,
+    //         debitAccountAccountId: accountIdForDebit,
+    //         creditAccountAccountId: accountIdForCredit,
 
-            amount: String(amount),
-            debitAmount: String(amount),
-            creditAmount: String(amount),
-          })
-          .returning()
-      )[0]
+    //         debitAccountName,
+    //         creditAccountName,
 
-      // update balance of debit account (asset, liability, equity, revenue)
-      await tx
-        .update(accounts)
-        .set({
-          balance: sql`${accounts.balance} + ${String(balancingRules[debitAccountAccountType]['debit'] + amount)}`,
-        })
-        .where(
-          and(eq(accounts.ownerId, userId), eq(accounts.id, accountIdForDebit)),
-        )
+    //         amount: String(amount),
+    //         debitAmount: String(amount),
+    //         creditAmount: String(amount),
+    //       })
+    //       .returning()
+    //   )[0]
 
-      // update balance of credit account (asset, liability, equity, revenue)
-      await tx
-        .update(accounts)
-        .set({
-          balance: sql`${accounts.balance} + ${String(balancingRules[creditAccountAccountType]['credit'] + amount)}`,
-        })
-        .where(
-          and(
-            eq(accounts.ownerId, userId),
-            eq(accounts.id, accountIdForCredit),
-          ),
-        )
+    //   // update balance of debit account (asset, liability, equity, revenue)
+    //   await tx
+    //     .update(accounts)
+    //     .set({
+    //       balance: sql`${accounts.balance} + ${String(balancingRules[debitAccountAccountType]['debit'] + amount)}`,
+    //     })
+    //     .where(
+    //       and(eq(accounts.ownerId, userId), eq(accounts.id, accountIdForDebit)),
+    //     )
 
-      const j = await tx
-        .select()
-        .from(transactions)
-        .where(eq(transactions.id, completedTransaction.id))
-        .fullJoin(
-          debitAccountTable,
-          eq(debitAccountTable.id, transactions.debitAccountId),
-        )
-        .fullJoin(
-          creditAccountTable,
-          eq(creditAccountTable.id, transactions.creditAccountId),
-        )
+    //   // update balance of credit account (asset, liability, equity, revenue)
+    //   await tx
+    //     .update(accounts)
+    //     .set({
+    //       balance: sql`${accounts.balance} + ${String(balancingRules[creditAccountAccountType]['credit'] + amount)}`,
+    //     })
+    //     .where(
+    //       and(
+    //         eq(accounts.ownerId, userId),
+    //         eq(accounts.id, accountIdForCredit),
+    //       ),
+    //     )
 
-      join = JSON.parse(JSON.stringify(j))
-    })
+    //   const j = await tx
+    //     .select()
+    //     .from(transactions)
+    //     .where(eq(transactions.id, completedTransaction.id))
+    //     .fullJoin(
+    //       debitAccountTable,
+    //       eq(debitAccountTable.id, transactions.debitAccountId),
+    //     )
+    //     .fullJoin(
+    //       creditAccountTable,
+    //       eq(creditAccountTable.id, transactions.creditAccountId),
+    //     )
 
-    return join
+    //   join = JSON.parse(JSON.stringify(j))
+    // })
+
+    // return join
   }
 
   findAll() {
