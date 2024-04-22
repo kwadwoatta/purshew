@@ -58,7 +58,7 @@
 9. seed the transaction templates
 
     ```bash
-    pnpm tsx seed/migrate.ts
+    pnpm tsx db/seed.ts
     ```
 
 10. (optional) start the drizzle-kit studio to interact with your database
