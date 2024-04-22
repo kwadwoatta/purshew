@@ -8,7 +8,6 @@ type Account {
   description: String!
   id: ID!
   name: String!
-  owner: User!
   ownerId: ID!
   type: AccountTypeEnum!
   updatedAt: DateTime!
@@ -180,7 +179,7 @@ type Query {
   accountsPayables: [AccountsPayable!]!
   accountsReceivable(id: ID!): AccountsReceivable!
   accountsReceivables: [AccountsReceivable!]!
-  generalLedgerAccounts: [Account!]!
+  generalLedgerAccounts: JSON!
   inventoryItem(id: ID!): Inventory!
   inventoryItems: [Inventory!]!
   transaction(id: ID!): Transaction!

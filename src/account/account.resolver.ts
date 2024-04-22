@@ -1,5 +1,6 @@
 import { UseGuards } from '@nestjs/common'
 import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql'
+import GraphQLJSON from 'graphql-type-json'
 import { GetUser } from 'src/auth/decorator'
 import { JwtGuard } from 'src/auth/guard'
 import { AccountTypeEnum } from 'src/common'
@@ -26,9 +27,9 @@ export class AccountResolver {
     return this.accountService.findAll(user.id)
   }
 
-  @Query(() => [Account], { name: 'generalLedgerAccounts' })
+  @Query(() => GraphQLJSON, { name: 'generalLedgerAccounts' })
   generalLedgerAccounts(@GetUser() user: User) {
-    return this.accountService.findAll(user.id)
+    return this.accountService.findAllAccountsForAccountTypes(user.id)
   }
 
   @Query(() => [AccountTypeEnum], { name: 'accountTypes' })

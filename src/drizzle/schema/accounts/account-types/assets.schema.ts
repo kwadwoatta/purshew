@@ -1,8 +1,6 @@
-import { registerEnumType } from '@nestjs/graphql'
 import {
   decimal,
   integer,
-  pgEnum,
   pgTable,
   text,
   timestamp,
@@ -10,29 +8,15 @@ import {
 } from 'drizzle-orm/pg-core'
 import {
   AccountTypeEnum,
+  CashNameEnum,
+  OfficeEquipmentNameEnum,
   accountTypeEnum,
+  cashNameEnum,
+  officeEquipmentNameEnum,
   transactionTypeEnum,
 } from 'src/common/enum'
 import { accounts } from '..'
 import { users } from '../../users'
-
-export enum CashNameEnum {
-  US_DOLLAR = 'US_DOLLAR',
-}
-
-registerEnumType(CashNameEnum, {
-  name: 'CashNameEnum',
-})
-
-const cashName = Object.values(CashNameEnum) as [
-  CashNameEnum,
-  ...CashNameEnum[],
-]
-
-export const cashNameEnum = pgEnum<
-  CashNameEnum,
-  [CashNameEnum, ...CashNameEnum[]]
->('cash_name', cashName)
 
 export const cash = pgTable('cash', {
   id: uuid('id').notNull().defaultRandom().primaryKey(),
@@ -167,27 +151,6 @@ export const accountsReceivable = pgTable('accounts_receivable', {
       onDelete: 'cascade',
     }),
 })
-
-export enum OfficeEquipmentNameEnum {
-  COMPUTER = 'COMPUTER',
-  PRINTER = 'PRINTER',
-  DESK = 'DESK',
-  CHAIR = 'CHAIR',
-}
-
-registerEnumType(OfficeEquipmentNameEnum, {
-  name: 'OfficeEquipmentNameEnum',
-})
-
-const officeEquipmentName = Object.values(OfficeEquipmentNameEnum) as [
-  OfficeEquipmentNameEnum,
-  ...OfficeEquipmentNameEnum[],
-]
-
-export const officeEquipmentNameEnum = pgEnum<
-  OfficeEquipmentNameEnum,
-  [OfficeEquipmentNameEnum, ...OfficeEquipmentNameEnum[]]
->('office_equipment_name', officeEquipmentName)
 
 export const officeEquipment = pgTable('office_equipment', {
   id: uuid('id').notNull().defaultRandom().primaryKey(),

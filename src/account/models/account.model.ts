@@ -2,7 +2,6 @@ import { Field, ID, ObjectType } from '@nestjs/graphql'
 import { InferInsertModel } from 'drizzle-orm'
 import { AccountTypeEnum } from 'src/common'
 import { accounts } from 'src/drizzle/schema'
-import { User } from 'src/user/models/user.model'
 
 @ObjectType()
 export class Account implements InferInsertModel<typeof accounts> {
@@ -29,7 +28,4 @@ export class Account implements InferInsertModel<typeof accounts> {
 
   @Field(() => ID)
   ownerId: string
-
-  @Field(() => User)
-  owner: User
 }

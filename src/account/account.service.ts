@@ -1,8 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { and, eq } from 'drizzle-orm'
+import { ExtractTablesWithRelations, and, eq } from 'drizzle-orm'
 import { AccountTypeEnum } from 'src/common'
 import { DrizzleService } from 'src/drizzle/drizzle.service'
-import { accounts, users } from 'src/drizzle/schema'
+import { accounts } from 'src/drizzle/schema'
+import * as accountsSchema from 'src/drizzle/schema/accounts/account-types'
 import { User } from 'src/user/models/user.model'
 import { CreateAccountInput } from './dto/create-account.input'
 import { UpdateAccountInput } from './dto/update-account.input'
@@ -24,8 +25,51 @@ export class AccountService {
   findAll(userId: string) {
     return this.drizzle.db
       .select()
-      .from(users)
+      .from(accounts)
       .where(and(eq(accounts.ownerId, userId)))
+  }
+
+  async findAllAccountsForAccountTypes(userId: string): Promise<JSON> {
+    return this.drizzle.db.transaction(async (tx) => {
+      const userAccounts = await tx
+        .select()
+        .from(accounts)
+        .where(and(eq(accounts.ownerId, userId)))
+
+      type UnionType = keyof ExtractTablesWithRelations<typeof accountsSchema>
+
+      function isKeyOfUnionType(key: string): key is UnionType {
+        return key in accountsSchema
+      }
+
+      const userAccountsWithSubAccounts: Record<string, any> = {}
+
+      for (const userAccount of userAccounts) {
+        console.log({ userAccount })
+        for (const key in accountsSchema) {
+          if (isKeyOfUnionType(key)) {
+            const table = accountsSchema[key]
+
+            const subAccounts = await tx
+              .select()
+              .from(table)
+              .where(
+                and(
+                  eq(table.accountId, userAccount.id),
+                  eq(table.ownerId, userId),
+                ),
+              )
+
+            userAccountsWithSubAccounts[userAccount.name] = {
+              ...userAccount,
+              accounts: subAccounts,
+            }
+          }
+        }
+      }
+
+      return JSON.parse(JSON.stringify(userAccountsWithSubAccounts))
+    })
   }
 
   findAccountTypes(): AccountTypeEnum[] {
@@ -38,7 +82,7 @@ export class AccountService {
     const account = (
       await this.drizzle.db
         .select()
-        .from(users)
+        .from(accounts)
         .where(and(eq(accounts.ownerId, userId), eq(accounts.id, accountId)))
     )[0]
 
@@ -51,7 +95,7 @@ export class AccountService {
 
   update(userId: string, input: UpdateAccountInput) {
     return this.drizzle.db
-      .update(users)
+      .update(accounts)
       .set({
         ...input,
       })
@@ -61,7 +105,7 @@ export class AccountService {
   remove(id: string, userId: string) {
     return this.drizzle.db
       .select()
-      .from(users)
+      .from(accounts)
       .where(and(eq(accounts.ownerId, userId), eq(accounts.id, id)))
   }
 }
