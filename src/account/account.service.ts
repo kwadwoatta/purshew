@@ -45,7 +45,11 @@ export class AccountService {
       const userAccountsWithSubAccounts: Record<string, any> = {}
 
       for (const userAccount of userAccounts) {
-        console.log({ userAccount })
+        userAccountsWithSubAccounts[userAccount.name] = {
+          ...userAccount,
+          accounts: [],
+        }
+
         for (const key in accountsSchema) {
           if (isKeyOfUnionType(key)) {
             const table = accountsSchema[key]
@@ -60,10 +64,9 @@ export class AccountService {
                 ),
               )
 
-            userAccountsWithSubAccounts[userAccount.name] = {
-              ...userAccount,
-              accounts: subAccounts,
-            }
+            ;(
+              userAccountsWithSubAccounts[userAccount.name]['accounts'] as any[]
+            ).push(...subAccounts)
           }
         }
       }
