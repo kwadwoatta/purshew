@@ -32,6 +32,11 @@ export class AccountResolver {
     return this.accountService.findAllAccountsForAccountTypes(user.id)
   }
 
+  @Query(() => GraphQLJSON, { name: 'financialStatement' })
+  financialStatement(@GetUser() user: User) {
+    return this.accountService.financialStatement(user.id)
+  }
+
   @Query(() => [AccountTypeEnum], { name: 'accountTypes' })
   accountTypes() {
     return this.accountService.findAccountTypes()

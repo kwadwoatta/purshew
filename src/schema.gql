@@ -179,6 +179,7 @@ type Query {
   accountsPayables: [AccountsPayable!]!
   accountsReceivable(id: ID!): AccountsReceivable!
   accountsReceivables: [AccountsReceivable!]!
+  financialStatement: JSON!
   generalLedgerAccounts: JSON!
   inventoryItem(id: ID!): Inventory!
   inventoryItems: [Inventory!]!

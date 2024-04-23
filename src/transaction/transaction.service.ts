@@ -81,7 +81,7 @@ export class TransactionService {
           .insert(debitAccountTable)
           .values({
             ownerId: userId,
-            amount: String(amount),
+            amount: String(debitOperation + amount),
             accountId: accountIdForDebit,
             transactionType: TransactionTypeEnum.debit,
           })
@@ -93,7 +93,7 @@ export class TransactionService {
           .insert(creditAccountTable)
           .values({
             ownerId: userId,
-            amount: String(amount),
+            amount: String(creditOperation + amount),
             accountId: accountIdForCredit,
             transactionType: TransactionTypeEnum.credit,
           })
@@ -117,8 +117,8 @@ export class TransactionService {
             creditAccountName,
 
             amount: String(amount),
-            debitAmount: String(amount),
-            creditAmount: String(amount),
+            debitAmount: String(debitOperation + amount),
+            creditAmount: String(creditOperation + amount),
           })
           .returning()
       )[0]

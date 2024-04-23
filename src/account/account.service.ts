@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { ExtractTablesWithRelations, and, eq } from 'drizzle-orm'
+import { ExtractTablesWithRelations, and, eq, sum } from 'drizzle-orm'
 import { AccountTypeEnum } from 'src/common'
 import { DrizzleService } from 'src/drizzle/drizzle.service'
 import { accounts } from 'src/drizzle/schema'
@@ -67,6 +67,57 @@ export class AccountService {
             ;(
               userAccountsWithSubAccounts[userAccount.name]['accounts'] as any[]
             ).push(...subAccounts)
+          }
+        }
+      }
+
+      return JSON.parse(JSON.stringify(userAccountsWithSubAccounts))
+    })
+  }
+
+  async financialStatement(userId: string): Promise<JSON> {
+    return this.drizzle.db.transaction(async (tx) => {
+      const userAccounts = await tx
+        .select({
+          name: accounts.name,
+          balance: accounts.balance,
+          id: accounts.id,
+        })
+        .from(accounts)
+        .where(and(eq(accounts.ownerId, userId)))
+
+      type UnionType = keyof ExtractTablesWithRelations<typeof accountsSchema>
+
+      function isKeyOfUnionType(key: string): key is UnionType {
+        return key in accountsSchema
+      }
+
+      const userAccountsWithSubAccounts: Record<string, any> = {}
+
+      for (const userAccount of userAccounts) {
+        userAccountsWithSubAccounts[userAccount.name] = {
+          ...userAccount,
+          accounts: {},
+        }
+
+        for (const key in accountsSchema) {
+          if (isKeyOfUnionType(key)) {
+            const table = accountsSchema[key]
+
+            const subAccountsTotal = await tx
+              .select({ total: sum(table.amount) })
+              .from(table)
+              .where(
+                and(
+                  eq(table.accountId, userAccount.id),
+                  eq(table.ownerId, userId),
+                ),
+              )
+
+            if (table.accountType.default === userAccount.name) {
+              userAccountsWithSubAccounts[userAccount.name]['accounts'][key] =
+                subAccountsTotal[0].total ?? '0.0'
+            }
           }
         }
       }
