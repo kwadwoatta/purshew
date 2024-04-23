@@ -1,21 +1,50 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { and, eq } from 'drizzle-orm'
+import { ExtractTablesWithRelations, and, eq } from 'drizzle-orm'
+import { Account } from 'src/account/models/account.model'
 import { DrizzleService } from 'src/drizzle/drizzle.service'
 import { inventory } from 'src/drizzle/schema'
+import * as accountsSchema from 'src/drizzle/schema/accounts/account-types'
+import { TransactionService } from 'src/transaction/transaction.service'
 import { UpdateInventoryInput } from './dto/update-inventory.input'
+import { Inventory } from './models/inventory.model'
 
 @Injectable()
 export class InventoryService {
-  constructor(private readonly drizzle: DrizzleService) {}
+  constructor(
+    private readonly drizzle: DrizzleService,
+    private readonly txService: TransactionService,
+  ) {}
 
-  create(input: any, userId: string) {
-    return this.drizzle.db
-      .insert(inventory)
-      .values({
-        userId: userId,
-        ...input,
-      })
-      .returning()
+  async create(
+    amount: number,
+    userId: string,
+    userAccounts: Account[],
+    description: string,
+  ): Promise<Inventory> {
+    type AccountTypeAccountKey = keyof ExtractTablesWithRelations<
+      typeof accountsSchema
+    >
+
+    const creditAccountName: AccountTypeAccountKey = 'cash'
+    const debitAccountName: AccountTypeAccountKey = 'inventory'
+
+    const json = await this.txService.create(
+      amount,
+      creditAccountName,
+      debitAccountName,
+      userId,
+      userAccounts,
+      description,
+    )
+
+    const jsonInventory = json[0]['inventory']
+    const inventory: Inventory = {
+      ...jsonInventory,
+      createdAt: new Date(jsonInventory['createdAt']),
+      updatedAt: new Date(jsonInventory['updatedAt']),
+    }
+
+    return inventory
   }
 
   findAll(userId: string) {
@@ -50,6 +79,7 @@ export class InventoryService {
       .update(inventory)
       .set({
         ...input,
+        amount: String(input.amount),
       })
       .where(and(eq(inventory.ownerId, userId), eq(inventory.id, input.id)))
   }

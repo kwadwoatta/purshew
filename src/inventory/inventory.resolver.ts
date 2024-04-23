@@ -6,7 +6,7 @@ import { GetUser } from 'src/auth/decorator'
 import { JwtGuard } from 'src/auth/guard'
 import { AccountTypeEnum } from 'src/common'
 import { User } from 'src/user/models/user.model'
-import { CreateInventoryInput } from './dto/create-inventory.input'
+import { AddToInventoryInput } from './dto/add-to-inventory.input'
 import { UpdateInventoryInput } from './dto/update-inventory.input'
 import { InventoryService } from './inventory.service'
 import { Inventory } from './models/inventory.model'
@@ -17,12 +17,19 @@ export class InventoryResolver {
   constructor(private readonly inventoryService: InventoryService) {}
 
   @Mutation(() => Inventory)
-  createInventory(
-    @Args('createInventoryInput')
-    createInventoryInput: CreateInventoryInput,
+  addToInventory(
+    @Args('addToInventoryInput')
+    addToInventoryInput: AddToInventoryInput,
     @GetUser() user: User,
+    @GetAccounts() accounts: Account[],
   ) {
-    return this.inventoryService.create(createInventoryInput, user.id)
+    const { amount, itemDescription } = addToInventoryInput
+    return this.inventoryService.create(
+      amount,
+      user.id,
+      accounts,
+      itemDescription,
+    )
   }
 
   @Query(() => [Inventory], { name: 'inventoryItems' })
