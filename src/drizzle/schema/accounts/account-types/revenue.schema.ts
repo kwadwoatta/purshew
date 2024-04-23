@@ -15,6 +15,8 @@ export const revenue = pgTable('revenue', {
 
   amount: decimal('amount').default('0.0').notNull(),
   transactionType: transactionTypeEnum('transaction_type').notNull(),
+  name: text('name'),
+  description: text('description'),
 
   revenueName: text('revenue_name'),
   revenueDescription: text('revenue_description'),
@@ -41,6 +43,8 @@ export const sales = pgTable('sales', {
 
   amount: decimal('amount').default('0.0').notNull(),
   transactionType: transactionTypeEnum('transaction_type').notNull(),
+  name: text('name'),
+  description: text('description'),
 
   salesAmount: decimal('sales_amount'),
   accountType: accountTypeEnum('account_type')
@@ -68,6 +72,8 @@ export const serviceRevenue = pgTable('service_revenue', {
 
   amount: decimal('amount').default('0.0').notNull(),
   transactionType: transactionTypeEnum('transaction_type').notNull(),
+  name: text('name'),
+  description: text('description'),
 
   serviceFee: decimal('service_fee'),
   accountType: accountTypeEnum('account_type')
@@ -95,6 +101,8 @@ export const interestRevenue = pgTable('interest_revenue', {
 
   amount: decimal('amount').default('0.0').notNull(),
   transactionType: transactionTypeEnum('transaction_type').notNull(),
+  name: text('name'),
+  description: text('description'),
 
   interestAmount: decimal('interest_amount'),
   accountType: accountTypeEnum('account_type')

@@ -1,0 +1,50 @@
+ALTER TABLE "cash" RENAME COLUMN "cash_name" TO "name";--> statement-breakpoint
+ALTER TABLE "inventory" RENAME COLUMN "item_name" TO "name";--> statement-breakpoint
+ALTER TABLE "inventory" RENAME COLUMN "item_description" TO "description";--> statement-breakpoint
+ALTER TABLE "accounts_receivable" ADD COLUMN "name" text;--> statement-breakpoint
+ALTER TABLE "accounts_receivable" ADD COLUMN "description" text;--> statement-breakpoint
+ALTER TABLE "cash" ADD COLUMN "description" text;--> statement-breakpoint
+ALTER TABLE "equipment" ADD COLUMN "name" text;--> statement-breakpoint
+ALTER TABLE "equipment" ADD COLUMN "description" text;--> statement-breakpoint
+ALTER TABLE "office_equipment" ADD COLUMN "name" text;--> statement-breakpoint
+ALTER TABLE "office_equipment" ADD COLUMN "description" text;--> statement-breakpoint
+ALTER TABLE "property" ADD COLUMN "name" text;--> statement-breakpoint
+ALTER TABLE "property" ADD COLUMN "description" text;--> statement-breakpoint
+ALTER TABLE "capital" ADD COLUMN "name" text;--> statement-breakpoint
+ALTER TABLE "capital" ADD COLUMN "description" text;--> statement-breakpoint
+ALTER TABLE "common_stock" ADD COLUMN "name" text;--> statement-breakpoint
+ALTER TABLE "common_stock" ADD COLUMN "description" text;--> statement-breakpoint
+ALTER TABLE "retained_earnings" ADD COLUMN "name" text;--> statement-breakpoint
+ALTER TABLE "retained_earnings" ADD COLUMN "description" text;--> statement-breakpoint
+ALTER TABLE "cost_of_goods_sold" ADD COLUMN "name" text;--> statement-breakpoint
+ALTER TABLE "cost_of_goods_sold" ADD COLUMN "description" text;--> statement-breakpoint
+ALTER TABLE "general_expense" ADD COLUMN "name" text;--> statement-breakpoint
+ALTER TABLE "general_expense" ADD COLUMN "description" text;--> statement-breakpoint
+ALTER TABLE "interest_expense" ADD COLUMN "name" text;--> statement-breakpoint
+ALTER TABLE "interest_expense" ADD COLUMN "description" text;--> statement-breakpoint
+ALTER TABLE "rent_expense" ADD COLUMN "name" text;--> statement-breakpoint
+ALTER TABLE "rent_expense" ADD COLUMN "description" text;--> statement-breakpoint
+ALTER TABLE "salary_expense" ADD COLUMN "name" text;--> statement-breakpoint
+ALTER TABLE "salary_expense" ADD COLUMN "description" text;--> statement-breakpoint
+ALTER TABLE "wages_expense" ADD COLUMN "name" text;--> statement-breakpoint
+ALTER TABLE "wages_expense" ADD COLUMN "description" text;--> statement-breakpoint
+ALTER TABLE "accounts_payable" ADD COLUMN "name" text;--> statement-breakpoint
+ALTER TABLE "accounts_payable" ADD COLUMN "description" text;--> statement-breakpoint
+ALTER TABLE "bonds_payable" ADD COLUMN "name" text;--> statement-breakpoint
+ALTER TABLE "bonds_payable" ADD COLUMN "description" text;--> statement-breakpoint
+ALTER TABLE "credit_card_payable" ADD COLUMN "name" text;--> statement-breakpoint
+ALTER TABLE "credit_card_payable" ADD COLUMN "description" text;--> statement-breakpoint
+ALTER TABLE "loan_payable" ADD COLUMN "name" text;--> statement-breakpoint
+ALTER TABLE "loan_payable" ADD COLUMN "description" text;--> statement-breakpoint
+ALTER TABLE "loans" ADD COLUMN "name" text;--> statement-breakpoint
+ALTER TABLE "loans" ADD COLUMN "description" text;--> statement-breakpoint
+ALTER TABLE "unearned_revenue" ADD COLUMN "name" text;--> statement-breakpoint
+ALTER TABLE "unearned_revenue" ADD COLUMN "description" text;--> statement-breakpoint
+ALTER TABLE "interest_revenue" ADD COLUMN "name" text;--> statement-breakpoint
+ALTER TABLE "interest_revenue" ADD COLUMN "description" text;--> statement-breakpoint
+ALTER TABLE "revenue" ADD COLUMN "name" text;--> statement-breakpoint
+ALTER TABLE "revenue" ADD COLUMN "description" text;--> statement-breakpoint
+ALTER TABLE "sales" ADD COLUMN "name" text;--> statement-breakpoint
+ALTER TABLE "sales" ADD COLUMN "description" text;--> statement-breakpoint
+ALTER TABLE "service_revenue" ADD COLUMN "name" text;--> statement-breakpoint
+ALTER TABLE "service_revenue" ADD COLUMN "description" text;

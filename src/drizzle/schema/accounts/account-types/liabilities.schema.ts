@@ -22,6 +22,8 @@ export const creditCardPayable = pgTable('credit_card_payable', {
 
   amount: decimal('amount').default('0.0').notNull(),
   transactionType: transactionTypeEnum('transaction_type').notNull(),
+  name: text('name'),
+  description: text('description'),
 
   cardName: text('card_name'),
   cardValue: decimal('card_value'),
@@ -47,6 +49,8 @@ export const accountsPayable = pgTable('accounts_payable', {
 
   amount: decimal('amount').default('0.0').notNull(),
   transactionType: transactionTypeEnum('transaction_type').notNull(),
+  name: text('name'),
+  description: text('description'),
 
   itemName: text('item_name'),
   itemDescription: text('item_description'),
@@ -75,6 +79,8 @@ export const loanPayable = pgTable('loan_payable', {
 
   amount: decimal('amount').default('0.0').notNull(),
   transactionType: transactionTypeEnum('transaction_type').notNull(),
+  name: text('name'),
+  description: text('description'),
 
   loanName: text('loan_name'),
   loanValue: decimal('loan_value'),
@@ -100,6 +106,8 @@ export const loans = pgTable('loans', {
 
   amount: decimal('amount').default('0.0').notNull(),
   transactionType: transactionTypeEnum('transaction_type').notNull(),
+  name: text('name'),
+  description: text('description'),
 
   lenderId: uuid('lender_id').references(() => users.id),
   accountType: accountTypeEnum('account_type')
@@ -126,6 +134,8 @@ export const bondsPayable = pgTable('bonds_payable', {
 
   amount: decimal('amount').default('0.0').notNull(),
   transactionType: transactionTypeEnum('transaction_type').notNull(),
+  name: text('name'),
+  description: text('description'),
 
   accountType: accountTypeEnum('account_type')
     .default(AccountTypeEnum.liability)
@@ -152,6 +162,8 @@ export const unearnedRevenue = pgTable('unearned_revenue', {
 
   amount: decimal('amount').default('0.0').notNull(),
   transactionType: transactionTypeEnum('transaction_type').notNull(),
+  name: text('name'),
+  description: text('description'),
 
   accountType: accountTypeEnum('account_type')
     .default(AccountTypeEnum.liability)

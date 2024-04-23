@@ -26,8 +26,9 @@ export const cash = pgTable('cash', {
 
   amount: decimal('amount').default('0.0').notNull(),
   transactionType: transactionTypeEnum('transaction_type').notNull(),
+  name: cashNameEnum('name').default(CashNameEnum.US_DOLLAR).notNull(),
+  description: text('description'),
 
-  cashName: cashNameEnum('cash_name').default(CashNameEnum.US_DOLLAR).notNull(),
   accountType: accountTypeEnum('account_type')
     .default(AccountTypeEnum.asset)
     .notNull(),
@@ -50,9 +51,9 @@ export const inventory = pgTable('inventory', {
 
   amount: decimal('amount').default('0.0').notNull(),
   transactionType: transactionTypeEnum('transaction_type').notNull(),
+  name: text('name'),
+  description: text('description'),
 
-  itemName: text('item_name'),
-  itemDescription: text('item_description'),
   quantity: integer('quantity'),
   purchasePrice: decimal('purchase_price'),
   salePrice: decimal('sale_price'),
@@ -78,6 +79,8 @@ export const property = pgTable('property', {
 
   amount: decimal('amount').default('0.0').notNull(),
   transactionType: transactionTypeEnum('transaction_type').notNull(),
+  name: text('name'),
+  description: text('description'),
 
   propertyName: text('property_name'),
   propertyValue: decimal('property_value'),
@@ -105,6 +108,8 @@ export const equipment = pgTable('equipment', {
 
   amount: decimal('amount').default('0.0').notNull(),
   transactionType: transactionTypeEnum('transaction_type').notNull(),
+  name: text('name'),
+  description: text('description'),
 
   equipmentName: text('equipment_name').notNull(),
   equipmentValue: decimal('equipment_value').notNull(),
@@ -132,6 +137,8 @@ export const accountsReceivable = pgTable('accounts_receivable', {
 
   amount: decimal('amount').default('0.0').notNull(),
   transactionType: transactionTypeEnum('transaction_type').notNull(),
+  name: text('name'),
+  description: text('description'),
 
   customerId: uuid('customer_id')
     .notNull()
@@ -160,6 +167,8 @@ export const officeEquipment = pgTable('office_equipment', {
 
   amount: decimal('amount').default('0.0').notNull(),
   transactionType: transactionTypeEnum('transaction_type').notNull(),
+  name: text('name'),
+  description: text('description'),
 
   officeEquipmentName: officeEquipmentNameEnum('office_equipment_name')
     .default(OfficeEquipmentNameEnum.COMPUTER)

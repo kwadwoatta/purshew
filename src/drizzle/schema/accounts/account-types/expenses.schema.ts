@@ -23,6 +23,8 @@ export const generalExpense = pgTable('general_expense', {
 
   amount: decimal('amount').default('0.0').notNull(),
   transactionType: transactionTypeEnum('transaction_type').notNull(),
+  name: text('name'),
+  description: text('description'),
 
   expenseName: text('expense_name'),
   expenseValue: decimal('expense_value'),
@@ -48,6 +50,8 @@ export const salaryExpense = pgTable('salary_expense', {
 
   amount: decimal('amount').default('0.0').notNull(),
   transactionType: transactionTypeEnum('transaction_type').notNull(),
+  name: text('name'),
+  description: text('description'),
 
   expenseName: text('expense_name'),
   expenseValue: decimal('expense_value'),
@@ -73,6 +77,8 @@ export const costOfGoodsSold = pgTable('cost_of_goods_sold', {
 
   amount: decimal('amount').default('0.0').notNull(),
   transactionType: transactionTypeEnum('transaction_type').notNull(),
+  name: text('name'),
+  description: text('description'),
 
   itemName: text('item_name'),
   itemDescription: text('item_description'),
@@ -101,6 +107,8 @@ export const wagesExpense = pgTable('wages_expense', {
 
   amount: decimal('amount').default('0.0').notNull(),
   transactionType: transactionTypeEnum('transaction_type').notNull(),
+  name: text('name'),
+  description: text('description'),
 
   wages: decimal('wages'),
   accountType: accountTypeEnum('account_type')
@@ -127,6 +135,8 @@ export const rentExpense = pgTable('rent_expense', {
 
   amount: decimal('amount').default('0.0').notNull(),
   transactionType: transactionTypeEnum('transaction_type').notNull(),
+  name: text('name'),
+  description: text('description'),
 
   rent: decimal('rent'),
   accountType: accountTypeEnum('account_type')
@@ -153,6 +163,8 @@ export const interestExpense = pgTable('interest_expense', {
 
   amount: decimal('amount').default('0.0').notNull(),
   transactionType: transactionTypeEnum('transaction_type').notNull(),
+  name: text('name'),
+  description: text('description'),
 
   interest: decimal('interest'),
   accountType: accountTypeEnum('account_type')

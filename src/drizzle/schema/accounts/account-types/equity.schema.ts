@@ -22,6 +22,8 @@ export const capital = pgTable('capital', {
 
   amount: decimal('amount').default('0.0').notNull(),
   transactionType: transactionTypeEnum('transaction_type').notNull(),
+  name: text('name'),
+  description: text('description'),
 
   capitalName: text('capital_name'),
   accountType: accountTypeEnum('account_type')
@@ -46,6 +48,8 @@ export const commonStock = pgTable('common_stock', {
 
   amount: decimal('amount').default('0.0').notNull(),
   transactionType: transactionTypeEnum('transaction_type').notNull(),
+  name: text('name'),
+  description: text('description'),
 
   itemName: text('item_name'),
   itemDescription: text('item_description'),
@@ -74,6 +78,8 @@ export const retainedEarnings = pgTable('retained_earnings', {
 
   amount: decimal('amount').default('0.0').notNull(),
   transactionType: transactionTypeEnum('transaction_type').notNull(),
+  name: text('name'),
+  description: text('description'),
 
   earnings: decimal('earnings'),
   accountType: accountTypeEnum('account_type')
